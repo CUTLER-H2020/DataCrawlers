@@ -4,8 +4,8 @@ Stay tuned.
 ### Contents
 
 1. [Economic Data](#Economic-Data)
-2. [Environmental Data]
-3. [Social Data](#Social Data)
+2. Environmental Data
+3. Social Data
 
 
 ### Economic Data
