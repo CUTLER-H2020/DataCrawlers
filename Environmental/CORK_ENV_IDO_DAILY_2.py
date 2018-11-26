@@ -22,7 +22,7 @@ class digitalOcean():
         pd.set_option('display.max_rows', 500)
         pd.set_option('display.max_columns', 500)
         pd.set_option('display.width', 1000)
-        downloadDir = "C:\\Users\\user\\PycharmProjects\\digitalOcean\\venv\\testDara"#Adds directory path for storing .CSV files
+        downloadDir = ""#Adds directory path for storing .CSV files
         uFileName = str(uuid.uuid4())# Calls uuid library for unique file naming
         fileName = downloadDir + uFileName + ".csv"
         time1 = datetime.now() - timedelta(days=1)
