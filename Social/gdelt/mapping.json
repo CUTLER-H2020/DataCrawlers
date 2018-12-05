@@ -1,0 +1,24 @@
+{
+  "mappings": {
+    "doc": {
+      "properties": {
+        "features.geometry.coordinates": {
+          "type": "geo_point"
+        },
+        "features.count.properties": {
+          "type": "long"
+        },
+        "features.name.properties": {
+          "type": "text"
+        },
+        "features.html.properties": {
+          "type": "text"
+        },
+        "created" : {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        }
+      }
+    }
+  }
+}
