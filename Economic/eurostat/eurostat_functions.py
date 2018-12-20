@@ -8,10 +8,11 @@ The functions gets data in SDMX json format from eurostat url and create
 a python dictionary with all the observations.
 Then, each function returns its dictionary
 """
-
-import urllib.request
+import os
 import json
-import operator
+import urllib.request
+
+# import operator
 
 DEBUG = False
 
@@ -21,7 +22,7 @@ eg. "unit","wstatus","nace_r2","geo","time"
 '''
 
 
-def parseeurostat5dimensions(url, firstdim, seconddim, thirddim, fourthdim, fifthdim):
+def parseeurostat5dimensions(url, dimensions):
     if DEBUG:
         print("[+] Reading json from url")
     with urllib.request.urlopen(url) as url:
@@ -38,11 +39,11 @@ def parseeurostat5dimensions(url, firstdim, seconddim, thirddim, fourthdim, fift
     eg. "id":["currency", "nace_r2", "geo","time"], "size":[3,2,4,2]
     observations are sorted based on ID
     '''
-    firstdimMap = data['dimension'][firstdim]['category']
-    seconddimMap = data['dimension'][seconddim]['category']
-    thirddimMap = data['dimension'][thirddim]['category']
-    fourthdimMap = data['dimension'][fourthdim]['category']
-    fifthdimMap = data['dimension'][fifthdim]['category']
+    firstdimMap = data['dimension'][dimensions[0]]['category']
+    seconddimMap = data['dimension'][dimensions[1]]['category']
+    thirddimMap = data['dimension'][dimensions[2]]['category']
+    fourthdimMap = data['dimension'][dimensions[3]]['category']
+    fifthdimMap = data['dimension'][dimensions[4]]['category']
     # idMap - See at 'Preparing observation maps' section
 
     # For every maps, create a python dictionary in order to create the unique ids for every observation
@@ -143,7 +144,7 @@ eg. "currency", "nace_r2", "geo","time" or "unit", "na_item", "geo","time"
 '''
 
 
-def parseeurostat4dimensions(url, firstdim, seconddim, thirddim, fourthdim):
+def parseeurostat4dimensions(url, dimensions):
     if DEBUG:
         print("[+] Reading json from url")
     with urllib.request.urlopen(url) as url:
@@ -160,10 +161,10 @@ def parseeurostat4dimensions(url, firstdim, seconddim, thirddim, fourthdim):
     eg. "id":["currency", "nace_r2", "geo","time"], "size":[3,2,4,2]
     observations are sorted based on ID
     '''
-    firstdimMap = data['dimension'][firstdim]['category']
-    seconddimMap = data['dimension'][seconddim]['category']
-    thirddimMap = data['dimension'][thirddim]['category']
-    fourthdimMap = data['dimension'][fourthdim]['category']
+    firstdimMap = data['dimension'][dimensions[0]]['category']
+    seconddimMap = data['dimension'][dimensions[1]]['category']
+    thirddimMap = data['dimension'][dimensions[2]]['category']
+    fourthdimMap = data['dimension'][dimensions[3]]['category']
     # idMap - See at 'Preparing observation maps' section
 
     # For every maps, create a python dictionary in order to create the unique ids for every observation
@@ -254,7 +255,7 @@ eg. "unit","geo","time"
 '''
 
 
-def parseeurostat3dimensions(url, firstdim, seconddim, thirddim):
+def parseeurostat3dimensions(url, dimensions):
     if DEBUG:
         print("[+] Reading json from url")
     with urllib.request.urlopen(url) as url:
@@ -271,9 +272,9 @@ def parseeurostat3dimensions(url, firstdim, seconddim, thirddim):
     eg. "id":["unit","geo","time"], "size":[2,4,2]
     observations are sorted based on ID
     '''
-    firstdimMap = data['dimension'][firstdim]['category']
-    seconddimMap = data['dimension'][seconddim]['category']
-    thirddimMap = data['dimension'][thirddim]['category']
+    firstdimMap = data['dimension'][dimensions[0]]['category']
+    seconddimMap = data['dimension'][dimensions[1]]['category']
+    thirddimMap = data['dimension'][dimensions[2]]['category']
     # idMap - See at 'Preparing observation maps' section
 
     # For every maps, create a python dictionary in order to create the unique ids for every observation
@@ -342,9 +343,9 @@ def parseeurostat3dimensions(url, firstdim, seconddim, thirddim):
 
                 observation_index += 1
 
-    #    for i, j in sorted(observations.items(), key=operator.itemgetter(0)):  # sorted by key
-    #        print(i, j)
-    #        print("=================")
+        # for i, j in sorted(observations.items(), key=operator.itemgetter(0)):  # sorted by key
+        #    print(i, j)
+        #    print("=================")
 
     if DEBUG:
         print("FOUND: " + str(len(observations)) + " observations")
@@ -354,56 +355,18 @@ def parseeurostat3dimensions(url, firstdim, seconddim, thirddim):
     return observations
 
 
-'''
-#Save every obseravtion to a csv file based on its Metropolitan Area
-#Columns -> Obseravtion Year
-#Rows -> Obseravtion Variables
-#	
-import csv
-import os
+def saveJSON(dataset, dataset_name):
+    if DEBUG:
+        print("[+] Saving dataset in json file")
 
-#create a directory if doesn't exists
-results_directory = "oecd_metropolitan_areas_results/"
-if not os.path.exists(results_directory):
-    print("[+] Creating results\' directory")
-    os.makedirs(results_directory)
+    # create a directory if doesn't exists
+    results_directory = "eurostat_results/"
+    if not os.path.exists(results_directory):
+        if DEBUG:
+            print("[+] Creating results\' directory:", results_directory)
+        os.makedirs(results_directory)
 
-
-#Create unique ids to extracts observations from python dictionary
-#for every Metropolitan Area
-for locations_name, locations_id in sorted(locations.items(), key=operator.itemgetter(1)):
-
-    csvfilename = str(results_directory) + str(locations_name) + ".csv"
-    print("[+] Saving dictionary to csv files: " + csvfilename)
-    print("[+] Saving csv files: " + csvfilename)
-
-    with open(csvfilename, 'w', newline='', encoding="utf8") as csvfile:
-        wr = csv.writer(csvfile)
-
-        #write headers in csv file
-        #Name of Metropolitan Area
-        #'Variable', years (min -> max)
-        wr.writerow(["Metropolitan Area: " + locations_name])
-        yearsforcsv = [key for key, val in sorted(years.items(), key=operator.itemgetter(1))]
-        wr.writerow(["Variables/Years"] + yearsforcsv)
-
-        #for every variable
-        for variable_name, variable_id in sorted(variables.items(), key=operator.itemgetter(1)):
-            #for every year
-            observationList = [] #create a temporary list to save each csv row
-            for year_name, year_id in sorted(years.items(), key=operator.itemgetter(1)):
-                search_unique_id = locations_id + variable_id + year_id
-                if DEBUG:
-                    print(locations_name + "-" + variable_name + "-" + year_name + " : " + search_unique_id)
-
-                #create a list with all years' variables                    
-                if search_unique_id in observations:
-                    observationList.append(observations[search_unique_id]['observationValue'])
-                    #pop element for speed
-                    observations.pop(search_unique_id, None)
-                else:
-                    observationList.append("---")
-
-            wr.writerow([variable_name] + observationList)
-print("[+] Finish")
-'''
+    results_filename = results_directory + dataset_name + ".json"
+    print("[+] Saving file", results_filename)
+    with open(results_filename, 'w') as fp:
+        json.dump(dataset, fp, indent=4)
