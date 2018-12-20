@@ -29,7 +29,9 @@ Air Temperature (° C), Air Pressure (mbar), Wind Speed ​​(m / s), Wind Dire
 	code : antalya_env_cityofantalya_perminute
 	code : antalya_env_cityofantalya_perminute_1
 """
+""" Note: if Local is set to False, the browser runs in headless mode"""
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
@@ -61,6 +63,7 @@ l_final_path = './data/'
 l_temp_file = 'params.csv'
 temp_path = ''
 final_path = '"/var/spoolDirectory/cutler/data/'#+code
+WINDOW_SIZE = "1920,1080"
 
 
 
@@ -82,7 +85,7 @@ class antalya_env_cityofantalya_perminute (object):
 	
 	def __init__(self, url):
 		self.url = url
-		self.local = True
+		self.local = False
 		self.file_to_move =''
 		self.names =[]
 
@@ -90,9 +93,6 @@ class antalya_env_cityofantalya_perminute (object):
 		"""Initialize webdriver and target URL, depending on environment"""
 		#try: 
 		if self.local:
-			#chrome_options = webdriver.ChromeOptions()
-			#prefs = {'download.default_directory' : '/path/to/dir'}
-			#chrome_options.add_experimental_option('prefs', prefs)
 			self.driver = webdriver.Chrome(executable_path=path_to_webdriver_c)#,chrome_options=chrome_options)
 			
 			self.driver.get(self.url)
@@ -100,25 +100,18 @@ class antalya_env_cityofantalya_perminute (object):
 			self.driver.maximize_window()
 			#self.driver.implicitly_wait(30)
 			self.driver.get(self.url)
-			#self.driver = webdriver.Firefox(executable_path=path_to_webdriver)#firefox_profile=fp,firefox_options=options)
-			#self.driver.implicitly_wait(15)
-			#self.driver.get(self.url)
+
 		else:
-			#fp = webdriver.FirefoxProfile()
-			#fp.set_preference("browser.download.folderList", 2)
-			#fp.set_preference("browser.download.manager.showWhenStarting", False)
-			#fp.set_preference("browser.download.dir", l_temp_path)
-			#fp.set_preference("browser.helperApps.neverAsk.saveToDisk","attachment/csv")
-			#options = Options()
-			#options.add_argument("--headless")
-			#
-			#Initialize webdriver and target URL
-			self.driver = webdriver.Firefox(executable_path=path_to_webdriver_f)#firefox_profile=fp,firefox_options=options)
+
+			chrome_options = Options()  
+			chrome_options.add_argument("--headless")
+			chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+			self.driver = webdriver.Chrome(executable_path=path_to_webdriver_c,chrome_options=chrome_options)#,chrome_options=chrome_options)
+			
+			self.driver.get(self.url)
 			self.driver.implicitly_wait(60)
-			self.driver.get(self.url)
-			self.driver.maximize_window()
-			self.driver.get(self.url)
-			#self.verificationErrors = []
+
+			self.driver.get(self.url)#self.verificationErrors = []
 			#self.accept_next_alert = True
 			#
 		return self.driver
@@ -248,42 +241,42 @@ class antalya_env_cityofantalya_perminute (object):
 			except Exception as e:
 				print(e)
 		"""
-		paritem = self.driver.find_element_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[1]")
+		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='PM10']""")#li[1]")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(paritem)
 		actions.pause(3)
 		actions.click(paritem)
 		actions.perform()
 
-		paritem = self.driver.find_element_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[2]")
+		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='SO2']""")#li[2]")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(paritem)
 		actions.pause(3)
 		actions.click(paritem)
 		actions.perform()
 
-		paritem = self.driver.find_element_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[19]")
+		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Hava Basinci']""")#li[19]")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(paritem)
 		actions.pause(3)
 		actions.click(paritem)
 		actions.perform()
 
-		paritem = self.driver.find_element_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[20]")
+		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Hava Sicakligi']""")#li[20]")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(paritem)
 		actions.pause(3)
 		actions.click(paritem)
 		actions.perform()
 
-		paritem = self.driver.find_element_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[39]")
+		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Ruzgar Hizi']""")#li[39]")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(paritem)
 		actions.pause(3)
 		actions.click(paritem)
 		actions.perform()
 
-		paritem = self.driver.find_element_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[40]")
+		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Ruzgar Yönü']""")#li[40]")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(paritem)
 		actions.pause(3)
@@ -328,7 +321,7 @@ class antalya_env_cityofantalya_perminute (object):
 			#	print(e)
 
 
-		#SEST START DATE AND END DATE
+		#TEST START DATE AND END DATE
 		#print(datetime.date.today().timestamp())
 		"""
 		now = datetime.datetime.now().replace(hour=0, minute=0,second=0)
@@ -455,6 +448,11 @@ class antalya_env_cityofantalya_perminute (object):
 		values['Station'] = self.names [0]
 		values['Latitude'] = 36.887500
 		values['Longitude'] = 30.726667
+		try:
+			values['wind_speed'] = 1.943844 * values['wind_speed_ms']
+		except:
+			print ('Cannot transform to knots')
+		
 		print(values.dtypes)
 
 		df_final = pd.DataFrame()
