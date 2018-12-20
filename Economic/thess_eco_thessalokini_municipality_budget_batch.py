@@ -9,17 +9,18 @@
 """ Type, that is Income or Expenses, is added as a column"""
 """ Year is added as a column"""
 """ Greek names are translated"""
-""" """
+""" Note: if Local is set to False, the browser runs in headless mode"""
 """ """
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
-import sys
+#import sys
 import shutil
 import uuid
 
@@ -31,47 +32,42 @@ __origin__ = "UbiComp - University of Oulu"
 origin_url = 'https://gaiacrmkea.c-gaia.gr/city_thessaloniki/index.php'
 code = 'thess_eco_thessaloniki_municipality_budget'
 
-#TODO firefox webdriver
-#path_to_webdriver = 'C:\\Users\\martacor\\Development\\python\\cuttler\\libs\\geckodriver.exe'
-path_to_webdriver = 'C:\\Users\\martacor\\Development\\python\\cuttler\\libs\\chromedriver.exe'
+
+path_to_webdriver_c = 'C:\\Users\\martacor\\Development\\python\\cuttler\\libs\\chromedriver.exe'
 options ={'Έξοδα':'Expenses','Έσοδα':'Income'} #Expenses, Income
 l_temp_path = './temp/'
 l_final_path = './data/'
 l_temp_file = 'thessaloniki_budget.csv'
 temp_path = ''
+WINDOW_SIZE = "1920,1080"
 #final_path = '"/var/spoolDirectory/cutler/data/'#+code
 
 class thess_eco_thessaloniki_municipality_budget (object):
 	
 	def __init__(self, url):
 		self.url = url
-		self.local = True
+		self.local = False
 		self.file_to_move =''
 
 	def get_session(self):
 		"""Initialize webdriver and target URL, depending on environment"""
 		#try: 
 		if self.local:
-			self.driver = webdriver.Chrome(executable_path=path_to_webdriver)#Firefox()
-			self.driver.implicitly_wait(30)
+			self.driver = webdriver.Chrome(executable_path=path_to_webdriver_c)#,chrome_options=chrome_options)
+			self.driver.implicitly_wait(60)
+			self.driver.maximize_window()
 			self.driver.get(self.url)
-			#self.driver = webdriver.Firefox(executable_path=path_to_webdriver)#firefox_profile=fp,firefox_options=options)
-			#self.driver.implicitly_wait(15)
-			#self.driver.get(self.url)
 		else:
-			fp = webdriver.FirefoxProfile()
-			fp.set_preference("browser.download.folderList", 2)
-			fp.set_preference("browser.download.manager.showWhenStarting", False)
-			fp.set_preference("browser.download.dir", l_temp_path)
-			fp.set_preference("browser.helperApps.neverAsk.saveToDisk","attachment/csv")
-			options = Options()
-			options.add_argument("--headless")
-			#Initialize webdriver and target URL
-			self.driver = webdriver.Firefox(firefox_profile=fp,firefox_options=options)
-			self.driver.implicitly_wait(15)
-			self.driver.get(self.url)
-			self.verificationErrors = []
-			self.accept_next_alert = True
+
+			chrome_options = Options()  
+			chrome_options.add_argument("--headless")
+			chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+			self.driver = webdriver.Chrome(executable_path=path_to_webdriver_c,chrome_options=chrome_options)#,chrome_options=chrome_options)
+			
+			self.driver.implicitly_wait(60)
+			self.driver.get(self.url)#self.verificationErrors = []
+			#self.accept_next_alert = True
+			#
 		return self.driver
 		#except:
 		#	print(sys.exc_info()[0],"occured.")
