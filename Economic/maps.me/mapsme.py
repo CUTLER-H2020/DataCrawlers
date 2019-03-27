@@ -7,28 +7,25 @@ Python 3.5
 headers - Dictionary with headers to be used in requests.get function
 xpath_category - Dictionary with xpaths for every element scrapped from th url / every category use the same dictionary
 
-def downloadPOI - Function
+downloadPOI - Function
     Download data from maps.me and returns a python dictionary
-    Parameters:
-        element_xpath_dictionary - dictionary with poi information (see sources directory)
-        country_locality - string with country and city to be used in the url
-        Output Dictionary format:
-            E.g. poi['name_of_poi']: {
-                poi_name: "name of the poi",
-                poi_url: "poi's page (to scrape lat, and lon)",
-                poi_category: "see Categories at the beggining",
-                poi_subcategory: "poi's subcategory",
-                poi_latitude: "poi's latitude",
-                poi_longitude: "poi's longitude",
 
-def saveJSON - Function
+saveJSON - Function
     Saves every category dictionary in a JSON file named by "country_locality" and "category"
-    E.g. Lodging data for Thessaloniki City are saves as: "Thessaloniki - Greece_lodging.json" (see maps_me_results)
-    Parameters:
-        dictionary - python dictionary with category pois
-        cityname - Name of City - Country
-        category - string with category name e.g. "food"
+
+saveNDJSON - Function
+    Saves every category dictionary in a NDJSON file named by "cityname"
+
+ingestdatatoelasticsearch - Function
+    Ingests data into elasticsearch index
+
+ingestdatatoelasticsearch - Function
+    Ingests data into elasticsearch index
+
+sendmessagetokafka - Function
+    Sends a message to a KAFKA topic that new data are ingested into a kibana index
 """
+
 import os
 import time
 import json
@@ -136,10 +133,10 @@ def downloadPOI(element_xpath_dictionary, country_locality):
                                              "poi_geo_point": poi_goe_point,
                                              "date": date}
 
-            #break #  uncomment to take only the first poi of the page
+            break #  uncomment to take only the first poi of the page
         #  scrape next page
         url_API_next_page += 1
-        #break #  uncomment to take only the first page for the category
+        break #  uncomment to take only the first page for the category
 
         # sleep 10 secs everytime you change category
         time.sleep(10)
@@ -194,3 +191,23 @@ def saveNDJSON(dictionary, cityname):
             value_str = str(value_str)[2:-1]+"\n"
             fp.write(value_str)
             poi_counter += 1
+
+def ingestdatatoelasticsearch(dictionary, cityname):
+    from elasticsearch_functions import send_to_elasticsearch
+
+    if DEBUG:
+        print("[+] Ingesting results into elasticsearch - Index: " + index_name)
+
+    index_name = cityname + "-mapsme-dashboard"
+    index_name = "test-index"
+
+    for key, value in dictionary.items():
+        send_to_elasticsearch(index_name, value, '_doc')
+
+def sendmessagetokafka(message, cityname):
+    from kafka_functions import kafkasendmessage
+
+    citynames = {"antalya": "ANT", "cork": "CRK", "antwerp": "ANW", "thessaloniki": "THE"}
+    topic = "DATA_" + citynames[cityname] + "_ECO_MAPSME_CRAWLER"
+
+    kafkasendmessage(topic, message)

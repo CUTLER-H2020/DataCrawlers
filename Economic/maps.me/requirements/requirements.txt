@@ -1,0 +1,3 @@
+elasticsearch
+requests
+kafka-python
