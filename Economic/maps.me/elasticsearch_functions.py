@@ -26,9 +26,11 @@ def connect_elasticsearch():
             print('[-] Couldn\'t connect to elasticsearch')
     return _es
 
-def send_to_elasticsearch(index_name, data, doc_type):
+def send_to_elasticsearch(index_name, dictionary, doc_type):
 
     es = connect_elasticsearch()
-    res = es.index(index=index_name, doc_type=doc_type, body=data)
+    for key, value in dictionary.items():
+        res = es.index(index=index_name, doc_type=doc_type, body=value)
 #    print(res['result'])
+
 

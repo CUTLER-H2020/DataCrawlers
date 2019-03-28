@@ -105,7 +105,7 @@ if __name__ == "__main__":
         dictionary.update(downloadPOI(xpaths_place_of_worship_taoist, country_locality))
         print("[+] Done, for attractions category")
         print("=====================\n[+] Done!")
-        
+
         # save them in NDjson based on "cityname"
         # saveNDJSON(dictionary, cityname)
         cityname = (cityname.split(" ")[0]).lower()

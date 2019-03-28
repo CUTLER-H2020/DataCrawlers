@@ -195,14 +195,13 @@ def saveNDJSON(dictionary, cityname):
 def ingestdatatoelasticsearch(dictionary, cityname):
     from elasticsearch_functions import send_to_elasticsearch
 
+    index_name = cityname + "-mapsme-dashboard"
+    #index_name = "test-index"
+
     if DEBUG:
         print("[+] Ingesting results into elasticsearch - Index: " + index_name)
 
-    index_name = cityname + "-mapsme-dashboard"
-    index_name = "test-index"
-
-    for key, value in dictionary.items():
-        send_to_elasticsearch(index_name, value, '_doc')
+    send_to_elasticsearch(index_name, dictionary, '_doc')
 
 def sendmessagetokafka(message, cityname):
     from kafka_functions import kafkasendmessage

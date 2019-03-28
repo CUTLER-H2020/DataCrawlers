@@ -9,25 +9,9 @@ xpath_category - Dictionary with xpaths for every element scrapped from th url /
 
 def downloadPOI - Function
     Download data from maps.me and returns a python dictionary
-    Parameters:
-        element_xpath_dictionary - dictionary with poi information (see sources directory)
-        country_locality - string with country and city to be used in the url
-        Output Dictionary format:
-            E.g. poi['name_of_poi']: {
-                poi_name: "name of the poi",
-                poi_url: "poi's page (to scrape lat, and lon)",
-                poi_category: "see Categories at the beggining",
-                poi_subcategory: "poi's subcategory",
-                poi_latitude: "poi's latitude",
-                poi_longitude: "poi's longitude",
 
 def saveJSON - Function
     Saves every category dictionary in a JSON file named by "country_locality" and "category"
-    E.g. Lodging data for Thessaloniki City are saves as: "Thessaloniki - Greece_lodging.json" (see maps_me_results)
-    Parameters:
-        dictionary - python dictionary with category pois
-        cityname - Name of City - Country
-        category - string with category name e.g. "food"
 """
 import datetime
 import os
@@ -130,8 +114,10 @@ def downloadPOI(url_API, purpose, uniqueid_pattern):
             poi_desc_address = '-' if len(poi_desc_address) == 0 else poi_desc_address[0]
 
             # take price from xpath find price with image processing
-            pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files (x86)/Tesseract-OCR/tesseract'
-            TESSDATA_PREFIX = 'C:/Program Files (x86)/Tesseract-OCR'
+            #pytesseract.pytesseract.tesseract_cmd = 'myenv/bin/pytesseract'
+            #pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files (x86)/Tesseract-OCR/tesseract'
+            #TESSDATA_PREFIX = 'myenv/bin'
+            #TESSDATA_PREFIX = 'C:/Program Files (x86)/Tesseract-OCR'
 
             poi_price_image_url_list = tree.xpath(xpath_category['xpath_poi_price'])  # image URL based on xpath
             if poi_price_image_url_list:
@@ -142,10 +128,11 @@ def downloadPOI(url_API, purpose, uniqueid_pattern):
                 urllib.request.urlretrieve(poi_price_image_url, "price.png") #save at price.png
 
                 #open price.png to extract number
-                price = pytesseract.image_to_string(PIL.Image.open('price.png').convert("RGB"), lang='eng', config='--psm 13 --eom 3 -c tessedit_char_whitelist=€0123456789')
+                #price = pytesseract.image_to_string(PIL.Image.open('price.png').convert("RGB"), lang='eng', config='--psm 13 --eom 3 -c tessedit_char_whitelist=€0123456789')
+                price = pytesseract.image_to_string(PIL.Image.open('price.png').convert("RGB"), lang='eng', config='--psm 13 --oem 3 -c tessedit_char_whitelist=€0123456789')
 #                print("PRICE:", price)
                 if price != "":
-                    poi_price = price.replace("€", "").replace(".", "").replace(" ", "").replace("O", "0")
+                    poi_price = price.replace("€", "").replace(".", "").replace(" ", "").replace("O", "0").replace("—", "")
                     poi_price = float(poi_price)
                 else:
                     poi_price = 0.0
@@ -236,3 +223,22 @@ def saveNDJSON(dictionary, poi_counter):
             fp.write(value_str)
             poi_counter += 1
     return poi_counter
+
+
+def ingestdatatoelasticsearch(dictionary, index_name):
+    from elasticsearch_functions import send_to_elasticsearch
+
+    index_name = "immoscoop-test"
+
+    if DEBUG:
+        print("[+] Ingesting results into elasticsearch - Index: " + index_name)
+
+    send_to_elasticsearch(index_name, dictionary, '_doc')
+
+def sendmessagetokafka(message, cityname):
+    from kafka_functions import kafkasendmessage
+
+    citynames = {"antwerp": "ANW"}
+    topic = "DATA_" + citynames[cityname] + "_ECO_IMMOSCOOPEBE_CRAWLER"
+    kafkasendmessage(topic, message)
+

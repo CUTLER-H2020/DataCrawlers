@@ -1,3 +1,0 @@
-tesseract
-pytesseract
-Pillow

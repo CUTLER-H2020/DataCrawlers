@@ -9,25 +9,9 @@ xpath_category - Dictionary with xpaths for every element scrapped from th url /
 
 def downloadPOI - Function
     Download data from maps.me and returns a python dictionary
-    Parameters:
-        element_xpath_dictionary - dictionary with poi information (see sources directory)
-        country_locality - string with country and city to be used in the url
-        Output Dictionary format:
-            E.g. poi['name_of_poi']: {
-                poi_name: "name of the poi",
-                poi_url: "poi's page (to scrape lat, and lon)",
-                poi_category: "see Categories at the beggining",
-                poi_subcategory: "poi's subcategory",
-                poi_latitude: "poi's latitude",
-                poi_longitude: "poi's longitude",
 
 def saveJSON - Function
     Saves every category dictionary in a JSON file named by "country_locality" and "category"
-    E.g. Lodging data for Thessaloniki City are saves as: "Thessaloniki - Greece_lodging.json" (see maps_me_results)
-    Parameters:
-        dictionary - python dictionary with category pois
-        cityname - Name of City - Country
-        category - string with category name e.g. "food"
 """
 import os
 import time
@@ -192,3 +176,22 @@ def saveNDJSON(dictionary, poi_counter):
             fp.write(value_str)
             poi_counter += 1
     return poi_counter
+
+def ingestdatatoelasticsearch(dictionary, index_name):
+    from elasticsearch_functions import send_to_elasticsearch
+
+    index_name = "spitogatos-test"
+
+    if DEBUG:
+        print("[+] Ingesting results into elasticsearch - Index: " + index_name)
+
+    send_to_elasticsearch(index_name, dictionary, '_doc')
+
+def sendmessagetokafka(message, cityname):
+    from kafka_functions import kafkasendmessage
+
+    citynames = {"thessaloniki": "THE"}
+    topic = "DATA_" + citynames[cityname] + "_ECO_SPITOGATOSGR_CRAWLER"
+
+    kafkasendmessage(topic, message)
+

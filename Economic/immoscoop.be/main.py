@@ -22,9 +22,18 @@ if __name__ == "__main__":
     dictionary = downloadPOI(
         "https://www.immoscoop.be/eng/immo.php?search_field=&main_city%5B%5D=2421&s_postcode%5B%5D=56&s_postcode%5B%5D=57&s_postcode%5B%5D=58&s_postcode%5B%5D=59&s_postcode%5B%5D=2420&s_postcode%5B%5D=1546&s_postcode%5B%5D=160&s_postcode%5B%5D=910&s_postcode%5B%5D=61&s_postcode%5B%5D=62&s_postcode%5B%5D=371&s_postcode%5B%5D=231&s_postcode%5B%5D=994&s_postcode%5B%5D=422&s_postcode%5B%5D=158&s_postcode%5B%5D=1521&s_postcode%5B%5D=703&category=&min_price=0&max_price=&bedroom=&baths=&order=city&proptype=Sale&page=",
         "Sale", "sale_")
-    poi_counter = saveNDJSON(dictionary, poi_counter)
+    #poi_counter = saveNDJSON(dictionary, poi_counter)
+    dictionary_for_all_elements = dictionary
 
-#    dictionary = downloadPOI(
-#        "https://www.immoscoop.be/eng/immo.php?search_field=&main_city%5B%5D=2421&s_postcode%5B%5D=56&s_postcode%5B%5D=57&s_postcode%5B%5D=58&s_postcode%5B%5D=59&s_postcode%5B%5D=2420&s_postcode%5B%5D=1546&s_postcode%5B%5D=160&s_postcode%5B%5D=910&s_postcode%5B%5D=61&s_postcode%5B%5D=62&s_postcode%5B%5D=371&s_postcode%5B%5D=231&s_postcode%5B%5D=994&s_postcode%5B%5D=422&s_postcode%5B%5D=158&s_postcode%5B%5D=1521&s_postcode%5B%5D=703&category=&min_price=0&max_price=&bedroom=&baths=&order=city&proptype=Rent&page=",
-#        "Rent", "rent_")
-#    poi_counter = saveNDJSON(dictionary, poi_counter)
+    dictionary = downloadPOI(
+        "https://www.immoscoop.be/eng/immo.php?search_field=&main_city%5B%5D=2421&s_postcode%5B%5D=56&s_postcode%5B%5D=57&s_postcode%5B%5D=58&s_postcode%5B%5D=59&s_postcode%5B%5D=2420&s_postcode%5B%5D=1546&s_postcode%5B%5D=160&s_postcode%5B%5D=910&s_postcode%5B%5D=61&s_postcode%5B%5D=62&s_postcode%5B%5D=371&s_postcode%5B%5D=231&s_postcode%5B%5D=994&s_postcode%5B%5D=422&s_postcode%5B%5D=158&s_postcode%5B%5D=1521&s_postcode%5B%5D=703&category=&min_price=0&max_price=&bedroom=&baths=&order=city&proptype=Rent&page=",
+        "Rent", "rent_")
+    #poi_counter = saveNDJSON(dictionary, poi_counter)
+    dictionary_for_all_elements.update(dictionary)
+#    print(dictionary_for_all_elements)
+
+    cityname = "antwerp"
+    ingestdatatoelasticsearch(dictionary_for_all_elements, "antwerp-immoscoop")
+    sendmessagetokafka("Data for Antwerp - immoscoop were ingested succesfully - Data cat be found in antwerp-immoscoop elasticsearch index - Date: " + str(datetime.date.today()), cityname)
+
+
