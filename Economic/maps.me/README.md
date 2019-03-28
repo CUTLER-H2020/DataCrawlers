@@ -26,7 +26,7 @@ cork-mapsme-dashboard
 thessaloniki-mapsme-dashboard
 ```
 
-### Install python3 - virtualenv
+- Install python3 - virtualenv
 ```
 $ sudo apt-get install python3
 $ sudo apt-get install python3-pip
