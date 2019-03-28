@@ -11,14 +11,14 @@ These instructions will get you a copy of the project up and running on your loc
 - Ubuntu Server LTS (16.04) (used in developement)
 - or a alternative debian based distro
 
--- Apache KAFKA - topics created: 
+- Apache KAFKA - topics created: 
 ```
 DATA_ANT_ECO_MAPSME_CRAWLER 
 DATA_CRK_ECO_MAPSME_CRAWLER
 DATA_ANW_ECO_MAPSME_CRAWLERDATA_THE_ECO_MAPSME_CRAWLER
 ```
 
--- elasticsearch - indexes created:
+- elasticsearch - indexes created:
 ```
 antalya-mapsme-dashboard
 antwerp-mapsme-dashboard
