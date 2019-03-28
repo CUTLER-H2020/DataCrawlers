@@ -1,6 +1,6 @@
-# Crawler for maps.me
+# Crawler for immoscoop.be
 
-DUTH's crawler to download data from maps.me
+DUTH's crawler to download data from immoscoop.be
 
 ## Getting Started
 
