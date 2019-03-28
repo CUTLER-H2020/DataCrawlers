@@ -1,6 +1,6 @@
-# Crawler for maps.me
+# Crawler for spitogatos.gr
 
-DUTH's crawler to download data from maps.me
+DUTH's crawler to download data from spitogatos.gr
 
 ## Getting Started
 
@@ -13,17 +13,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Apache KAFKA - topics created: 
 ```
-DATA_ANT_ECO_MAPSME_CRAWLER 
-DATA_CRK_ECO_MAPSME_CRAWLER
-DATA_ANW_ECO_MAPSME_CRAWLERDATA_THE_ECO_MAPSME_CRAWLER
+DATA_THE_ECO_SPITOGATOSGR_CRAWLER
 ```
 
 - elasticsearch - indexes created:
 ```
-antalya-mapsme-dashboard
-antwerp-mapsme-dashboard
-cork-mapsme-dashboard
-thessaloniki-mapsme-dashboard
+thessaloniki-spitogatos
 ```
 
 - Install python3 - virtualenv
