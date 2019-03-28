@@ -7,11 +7,20 @@ Python 3.5
 headers - Dictionary with headers to be used in requests.get function
 xpath_category - Dictionary with xpaths for every element scrapped from th url / every category use the same dictionary
 
-def downloadPOI - Function
+downloadPOI - Function
     Download data from maps.me and returns a python dictionary
 
-def saveJSON - Function
+saveJSON - Function
     Saves every category dictionary in a JSON file named by "country_locality" and "category"
+
+saveNDJSON - Function
+    Saves every category dictionary in a NDJSON file named by "cityname"
+
+ingestdatatoelasticsearch - Function
+    Ingests data into elasticsearch index
+
+sendmessagetokafka - Function
+    Sends a message to a KAFKA topic that new data are ingested into a kibana index
 """
 import datetime
 import os
@@ -183,8 +192,8 @@ def downloadPOI(url_API, purpose, uniqueid_pattern):
             pois[uniqueid_pattern + str(poi_ascending_counter)] = poi
             poi_ascending_counter += 1
 
-            break
-        break
+            #break
+        #break
 
         page_counter += 1
 
@@ -228,7 +237,7 @@ def saveNDJSON(dictionary, poi_counter):
 def ingestdatatoelasticsearch(dictionary, index_name):
     from elasticsearch_functions import send_to_elasticsearch
 
-    index_name = "immoscoop-test"
+    #index_name = "immoscoop-test"
 
     if DEBUG:
         print("[+] Ingesting results into elasticsearch - Index: " + index_name)
