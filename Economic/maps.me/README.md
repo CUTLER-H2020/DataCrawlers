@@ -44,10 +44,10 @@ $ source myenv/bin/activate
 2. Install requirements
 
 ```
-(myenv) $ pip3 install -r requirements/develop.txt
+(myenv) $ pip3 install -r requirements/requirements.txt
 ```
 
-3. Run crawler
+3. Run the crawler
 ```
 (myenv) $ python3 main.py
 ```
