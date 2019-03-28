@@ -25,7 +25,7 @@ if __name__ == "__main__":
     dictionary = downloadPOI("https://spitogatos.gr/search/results/residential/sale/r108/m108m109m110m/offset_", "Αγορά", "Κατοικία", "sale_residential_")
     #poi_counter = saveNDJSON(dictionary, poi_counter)
     dictionary_for_all_elements = dictionary
-    '''
+
     dictionary = downloadPOI("https://spitogatos.gr/search/results/commercial/sale/r108/m108m109m110m/offset_", "Αγορά", "Επαγγελματική στέγη", "sale_commercial_")
     #poi_counter = saveNDJSON(dictionary, poi_counter)
     dictionary_for_all_elements.update(dictionary)
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     dictionary = downloadPOI("https://spitogatos.gr/search/results/other/rent/r108/m108m109m110m/offset_", "Ενοικίαση", "Λοιπά ακίνητα", "rent_other_")
     #poi_counter = saveNDJSON(dictionary, poi_counter)
     dictionary_for_all_elements.update(dictionary)
-    '''
+    
 
     # save them in NDjson based on "cityname"
     # saveNDJSON(dictionary, cityname)
