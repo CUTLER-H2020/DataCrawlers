@@ -29,7 +29,12 @@ DD = (Seconds/3600) + (Minutes/60) + Degrees
 """
 '''check  https://www.itilog.com for transformig location'''
 """ Original files must (antalya_cutler_all_data_ (version 1).xlsx) be previously saved in folder temp"""
-""" """
+""" 
+Folder for temporal file
+l_temp_path = './temp/'
+Folder for data
+l_final_path = './data/'
+"""
 """ code: anta_env_cityofantalya2_monthly """
 
 
