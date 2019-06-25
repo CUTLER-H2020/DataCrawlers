@@ -6,7 +6,12 @@ This part of the repository gathers all the crawlers for environmental data deve
 
 There are folders created for some data sources, so the crawler and other related software, as well as instructions.
 The rest of the crawlers are files listed in this folder, mainly written in javascript or in python.
-Most of the names of the crawlers are descriptive: they contain the name of the city and some reference to the data set they are crawling.
+
+Description of the folders:
+
+* [IMEC Data Crawler](ANT_ENV_IMEC/)
+
+Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
 
 
 ## Python Crawlers
