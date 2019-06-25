@@ -9,9 +9,10 @@ The rest of the crawlers are files listed in this folder, mainly written in pyth
 
 Most of the names of the crawlers are descriptive: they contain the name of the city and some reference to the data set they are crawling.
 
-* [gdelt](gdelt/): news crawled from gdelt
-* [newsCrawler](newsCrawler/): 
-* [twitterCrawler](twitterCrawler/): In this folder there are two types of crawlers. There are python based scripts and there is a conf file for 
+* [eurostat](eurostat/): crawler from eurostat databases
+* [immoscoop.be](immoscoop.be/): crawler from immoscoop.be and indexing for elasticsearch, as well as instructions
+* [maps.me](maps.me/): crawler from maps.me and indexing for elasticsearch, as well as instructions
+* [spitogatos.gr](spitogatos.gr/): crawler from spitogatos.gr and indexing for elasticsearch, as well as instructions
 
 ## Python Crawlers
 
