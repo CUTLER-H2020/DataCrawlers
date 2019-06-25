@@ -1,7 +1,11 @@
 # Environmantal Data Crawlers for CUTLER
 
-This part of the repository gathers all the crawlers for environmental data developed for CUTLER.
+This part of the repository gathers all the crawlers for environmental data developed for CUTLER, as well as othere related software.
 
+## Structure of the folder
+
+There are folders created for some data sources, so the crawler and other related software, as well as instructions.
+The rest of the crawlers are files listed in this folder, mainly written in javascript or in python.
 Most of the names of the crawlers are descriptive: they contain the name of the city and some reference to the data set they are crawling.
 
 
