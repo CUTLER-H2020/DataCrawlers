@@ -82,7 +82,17 @@ python3 name_of_the_script.py
 ## R Crawlers
 
 ### Getting started with R
+#### Prerequsites
+You need to install [R](https://www.r-project.org/). 
+Instructions can be found at [R project webpage](https://cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed_003f). R can be downloaded from [any of these mirrors](https://cran.r-project.org/mirrors.html). Please, select first the mirror and then the correct distribution depending on you operating system.
+* Note for linux: R is part of many Linux distributions, you should check with your Linux package management system in addition to the links found in the link above.
+
 #### Installation
+Packages can be installed with the R shell. 
+```
+> install.packages("package_name")
+```
+Needed packages can be found in each R script
 ### Running as stand alone
 
 #### Prerequisites
@@ -91,5 +101,5 @@ Apart from those detailed in the [Installation](#installation-1) section, some s
 #### Run the script
 
 ```
-OEDC.R
+Rscript name_of_the_script.R
 ```
