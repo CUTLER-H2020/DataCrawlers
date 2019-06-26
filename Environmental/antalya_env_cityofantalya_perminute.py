@@ -2,6 +2,7 @@
 
 """
 Downloads environmental values from the day before to current day, with scheduled update (daily)
+@version 1.3 Changes in the webpage 
 
 """
 """
@@ -23,13 +24,18 @@ Air Temperature (° C), Air Pressure (mbar), Wind Speed ​​(m / s), Wind Dire
  Form dates: 
  <input type="hidden" name="start_TimeStamp" value="1167602400000"> 01012007
  <input type="hidden" name="end_TimeStamp" value="1542837600000"> 22112018
+
+  Wind Speed in m/s is transformed to knots  as m/s = 1.943844 knots
 """
 """ data public (Ministry of Environment and Urbanism)"""
 """
 	code : antalya_env_cityofantalya_perminute
-	code : antalya_env_cityofantalya_perminute_1
+	
 """
-""" Note: if Local is set to False, the browser runs in headless mode"""
+""" NOTE: if Local is set to False, the browser runs in headless mode"""
+""" NOTE: path_to_webdriver_c should hold the actual path to chrome webdriver """
+""" NOTE  if data are to be written in the same batch than the batch, remove headers when writting to csv file"""
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -39,6 +45,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
+import numpy as np
 import re
 import pandas as pd
 import datetime
@@ -53,16 +60,14 @@ __origin__ = "UbiComp - University of Oulu"
 
 origin_url = 'http://www.havaizleme.gov.tr/STN/STN_Report/StationDataDownload'
 code = 'antalya_env_cityofantalya_perminute'
-path_to_webdriver_c = 'C:\\Users\\martacor\\Development\\python\\cuttler\\libs\\chromedriver.exe'
-path_to_webdriver_f = 'C:\\Users\\martacor\\Development\\python\\cuttler\\libs\\geckodriver.exe'
-#path_to_webdriver_f = 'C:\\Users\\Owner\\Documents\\development\\cutler\\code\\libs\\geckodriver.exe'
-#path_to_webdriver_c = 'C:\\Users\\Owner\\Documents\\development\\cutler\\code\\libs\\chromedriver.exe'
+
+path_to_webdriver_c = path_to_chrome_webdriver
 params=['HavaSicakligi','HavaBasinc','RuzgarHizi', 'RuzgarYon','PM10','SO2'] 
-l_temp_path = './temp/'
+
 l_final_path = './data/'
-l_temp_file = 'params.csv'
-temp_path = ''
-final_path = '"/var/spoolDirectory/cutler/data/'#+code
+
+
+
 WINDOW_SIZE = "1920,1080"
 
 
@@ -100,7 +105,9 @@ class antalya_env_cityofantalya_perminute (object):
 			self.driver.maximize_window()
 			#self.driver.implicitly_wait(30)
 			self.driver.get(self.url)
-
+			#self.driver = webdriver.Firefox(executable_path=path_to_webdriver)#firefox_profile=fp,firefox_options=options)
+			#self.driver.implicitly_wait(15)
+			#self.driver.get(self.url)
 		else:
 
 			chrome_options = Options()  
@@ -110,17 +117,17 @@ class antalya_env_cityofantalya_perminute (object):
 			
 			self.driver.get(self.url)
 			self.driver.implicitly_wait(60)
+			#self.driver.maximize_window()
+			#self.driver.implicitly_wait(30)
+			self.driver.get(self.url)
 
-			self.driver.get(self.url)#self.verificationErrors = []
-			#self.accept_next_alert = True
-			#
 		return self.driver
 		#except:
 		#	print(sys.exc_info()[0],"occured.")
 		#	return False
 
 	def select_city(self):
-		el1 = self.driver.find_element_by_xpath('//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[1]/div[3]/div/div/span/span/span[2]')
+		el1 = self.driver.find_element_by_xpath('//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[1]/div[2]/div/div/span/span/span[2]')
 		el1.click()
 		time.sleep(4)
 		WebDriverWait(self.driver, 20).until(wait_for_display((By.XPATH, '//*[@id="CityId-list"]')))
@@ -145,8 +152,14 @@ class antalya_env_cityofantalya_perminute (object):
 		print ('id11 '+el11.get_attribute("id"))
 		print ('class11 '+el11.get_attribute("class"))
 		
+
+		#SELECT STATIONS
+		print ("stations dropdown open")
 		print ("el2")		
 		el2 = self.driver.find_element_by_xpath("""//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[1]/div[4]/div/div/div/div""")#//div[@class='k-multiselect-wrap k-floatwrap']
+		print ('id2 '+el2.get_attribute("id"))
+		print ('class2 '+el2.get_attribute("class"))
+
 
 		actions = ActionChains(self.driver)
 		actions.move_to_element(el2)
@@ -158,24 +171,33 @@ class antalya_env_cityofantalya_perminute (object):
 		print ('id22 '+el22.get_attribute("id"))
 		print ('class22 '+el22.get_attribute("class"))
 
-		#SELECT STATIONS
+		
 		#click stations dropdown
 		print ("stations dropdown")
-
+		#first click
 		wait = WebDriverWait(self.driver, 10)
-
+		#Changed
 		try:
-			element = wait.until(EC.text_to_be_present_in_element((By.XPATH,"//div[@id='StationId-list']//ul[@id='StationId_listbox']/li[1]"),'Antalya'))
+			element = wait.until(EC.text_to_be_present_in_element((By.XPATH,"//div[@id='StationIds-list']//ul[@id='StationIds_listbox']/li[text()='0107000 Antalya- (Antalya-Muratpaşa)']"),'Antalya'))
 		except Exception as e:
-				print(e)
-				self.select_city()
-				wait = WebDriverWait(self.driver, 20)
-				element = wait.until(EC.text_to_be_present_in_element((By.XPATH,"//div[@id='StationId-list']//ul[@id='StationId_listbox']/li[1]"),'Antalya'))
-
-
+			print(e)
+			self.select_city()
+			wait = WebDriverWait(self.driver, 20)
+			element = wait.until(EC.text_to_be_present_in_element((By.XPATH,"//div[@id='StationIds-list']//ul[@id='StationIds_listbox']/li[text()='0107000 Antalya- (Antalya-Muratpaşa)'"),'Antalya'))
+		
+		"""
+		select = Select(self.driver.find_element_by_id('StationIds'))
+		option = select.select_by_visible_text('0107000 Antalya- (Antalya-Muratpaşa)')
+		actions = ActionChains(self.driver)
+		actions.move_to_element(option)
+		#actions.pause(1)
+		actions.click(option)
+		actions.perform()
+		self.names.append(option.text)
+		"""
 		#to click all the stations use this code
 		"""
-		stitems = self.driver.find_elements_by_xpath("//div[@id='StationId-list']//ul[@id='StationId_listbox']/li")
+		stitems = self.driver.find_elements_by_xpath("//div[@id='StationIds-list']//ul[@id='StationIds_listbox']/li")
 		
 		for item in stitems:
 			try:
@@ -191,100 +213,34 @@ class antalya_env_cityofantalya_perminute (object):
 				print(e)
 		"""
 		#at this moment, just one station is giving values, so just click that one
-		sitem = self.driver.find_element_by_xpath("//div[@id='StationId-list']//ul[@id='StationId_listbox']/li[1]")
+		
+		#XPATH: to div where the list of stations; THIS has changed 
+			
+		sitem = self.driver.find_element_by_xpath("//div[@id='StationIds-list']//ul[@id='StationIds_listbox']/li[text()='0107000 Antalya- (Antalya-Muratpaşa)']")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(sitem)
-		#actions.pause(1)
+		actions.pause(1)
 		actions.click(sitem)
 		actions.perform()
 		self.names.append(sitem.text)
+		
 		#print ('item1 '+liitems_1.text+ " : "+liitems_1.get_attribute("class"))
 		#liitems_2 = self.driver.find_element_by_xpath("//div[@id='StationId-list']//ul[@id='StationId_listbox']/li[2]")
 		#print ('item1 '+liitems_2.text+ " : "+liitems_2.get_attribute("class"))
 		el33 = self.driver.switch_to.active_element#self.driver.find_element_by_xpath('//*[@id="CityId-list"]/span/input')
 		print ('id33 '+el33.get_attribute("id"))
 		print ('class33 '+el33.get_attribute("class"))
-
-		#in case the dropdown does not hide
-		#self.driver.execute_script("document.getElementById('StationId-list').style.display = 'none';")
+		time.sleep(5)
+		#in case the dropdown does not hide. PROBLEM: focus goes to body
+		#self.driver.execute_script("document.getElementById('StationIds-list').style.display = 'none';")
 		#time.sleep(5)
-		#Click on parameters dropdown
-		print ("parameters dropdown")		
-		el4 = self.driver.find_element_by_xpath("""//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[2]/div[1]/div/div/div""")#//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[1]/div[4]/div/div/div/div')
-		actions = ActionChains(self.driver)
-		actions.move_to_element(el4)
-		actions.pause(2)
-		actions.click(el4)
-		actions.perform()
 
-		el44 = self.driver.switch_to.active_element#self.driver.find_element_by_xpath('//*[@id="CityId-list"]/span/input')
-		print ('id44 '+el44.get_attribute("id"))
-		print ('class44 '+el44.get_attribute("class"))
 
-		#
-		#To check element by element (not working everytime)
-		"""
-		paritems = self.driver.find_elements_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li")
-		i=0
-		for item in paritems:
-			try:
-				#print ('item '+item.text)
-				if item.text in params:
-					print ('item '+item.text)#+ " : "+item.get_attribute("class"))
-					print ('param ' +str(i))
-					actions = ActionChains(self.driver)
-					actions.move_to_element(item)
-					actions.pause(3)
-					actions.click(item)
-					actions.perform()
-					i+=1
-			except Exception as e:
-				print(e)
-		"""
-		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='PM10']""")#li[1]")
-		actions = ActionChains(self.driver)
-		actions.move_to_element(paritem)
-		actions.pause(3)
-		actions.click(paritem)
-		actions.perform()
-
-		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='SO2']""")#li[2]")
-		actions = ActionChains(self.driver)
-		actions.move_to_element(paritem)
-		actions.pause(3)
-		actions.click(paritem)
-		actions.perform()
-
-		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Hava Basinci']""")#li[19]")
-		actions = ActionChains(self.driver)
-		actions.move_to_element(paritem)
-		actions.pause(3)
-		actions.click(paritem)
-		actions.perform()
-
-		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Hava Sicakligi']""")#li[20]")
-		actions = ActionChains(self.driver)
-		actions.move_to_element(paritem)
-		actions.pause(3)
-		actions.click(paritem)
-		actions.perform()
-
-		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Ruzgar Hizi']""")#li[39]")
-		actions = ActionChains(self.driver)
-		actions.move_to_element(paritem)
-		actions.pause(3)
-		actions.click(paritem)
-		actions.perform()
-
-		paritem = self.driver.find_element_by_xpath("""//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='Ruzgar Yönü']""")#li[40]")
-		actions = ActionChains(self.driver)
-		actions.move_to_element(paritem)
-		actions.pause(3)
-		actions.click(paritem)
-		actions.perform()
-
+		#SELECT HOUR
+		#XPATH //*[@id="StationDataDownloadForm"]/fieldset[1]/div[2]/div[1]/div/div/span/span
+		#OLD XPATH: //*[@id='page-wrapper']/div[2]/form/fieldset[1]/div[2]/div[4]/div/div/span[1]/span
 		print ("hours dropdown")		
-		el5 = self.driver.find_element_by_xpath("""//*[@id='page-wrapper']/div[2]/form/fieldset[1]/div[2]/div[4]/div/div/span[1]/span""")#//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[2]/div[4]/div/div/span/span/span[2]""")
+		el5 = self.driver.find_element_by_xpath("""//*[@id='page-wrapper']/div[2]/form/fieldset[1]/div[2]/div[1]/div/div/span/span""")#//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[2]/div[4]/div/div/span/span/span[2]""")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(el5)
 		actions.pause(3)
@@ -321,7 +277,96 @@ class antalya_env_cityofantalya_perminute (object):
 			#	print(e)
 
 
-		#TEST START DATE AND END DATE
+
+		#SELECT PARAMETERS
+		#Click on parameters dropdown
+		print ("parameters dropdown open")
+		#XPATH: to div where the list of parameters; THIS has changed 		
+		#OLDel4 = self.driver.find_element_by_xpath("""//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[2]/div[1]/div/div/div""")#//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[1]/div[4]/div/div/div/div')
+		
+		param_dd = self.driver.find_element_by_xpath("""//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[2]/div[4]/div/div/div/div""")#//*[@id="StationDataDownloadForm"]/fieldset[1]/div[2]/div[4]/div/div/div/div""")
+
+		print ('idparam_dd'+param_dd.get_attribute("id"))
+		print ('classparam_dd '+param_dd.get_attribute("class"))
+
+		actions = ActionChains(self.driver)
+		actions.move_to_element(param_dd)
+		actions.pause(3)
+		actions.click(param_dd)
+		actions.perform()
+
+		el44 = self.driver.switch_to.active_element#self.driver.find_element_by_xpath('//*[@id="CityId-list"]/span/input')
+		print ('id44 '+el44.get_attribute("id"))
+		print ('class44 '+el44.get_attribute("class"))
+
+		#
+		#To check element by element (not working everytime)
+		"""
+		paritems = self.driver.find_elements_by_xpath("//div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li")
+		i=0
+		for item in paritems:
+			try:
+				#print ('item '+item.text)
+				if item.text in params:
+					print ('item '+item.text)#+ " : "+item.get_attribute("class"))
+					print ('param ' +str(i))
+					actions = ActionChains(self.driver)
+					actions.move_to_element(item)
+					actions.pause(3)
+					actions.click(item)
+					actions.perform()
+					i+=1
+			except Exception as e:
+				print(e)
+		"""
+		#XPATH: to div where the list of parameters; THIS has changed 	
+		#OLD: //div[@id='SelectedParameters-list']//ul[@id='SelectedParameters_listbox']/li[text()='PM10']
+		paritem = self.driver.find_element_by_xpath("""//div[@id='Parameters-list']//ul[@id='Parameters_listbox']/li[text()='PM10']""")#li[1]")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(paritem)
+		actions.pause(3)
+		actions.click(paritem)
+		actions.perform()
+
+		paritem = self.driver.find_element_by_xpath("""//div[@id='Parameters-list']//ul[@id='Parameters_listbox']/li[text()='SO2']""")#li[2]")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(paritem)
+		actions.pause(3)
+		actions.click(paritem)
+		actions.perform()
+
+		paritem = self.driver.find_element_by_xpath("""//div[@id='Parameters-list']//ul[@id='Parameters_listbox']/li[text()='Hava Basinci']""")#li[19]")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(paritem)
+		actions.pause(3)
+		actions.click(paritem)
+		actions.perform()
+
+		paritem = self.driver.find_element_by_xpath("""//div[@id='Parameters-list']//ul[@id='Parameters_listbox']/li[text()='Hava Sicakligi']""")#li[20]")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(paritem)
+		actions.pause(3)
+		actions.click(paritem)
+		actions.perform()
+
+		paritem = self.driver.find_element_by_xpath("""//div[@id='Parameters-list']//ul[@id='Parameters_listbox']/li[text()='Ruzgar Hizi']""")#li[39]")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(paritem)
+		actions.pause(3)
+		actions.click(paritem)
+		actions.perform()
+
+		paritem = self.driver.find_element_by_xpath("""//div[@id='Parameters-list']//ul[@id='Parameters_listbox']/li[text()='Ruzgar Yönü']""")#li[40]")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(paritem)
+		actions.pause(3)
+		actions.click(paritem)
+		actions.perform()
+
+
+
+
+		#SEST START DATE AND END DATE
 		#print(datetime.date.today().timestamp())
 		"""
 		now = datetime.datetime.now().replace(hour=0, minute=0,second=0)
@@ -355,14 +400,60 @@ class antalya_env_cityofantalya_perminute (object):
 		#today.strftime('%m%d%y')
 		#todayts = int(today.timestamp()) * 1000
 
+		#Input hidden for dates found by name <- THIS CHANGES
+		#OLD NAME :start_TimeStamp 
 		"""first date <input type="hidden" name="start_TimeStamp" value="1167602400000"> """
-		self.driver.execute_script("document.getElementsByName('start_TimeStamp')[0].value='"+str(beforeyesterdayts)+"'")
+		self.driver.execute_script("document.getElementsByName('StartDateTime_TimeStamp')[0].value='"+str(beforeyesterdayts)+"'")
 		"""last date  <input type="hidden" name="end_TimeStamp" value="1543356000000">"""
-		self.driver.execute_script("document.getElementsByName('end_TimeStamp')[0].value='"+str(yesterdayts)+"'")
+		self.driver.execute_script("document.getElementsByName('EndDateTime_TimeStamp')[0].value='"+str(yesterdayts)+"'")
 		"""value: datetime.date.today().timestamp() """
 		#print(datetime.date.today().timestamp())
 
-		""" Button"""
+
+		#SELECT HOUR <-- JUST REPEAT FOR BEING ABLE TO CLICK THE BUTTON (the properties dropdown hides it and clicking to close change focus to body)
+		#XPATH //*[@id="StationDataDownloadForm"]/fieldset[1]/div[2]/div[1]/div/div/span/span
+		#OLD XPATH: //*[@id='page-wrapper']/div[2]/form/fieldset[1]/div[2]/div[4]/div/div/span[1]/span
+		print ("hours dropdown")		
+		el5 = self.driver.find_element_by_xpath("""//*[@id='page-wrapper']/div[2]/form/fieldset[1]/div[2]/div[1]/div/div/span/span""")#//*[@id="page-wrapper"]/div[2]/form/fieldset[1]/div[2]/div[4]/div/div/span/span/span[2]""")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(el5)
+		actions.pause(3)
+		actions.click(el5)
+		actions.perform()
+
+		el55 = self.driver.switch_to.active_element#self.driver.find_element_by_xpath('//*[@id="CityId-list"]/span/input')
+		print ('id55 '+el55.get_attribute("id"))
+		print ('class55 '+el55.get_attribute("class"))
+
+		
+		#WebDriverWait(self.driver, 30).until(wait_for_display((By.XPATH, '//body/div[11]')))
+		WebDriverWait(self.driver, 30).until(wait_for_display((By.XPATH, """//*[@id="TimeUnit-list"]""")))
+
+		houritem = self.driver.find_element_by_xpath("""//ul[@id='TimeUnit_listbox']/li[text()='1 Saat']""")
+
+		#for item in paritems:
+
+			#try:
+				#print ('item '+item.text)
+		if houritem.text is '1 Saat':
+		#	print ('item '+item.text+ " : "+item.get_attribute("class"))
+			print ('hour ')
+		else:
+			houritem = self.driver.find_element_by_xpath("""//div[@id='TimeUnit-list']//ul[@id='TimeUnit_listbox']/li[1]""")
+
+		actions = ActionChains(self.driver)
+		actions.move_to_element(houritem)
+		actions.pause(2)
+		actions.click(houritem)
+		actions.perform()
+			#		break
+			#except Exception as e:
+			#	print(e)
+
+
+
+
+		""" Button CLICK"""
 		print ("button")
 		button = self.driver.find_element_by_xpath("""//button[text()='Sorgula']""")
 		#button.click()
@@ -406,18 +497,36 @@ class antalya_env_cityofantalya_perminute (object):
 		
 		print ("showall")
 		#Show all drop down
-		showalldrop = self.driver.find_element_by_xpath("""//*[@id="grid"]/div[4]/span[1]/span/span/span[2]/span""")
+		## OPEN DROPDOWN
+		#XPath //*[@id="grid"]/div[5]/span[1]/span/span
+		# (OLD XPATH //*[@id="grid"]/div[4]/span[1]/span/span/span[2]/span
+		showalldrop = self.driver.find_element_by_xpath("""//*[@id="grid"]/div[5]/span[1]/span/span""")
+		
 		actions = ActionChains(self.driver)
 		actions.move_to_element(showalldrop).click(showalldrop)
 		actions.perform()
 
-		#To show all option click on :		/html/body/div[11]/div/div[2]/ul/li[1]
-		showall = self.driver.find_element_by_xpath("""//body/div[11]/div/div[2]/ul/li[1]""")
+		#To show all option click on :	 
+		#OLD XPATH	/html/body/div[11]/div/div[2]/ul/li[1]
+		#XPATH: //body/div[11]/div/div[2]/ul/li[4]
+		showall = self.driver.find_element_by_xpath("""//body/div[11]/div/div[2]/ul/li[4]""")
 		actions = ActionChains(self.driver)
 		actions.move_to_element(showall)
 		actions.pause(3)
 		actions.click(showall)
 		actions.perform()
+
+		#Now CLICK refresh
+		#XPATH //*[@id="grid"]/div[5]/a[5]
+		
+		print ("refresh")
+		refresh = self.driver.find_element_by_xpath("""//*[@id="grid"]/div[5]/a[5]""")
+		actions = ActionChains(self.driver)
+		actions.move_to_element(refresh)
+		actions.pause(3)
+		actions.click(refresh)
+		actions.perform()
+
 
 		time.sleep(5)
 
@@ -426,33 +535,45 @@ class antalya_env_cityofantalya_perminute (object):
 
 		tables = soup_level2.find_all('table')
 
-		headers_table = tables[0]
-		values_table = tables[1]
+		headers_table = tables[5]#0
+		times_table = tables[6]
+		values_table = tables[7]#1
 
 		df_headers = pd.read_html(str(headers_table),header=[0,1])
 		#print (df_headers[0].columns.tolist)
 		hnames =df_headers[0].columns.get_level_values(level=1)
 
 		df_values = pd.read_html(str(values_table),header=None,decimal=',',thousands='.')
-		#print (df_values[0].columns.tolist)
+		df_times = pd.read_html(str(times_table),header=None)
+		print (df_values[0].columns.tolist)
+		print (df_times[0].columns.tolist)
 		values = df_values[0]
 		#Change columns names
-		values.columns = ["DateTime", hnames[0], hnames[1],hnames[2],hnames[3],hnames[4],hnames[5]]
+		#values.columns = ["DateTime", hnames[0], hnames[1],hnames[2],hnames[3],hnames[4],hnames[5]]
+		values.columns = [hnames[0], hnames[1],hnames[2],hnames[3],hnames[4],hnames[5]]
+		values["DateTime"] = df_times[0]
+		values["DateTime"]= values["DateTime"].astype(str)
 		#Clean columns names
 		values.columns = values.columns.str.replace(r"\(.*\)","")#remove all braces and data inside
+		
 		#translate column names
 		
-		values.rename(columns={'Hava Sicakligi':'air_temperature','Hava Basinci':'air_preassure','Ruzgar Hizi':'wind_speed', 'Ruzgar Yönü':'wind_from_direction'},inplace=True)
+		#OLDvalues.rename(columns={'Hava Sicakligi':'air_temperature','Hava Basinci':'air_preassure','Ruzgar Hizi':'wind_speed_ms', 'Ruzgar Yönü':'wind_from_direction'},inplace=True)
+		values.rename(columns={'PM10 ':'PM10','SO2 ':'SO2','HavaSicakligi ':'air_temperature','HavaBasinc ':'air_preassure','RuzgarHizi ':'wind_speed_ms', 'RuzgarYon ':'wind_from_direction'},inplace=True)
 
-		values['DateTime'] = pd.to_datetime(values['DateTime'], format='%d.%m.%Y %H:%M').dt.strftime('%Y-%m-%dT%H:%M+03')
-		values['Station'] = self.names [0]
+		#reformat date
+		values['DateTime'] = pd.to_datetime(values['DateTime'], format='%d.%m.%Y %H:%M:%S').dt.strftime('%Y-%m-%dT%H:%M+03')
+		
+		##add necessary columns
+		values['station_id'] = self.names [0]
 		values['Latitude'] = 36.887500
 		values['Longitude'] = 30.726667
 		try:
-			values['wind_speed'] = 1.943844 * values['wind_speed_ms']
+			#values['wind_speed'] = 1.943844 * values['wind_speed_ms'].astype(float)
+			values['wind_speed'] = 1.943844 *pd.to_numeric(values['wind_speed_ms'], errors='coerce')
 		except:
 			print ('Cannot transform to knots')
-		
+
 		print(values.dtypes)
 
 		df_final = pd.DataFrame()
@@ -466,18 +587,20 @@ class antalya_env_cityofantalya_perminute (object):
 		toutdir = touterdir + code
 		if not os.path.exists(toutdir):
 			os.mkdir(toutdir)
-		ttoutdir = toutdir +'/'+ code+'_1'
-		if not os.path.exists(ttoutdir):
-			os.mkdir(ttoutdir)
+		#no subindex folder
+		#ttoutdir = toutdir +'/'+ code+'_1'
+		#if not os.path.exists(ttoutdir):
+		#	os.mkdir(ttoutdir)
 		csvfile =  str(uuid.uuid4()) + ".csv"
-		tfilename = os.path.join(ttoutdir, csvfile)
+		
+		tfilename = os.path.join(toutdir, csvfile) #change to ttoutdir if subindex folder
 
 		#copy to
 		#fpath = l_final_path+code+'/'
 		#filname = fpath + csvfile
 
 		#create the file with just new values
-		df_final.to_csv(tfilename, mode='w', encoding='utf-8-sig', index=False)
+		df_final.to_csv(tfilename, mode='w', encoding='utf-8-sig', index=False)#header=False
 
 if __name__ == '__main__':
 	a = antalya_env_cityofantalya_perminute(origin_url)
