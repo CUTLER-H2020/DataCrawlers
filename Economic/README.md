@@ -46,11 +46,11 @@ You need to create a virtual environment, activate it and install the correspond
     source myenv/bin/activate
     ```
     After you activate the environment, your command line will reflect the change
-  * Install requirements (corresponding requirements.txt can be found under requirements folder)
+  * Install requirements 
     ```
     (myenv) $ pip3 install -r requirements/requirements.txt
     ```
-  
+     Corresponding requirements.txt can be found under corresponding  requirements folder.
 * For windows
   * Create and activate the virtual environment *myenv* 
     ```
@@ -59,11 +59,11 @@ You need to create a virtual environment, activate it and install the correspond
     .\myenv\Scripts\activate
     ```
     After you activate the environment, your command prompt will be modified to reflect the change
-  * Install requirements (corresponding requirements.txt can be found under requirements folder)
+  * Install requirements 
     ```
     (myenv) C:\Path\To\my-project> pip3 install -r requirements/requirements.txt
     ```
-
+     Corresponding requirements.txt can be found under corresponding  requirements folder.
 
 ### Running as stand alone
 
