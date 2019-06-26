@@ -9,9 +9,9 @@ There is a folder created for each data, so the crawler and other related softwa
 * [newsCrawler](newsCrawler/): 
 * [twitterCrawler](twitterCrawler/): In this folder there are two types of crawlers. There are python based scripts and there is a conf file for 
 
-
-### Getting started with python
+## Python Crawlers
 General instructions for python crawlers. Further instructions can be found under each data crawler folder
+### Getting started with python
 #### Prerequisites
 You need to install python3, pip (python package manager) and a virtualenv (a tool to create virtual environments for python)
 
