@@ -7,7 +7,7 @@ Crawler to get data from several sensors in Antwerp from IMEC API.
 #### Prerequisites
 You need to have Java installed. JavaSE Development Kit for different OS can be downloaded from [here](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 #### Installation
-Needed libraries can be found at[dist>lib](dist/lib/)
+Needed libraries can be found at [dist>lib](dist/lib/)
 ### Running as stand alone
 #### Prerequisites
 You need to modify the  following parameters in [rpt.properties](rpt.properties) file:
