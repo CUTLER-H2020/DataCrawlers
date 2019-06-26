@@ -67,7 +67,7 @@ You need to create a virtual environment, activate it and install the correspond
 ### Running as stand alone
 
 #### Prerequisites
-Apart from those detailed in the section [Getting started with python](###Getting started with python) section, some scripts may need further prerequisites (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found **in each script**. 
+Apart from those detailed in the [Installation](#installation) section, some scripts may need further prerequisites (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found **in each script**. 
 
 #### Run the script
 All the python scrips run the same way
@@ -85,7 +85,7 @@ py name_of_the_script.py
 ### Running as stand alone
 
 #### Prerequisites
-Apart from those detailed in the [Getting started with R](###Getting started with R) section, some scripts may need further prerequisites (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found in each script. 
+Apart from those detailed in the [Installation](#installation-1) section, some scripts may need further prerequisites (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found in each script. 
 
 #### Run the script
 
