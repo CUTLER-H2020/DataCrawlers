@@ -13,12 +13,12 @@ spoolAgent.sources.splSrc.type = spooldir
 spoolAgent.sources.splSrc.channels = splChannel
 spoolAgent.channels.splChannel.capacity = 1000000
 spoolAgent.channels.splChannel.transactionCapacity=10000
-spoolAgent.sources.splSrc.spoolDir = "PATH_TO_SPOOL_DIRECTORY"
+spoolAgent.sources.splSrc.spoolDir = "/PATH/TO/SPOOL/DIRECTORY"
 # Add spooldirectory i.e. where crawlers fetches the data
 spoolAgent.sinks.sinkToHdfs.type = hdfs
 spoolAgent.sinks.sinkToHdfs.hdfs.fileType = DataStream
 
-spoolAgent.sinks.sinkToHdfs.hdfs.path = "PATH_TO_HDFS_FOLDER"
+spoolAgent.sinks.sinkToHdfs.hdfs.path = "hdfs://ADDRESS:8020/PATH/TO/HDFS/FOLDER"
 spoolAgent.sinks.sinkToHdfs.hdfs.filePrefix = "FILE_NAME"
 spoolAgent.sinks.sinkToHdfs.hdfs.batchSize = 100
 spoolAgent.sinks.sinkToHdfs.hdfswriteFormat = Text
@@ -29,5 +29,5 @@ spoolAgent.sinks.sinkToHdfs.hdfs.rollCount = 0
 # Use a channel which buffers events in memory
 spoolAgent.channels.splChannel.type = file
 #These directories are usually in flume-ng folder
-spoolAgent.channels.splChannel.checkpointDir = "PATH_TO_CHECKPOINT"
-spoolAgent.channels.splChannel.dataDirs = "PATH_TO_DATA_DIRECTORY"
+spoolAgent.channels.splChannel.checkpointDir = "/PATH/TO/CHECKPOINT"
+spoolAgent.channels.splChannel.dataDirs = "/PATH/TO/DATA/DIRECTORY"
