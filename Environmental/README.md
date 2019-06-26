@@ -16,6 +16,7 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 
 
 ## Python Crawlers
+General instructions for python crawlers. Further instructions can be found under each data crawler folder
 ### Getting started with python
 #### Prerequisites
 You need to install python3, pip (python package manager) and a virtualenv (a tool to create virtual environments for python)
