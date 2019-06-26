@@ -1,3 +1,7 @@
+#__author__ = "Hassan Mehmood"
+#__email__ = "hassan.mehmood@oulu.fi"
+#__origin__ = "UbiComp - University of Oulu"
+
 #Initialize agent source,channel,sinks
 spoolAgent.sources =  splSr
 spoolAgent.channels =  splChannel
