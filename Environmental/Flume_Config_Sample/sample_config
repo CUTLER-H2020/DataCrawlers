@@ -1,0 +1,33 @@
+#Initialize agent source,channel,sinks
+spoolAgent.sources =  splSr
+spoolAgent.channels =  splChannel
+spoolAgent.sinks =  sinkToHdfs
+
+
+# Bind the source and sink to the channel
+spoolAgent.sources.splSrc.channels = splChannel
+spoolAgent.sinks.sinkToHdfs.channel = splChannel
+
+#Define channel and its capacity and source type
+spoolAgent.sources.splSrc.type = spooldir
+spoolAgent.sources.splSrc.channels = splChannel
+spoolAgent.channels.splChannel.capacity = 1000000
+spoolAgent.channels.splChannel.transactionCapacity=10000
+spoolAgent.sources.splSrc.spoolDir = "PATH_TO_SPOOL_DIRECTORY"
+# Add spooldirectory i.e. where crawlers fetches the data
+spoolAgent.sinks.sinkToHdfs.type = hdfs
+spoolAgent.sinks.sinkToHdfs.hdfs.fileType = DataStream
+
+spoolAgent.sinks.sinkToHdfs.hdfs.path = "PATH_TO_HDFS_FOLDER"
+spoolAgent.sinks.sinkToHdfs.hdfs.filePrefix = "FILE_NAME"
+spoolAgent.sinks.sinkToHdfs.hdfs.batchSize = 100
+spoolAgent.sinks.sinkToHdfs.hdfswriteFormat = Text
+spoolAgent.sinks.sinkToHdfs.hdfs.rollSize = 1048576
+spoolAgent.sinks.sinkToHdfs.hdfs.rollInterval = 0
+spoolAgent.sinks.sinkToHdfs.hdfs.rollCount = 0
+
+# Use a channel which buffers events in memory
+spoolAgent.channels.splChannel.type = file
+#These directories are usually in flume-ng folder
+spoolAgent.channels.splChannel.checkpointDir = "PATH_TO_CHECKPOINT"
+spoolAgent.channels.splChannel.dataDirs = "PATH_TO_DATA_DIRECTORY"
