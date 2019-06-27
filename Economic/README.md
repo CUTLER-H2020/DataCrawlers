@@ -81,6 +81,9 @@ python3 name_of_the_script.py
 
 We use Apache Flume to pass the data from local folder to HDFS of Hadoop cluster. More information at [HadoopDeployment](../HadoopDeployment/)
 
+### Schedulling
+
+Some scripts crawl data from sites that are updated periodically. Those scripts require a cron scheduler based on athe necessary acquisition frequency.
 
 ## R Crawlers
 
