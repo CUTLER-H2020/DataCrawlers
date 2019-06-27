@@ -5,9 +5,10 @@ This part of the repository gathers all the crawlers for social data developed f
 ## Structure of the folder
 There is a folder created for each data, so the crawler and other related software, as well as instructions
 
-* [gdelt](gdelt/): news crawled from gdelt
-* [newsCrawler](newsCrawler/): 
-* [twitterCrawler](twitterCrawler/): In this folder there are two types of crawlers. There are python based scripts and there is a conf file for 
+* [facebookCrawler](facebookCrawler/): facebook crawler, deprecated
+* [gdelt](gdelt/): python based news crawled from gdelt, more information in the folder
+* [newsCrawler](newsCrawler/): python based crawler. 
+* [twitterCrawler](twitterCrawler/): In this folder there are two types of crawlers: python based scripts and there is a sample config file for Flume
 
 ## Python Crawlers
 General instructions for python crawlers. Further instructions can be found under each data crawler folder
