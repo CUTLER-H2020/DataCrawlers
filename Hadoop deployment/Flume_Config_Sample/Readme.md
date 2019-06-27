@@ -19,6 +19,6 @@ Steps:
 5.	Add additional details commented in the sample config
 6.	Save the file and run it using bewlo mentioned shell script
 7.	To flume agent as Daemon service add nohup before the following shell scripts (nohup shell_script)
-```
-bin/flume-ng agent --conf conf --conf-file conf/flume-conf.conf --classpath apache-flume-1.9.0-bin/lib/ --name agent -Dflume.root.logger=INFO,console
-```
+  ```
+  bin/flume-ng agent --conf conf --conf-file conf/flume-conf.conf --classpath apache-flume-1.9.0-bin/lib/ --name agent -Dflume.root.logger=INFO,console
+  ```
