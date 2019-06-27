@@ -37,7 +37,7 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 | [CORK_ENV_SEAI_DAILY_1_2.py](CORK_ENV_SEAI_DAILY_1_2.py)| python|URL|-|-|-|
 | [CORK_ENV_SEAI_DAILY_1_3.py](CORK_ENV_SEAI_DAILY_1_3.py)| python|URL|-|-|-|
 | [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)|python|SHP FILE| | |shapefile to GeoJSON|	|
-| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)| python|EXCEL|URL-JSON|-|-|-|
+| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)| python|EXCEL|-|-|-|-|
 | [ant_env_cityofant_gwl_(draxis).js](ant_env_cityofant_gwl_(draxis).js)| javascript|-|-|-|-|
 | [ant_env_cityofant_histprec.py](ant_env_cityofant_histprec.py)| python| EXCEL|-|-|-|
 | [anta_env_airquality_envmin_hourly_(DRAXIS).js](anta_env_airquality_envmin_hourly_(DRAXIS).js)| javascript|-|-|-|-|
