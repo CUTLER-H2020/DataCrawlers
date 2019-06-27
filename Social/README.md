@@ -70,6 +70,10 @@ All the python scrips run the same way
 python3 name_of_the_script.py
 ```
 
+### Deployment in Hadoop
+
+We directly inject data 
+
 ### Deployment in ElasticSearch
 
 Corresponding information can be found under each data folder
