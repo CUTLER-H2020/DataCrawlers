@@ -15,16 +15,18 @@ Description of the folders:
 * [spitogatos.gr](spitogatos.gr/): crawler from spitogatos.gr and indexing for elasticsearch, as well as instructions
 * [requirements](requirements/): requiremenst for python crawlers listed 
 
+Description of the crawlers:
+
 Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
 
 |Crawler|Language|Origin|Credentials needed| Schedulling|Notes|
 | ------------- | ------------- | ------------- | ------------- |------------- |------------|
-| [OECD.R](OECD.R)| R ||||OECD databases|
+| [OECD.R](OECD.R)| R |API|||OECD databases|
 | [anta_eco_several_codes.py](anta_eco_several_codes.py)| python |EXCEL||||
-| [antalya_econ_cityofantalya_cityzonepuplictransportationpasengernumber_monthly.py](antalya_econ_cityofantalya_cityzonepuplictransportationpasengernumber_monthly.py)|  python |EXCEL ||||
+| [antalya_econ_cityofantalya_city...pasengernumber_monthly.py](antalya_econ_cityofantalya_cityzonepuplictransportationpasengernumber_monthly.py)|  python |EXCEL ||||
 | [antalya_econ_cityofantalya_shopsrentearn_year.py](antalya_econ_cityofantalya_shopsrentearn_year.py)|  python|EXCEL||||
 | [cork_eco_visitors_daily.py](cork_eco_visitors_daily.py)|  python|EXCEL||||
-| [thess_eco_thessalokini_municipality_budget.py](thess_eco_thessalokini_municipality_budget.py)|  python | from URL|Needs schedulling|||
+| [thess_eco_thessalokini_municipality_budget.py](thess_eco_thessalokini_municipality_budget.py)|  python | from URL||Yes||
 | [thess_eco_thessalokini_municipality_budget_batch.py](thess_eco_thessalokini_municipality_budget_batch.py)|  python | URL||||
 | [thess_eco_thessaloniki_parking_data.py](thess_eco_thessaloniki_parking_data.py)|  python | EXCEL ||||
 | [thess_eco_thessaloniki_traffic_fines.p](thess_eco_thessaloniki_traffic_fines.py)|  python | EXCEL ||||
