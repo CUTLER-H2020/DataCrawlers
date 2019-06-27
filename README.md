@@ -13,6 +13,6 @@ Crawlers have been implemented using different programming languages (R, python,
 
 General information on the deployment in Hadoop:
 
-* [HadoopDeployment](HadoopDeployment/)
+* [HadoopDeployment](HadoopDeployment/): scripts, configuration files and instructions related to data injestion into/from Hadoop HDFS
 
 
