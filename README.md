@@ -13,6 +13,6 @@ Crawlers have been implemented using different programming languages (R, python,
 
 General information on the deployment in Hadoop:
 
-* [Hadoop deployment](Hadoop deployment/)
+* [HadoopDeployment](HadoopDeployment/)
 
 
