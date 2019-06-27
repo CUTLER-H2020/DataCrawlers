@@ -11,4 +11,8 @@ The crawlers are grouped according to the type of data crawled:
 
 Crawlers have been implemented using different programming languages (R, python, javascript, java). Crawlers are used to inject data either in a Hadoop Distributed File System ([HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html)) or [ElasticSearch](https://www.elastic.co/).  However, most of the crawlers can also be used as stand-alone. You can find more specific documentation under the different folders. 
 
+General information on the deployment in Hadoop:
+
+* [Hadoop deployment](Hadoop deployment/) 
+
 
