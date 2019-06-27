@@ -9,8 +9,11 @@ The rest of the crawlers are files listed in this folder, mainly written in pyth
 
 Description of the folders:
 
-* [IMEC Data Crawler](ANT_ENV_IMEC/)
+* [IMEC Data Crawler](ANT_ENV_IMEC/): java based crawler that gets data from API
 * [requirements](requirements/): requiremenst for python crawlers listed
+* [Flume_Config_Sample](Flume_Config_Sample/): Sample config for Flume to ingest data from spool directory to HDFS
+* [HDFSTOElasticSearch](HDFSTOElasticSearch/): (Experimental!) Sample script for porting data from HDFS to Elastic Search
+
 
 Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
 
@@ -82,3 +85,5 @@ More information under the correponding folder
 * [IMEC Data Crawler](ANT_ENV_IMEC/)
 
 ## Javascript Crawlers
+
+### Deployment with ElasticSearch
