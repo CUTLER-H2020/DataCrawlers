@@ -1,4 +1,4 @@
-# HDFS TO ElasticSearch data pipe
+# HDFS to ElasticSearch data pipe
 
 **EXPERIMENTAL!!!**
 
