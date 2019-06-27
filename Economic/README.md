@@ -17,6 +17,16 @@ Description of the folders:
 
 Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
 
+* OECD.R: R based script to get data from OECD databases
+* anta_eco_several_codes.py: python based script to get data from EXCEL file
+* antalya_econ_cityofantalya_cityzonepuplictransportationpasengernumber_monthly.py:  python based script to get data from EXCEL file
+* antalya_econ_cityofantalya_shopsrentearn_year.py:  python based script to get data from EXCEL file
+* cork_eco_visitors_daily.py:  python based script to get data from EXCEL file
+* thess_eco_thessalokini_municipality_budget.py:  python based script to crawl data from URL. Needs schedulling
+* thess_eco_thessalokini_municipality_budget_batch.py:  python based script to get historical data from URL
+* thess_eco_thessaloniki_parking_data.py:  python based script to get data from EXCEL file
+* thess_eco_thessaloniki_traffic_fines.py:  python based script to get data from EXCEL file
+
 ## Python Crawlers
 General instructions for python crawlers. Further instructions can be found under each data crawler folder
 ### Getting started with python
