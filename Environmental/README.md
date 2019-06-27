@@ -1,4 +1,4 @@
-# Environmantal Data Crawlers for CUTLER
+# Environmental Data Crawlers for CUTLER
 
 This part of the repository gathers all the crawlers for environmental data developed for CUTLER, as well as othere related software.
 
