@@ -52,9 +52,9 @@ You need to create a virtual environment, activate it and install the correspond
     .\myenv\Scripts\activate
     ```
     After you activate the environment, your command prompt will be modified to reflect the change
-  * Install requirements (corresponding requirements.txt can be found under requirements folder)
+  * Install requirements (corresponding requirements.txt can be found in this folder)
     ```
-    (myenv) C:\Path\To\my-project> pip3 install -r requirements/requirements.txt
+    (myenv) C:\Path\To\my-project> pip3 install -r requirements.txt
     ```
 
 
@@ -69,6 +69,10 @@ All the python scrips run the same way
 ```
 python3 name_of_the_script.py
 ```
+
+### Deployment in ElasticSearch
+
+Corresponding information can be found under each data folder
 
 
 
