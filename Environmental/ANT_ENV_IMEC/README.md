@@ -16,7 +16,7 @@ You need to modify the  following parameters in [rpt.properties](rpt.properties)
 * kafka_use = true or false, whether data should be sent to kafka (experimental and requires further development)
 
 #### Run the jar
-Compile and run (use rpt.properties file). Alternatively, you can use the already compiled jar file at [dist](dist/) folder
+Compile and run (use rpt.properties file).
 ```
 java -jar ImecCrawler.jar -Dapp.properties="/path/to/properties/rpt.properties"
 ```
