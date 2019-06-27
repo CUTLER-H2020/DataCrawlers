@@ -1,7 +1,7 @@
 ## Decription
 Crawler to get data from several sensors in Antwerp from IMEC API.
 * [imeccrawler](imeccrawler/): sources of the crawler
-* [dist](dist/): crawler as an executable jar with all the needed libraries
+* [dist](dist/): All the needed libraries
 
 ### Getting started
 #### Prerequisites
