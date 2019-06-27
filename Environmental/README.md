@@ -78,7 +78,7 @@ python3 name_of_the_script.py
 
 ### Deployment with Hadoop
 
-
+We use Apache Flume to pass the data from local folder to HDFS of Hadoop cluster. More information at [HadoopDeployment](../HadoopDeployment/)
 
 ## Java Crawlers
 More information under the correponding folder
