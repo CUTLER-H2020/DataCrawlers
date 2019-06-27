@@ -83,7 +83,7 @@ We use Apache Flume to pass the data from local folder to HDFS of Hadoop cluster
 
 ### Schedulling
 
-Some scripts crawl data from sites that are updated periodically. Those scripts require a cron scheduler based on athe necessary acquisition frequency.
+Some scripts crawl data from sites that are updated periodically. Those scripts require a cron scheduler based on the corresponding acquisition frequency.
 
 ## R Crawlers
 
