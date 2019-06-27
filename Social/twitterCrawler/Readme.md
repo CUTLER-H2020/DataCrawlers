@@ -11,6 +11,11 @@ There are two types of files:
 * Necessary files to directly injest data into HDFS with Flume
   * CORK-SOC_TWITTER.conf: configuration file
   * flume.twitter-0.0.1-SNAPSHOT.jar: twitter connector for flume
+
+|Crawler|Language|Origin|Credentials needed| Schedulling|Notes|
+| ------------- | ------------- | ------------- | ------------- |------------- |------------|
+| [TweetCrawler.py](TweetCrawler.py)| python|API|-|-|-|
+| [CORK-SOC_TWITTER.conf](CORK-SOC_TWITTER.conf)| -|API|-|-|Flume script for Twitter data|
   
 ## Direct injestion into HDFS
 
