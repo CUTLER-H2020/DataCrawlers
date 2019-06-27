@@ -3,6 +3,10 @@ Crawler to get data from several sensors in Antwerp from IMEC API.
 * [imeccrawler](imeccrawler/): sources of the crawler
 * [dist](dist/): All the needed libraries
 
+|Language|Origin|Credentials needed| Schedulling|Notes|
+| ------------- | ------------- | ------------- | ------------- |------------- |
+|Java|API|Yes|-|-|
+
 ### Getting started
 #### Prerequisites
 You need to have Java installed. JavaSE Development Kit for different OS can be downloaded from [here](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
