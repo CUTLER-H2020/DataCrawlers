@@ -107,7 +107,7 @@ You need to create a virtual environment, activate it and install the correspond
 ### Running as stand alone
 
 #### Prerequisites
-Apart from those detailed in the [Installation](#installation) section, some scripts may need further prerequisites (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found **in each script**. 
+Apart from those detailed in the [Installation](#installation) section, some scripts **may need further prerequisites** (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found **in each script**. 
 
 #### Run the script
 All the python scrips run the same way
