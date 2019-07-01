@@ -1,10 +1,22 @@
 # Crawler for spitogatos.gr
 
 DUTH's crawler to download data from spitogatos.gr
+The crawler downloads several information regarding the house prices for the city of Thessaloniki
+The table bellow presents the fields used by the crawler:
+
+| Field on spitogatos.gr  | Description |
+| ------------- | ------------- |
+| category  | Property category (eg. Commercial, Land)  |
+| type  | Property sub-category (eg. Apartment, Studio, Office, Hotel)  |
+| Περιοχή (Location)  | Property location (based on Thessaloniki's municipalities)  |
+| purpose  | Either Sale or Rent  |
+| Τιμή ανά τ.μ. (Price per m²)  | Property price per square meter  |
+| Construction year  | Property construction year  |
+| date  | The date (format: yyyy-mm) the crawler downloaded the data  |
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine. The crawler downloads the data from maps.me and ingest them in an elasticsearch index. The crawler then pushes a message into a Apache KAFKAF topic.
 
 ### Prerequisites
 
