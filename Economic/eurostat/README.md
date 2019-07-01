@@ -4,9 +4,9 @@ DUTH's crawler to download data from Eurostat
 The crawler downloads data for several economic indicators from Eurostat for the 4 pilot-cities and their regions (Antalya, Antwerp, Cork, Thessaloniki)
 The table bellow presents both the economic indicators and the fields used by the crawler:
 
-| Dataset  | Fields | Description |
-| ------------- | ------------- | ------------- |
-| Population density by NUTS 3 region  | "unit", "geo", "time"  |   |
+| Dataset  | Fields |
+| ------------- | ------------- |
+| Population density by NUTS 3 region  | "unit", "geo", "time"  |
 | Population: Structure indicators by NUTS 3 region  | "indic_de","unit","geo","time"  |
 | Average annual population to calculate regional GDP data (thousand persons) by NUTS 3 regions  | "unit", "geo", "time"  |
 | Gross domestic product (GDP) at current market prices by NUTS 3 regions  | "unit", "geo", "time"  |
@@ -25,8 +25,6 @@ The table bellow describes the fields used by the crawler
 
 | Field  | Description |
 | ------------- | ------------- |
-|   |   |
-
 | geo  | geopolitical entity  |
 | time  | period of time  |
 | unit  | unit of measure  |
