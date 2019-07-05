@@ -4,7 +4,7 @@ const moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
-var breakpoints = require('../files/helpers/aqi_breakpoints');
+var breakpoints = require('./files/helpers/aqi_breakpoints');
 
 const client = new elasticsearch.Client({
   host: 'localhost:9200'

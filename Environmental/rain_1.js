@@ -4,7 +4,7 @@ const moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
-const stations = require('./stations');
+const stations = require('./files/stations');
 
 var elIndex = {
   index: {
