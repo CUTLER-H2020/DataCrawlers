@@ -143,7 +143,7 @@ General instructions for installing nodejs and running javascript crawlers
 
 #### Prerequisites
 
-You need to install nodejs and npm for installing javascript helper libraries and running crawlers.
+You need to install nodejs and npm for running crawlers.
 
 - For linux
 
@@ -159,13 +159,13 @@ sudo apt-get install npm
 
 - For windows and MAC
 
-download the executable from [https://nodejs.org/en/](https://nodejs.org/en/) and run it
+       download the executable from [https://nodejs.org/en/](https://nodejs.org/en/) and run it
 
-This will install nodejs and npm in your system.
+  This will install nodejs and npm in your system.
 
-After successfully install nodejs and npm in your system:
-`cd /project_name && npm install`
-to install all the necessary libraries.
+  After successfully install nodejs and npm in your system:
+  `cd /project_name && npm install`
+  to install all the necessary libraries.
 
 ### Running as stand alone
 
