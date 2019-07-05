@@ -18,7 +18,7 @@ var elBody = [];
 const extractValues = (async () => {
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/CORK_ENV_OPW_WL_15min.xlsx', {
+    .extract(__dirname + '/files/CORK_ENV_OPW_WL_15min.xlsx', {
       sheet_nr: 0,
       ignore_header: 7
     })

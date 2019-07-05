@@ -34,7 +34,7 @@ var dailyPM = 0;
 const extractValues = (async () => {
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/anta_air_quality_2018-2019.xlsx', {
+    .extract(__dirname + '/files/anta_air_quality_2018-2019.xlsx', {
       sheet_nr: 0,
       ignore_header: 3
     })

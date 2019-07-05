@@ -19,48 +19,6 @@ var elIndex = {
 var elBody = [];
 var stations = [];
 
-// const checkElasticIfIndexExist = (() => {
-//   client.count(
-//     {
-//       index: 'ant_env_cityofant_gwl_(draxis)',
-//       body: {
-//         query: {
-//           match_all: {}
-//         }
-//       }
-//     },
-//     (err, res) => {
-//       if (err) {
-//         client.indices.create(
-//           {
-//             index: 'ant_env_cityofant_gwl_(draxis)',
-//             body: {
-//               settings: {
-//                 number_of_shards: 1
-//               },
-//               mappings: {
-//                 _doc: {
-//                   properties: {
-//                     station_location: {
-//                       type: 'geo_point'
-//                     }
-//                   }
-//                 }
-//               }
-//             }
-//           },
-//           (err, resp) => {
-//             if (err) console.log(err);
-//             else console.log('Succesfully created Index');
-//           }
-//         );
-//       } else {
-//         console.log('Index exist, the data will update');
-//       }
-//     }
-//   );
-// })();
-
 const saveToElastic = elBody => {
   client.bulk(
     {
@@ -96,7 +54,7 @@ const extractValues = (async () => {
 
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/Export_CUTLER_v40.xlsx', {
+    .extract(__dirname + '/files/Export_CUTLER_v40.xlsx', {
       sheet_nr: 3,
       ignore_header: 1
     })
@@ -104,7 +62,7 @@ const extractValues = (async () => {
       let selectedStation = stations.filter(station => {
         return station[0] == row[0];
       })[0];
-      if (selectedStation) {
+      if (selectedStation && row[2] != undefined) {
         elBody.push(elIndex);
         elBody.push({
           station_id: selectedStation[0].toString(),
