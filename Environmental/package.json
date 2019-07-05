@@ -1,0 +1,11 @@
+{
+  "name": "cutler",
+  "version": "1.0.0",
+  "description": "This part of the repository gathers all the crawlers for environmental data developed for CUTLER, as well as othere related software.",
+  "main": "CORK_ENV_OPW_WL_15min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
