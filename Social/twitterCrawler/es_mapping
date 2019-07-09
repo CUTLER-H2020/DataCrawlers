@@ -1,0 +1,94 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    },
+    "analysis": {
+      "analyzer": {
+        "analyzer_english": {
+          "tokenizer": "standard",
+          "filter": [ "stemmer_possessive_english", "lowercase", "stop_english", "stop_twitter", "stemmer_light_english" ]
+        }
+      },
+      "filter": {
+        "stemmer_possessive_english": {
+          "type": "stemmer",
+          "language": "possessive_english"
+        },
+        "stop_english": {
+          "type": "stop",
+          "stopwords": "_english_"
+        },
+        "stop_twitter": {
+          "type": "stop",
+          "stopwords_path": "stopwords/stop-twitter.txt"
+        },
+        "stemmer_light_english": {
+          "type": "stemmer",
+          "language": "light_english"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "city": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "location": {
+          "type": "geo_point",
+          "ignore_malformed": true
+        },
+        "created_at": {
+          "type": "date"
+        },
+        "full_text": {
+          "type": "text",
+          "fielddata": true,
+          "fields": {
+            "english": {
+              "type": "text",
+              "fielddata": true,
+              "analyzer": "analyzer_english"
+            }
+          }
+        },
+        "hashtags": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "user": {
+          "type": "keyword"
+        },
+        "retweet_count": {
+          "type": "long"
+        },
+        "topic": {
+          "type": "keyword"
+        },
+        "images": {
+          "type": "text",
+          "fields": {
+            "url": {
+              "type": "keyword"
+            }
+          }
+        },
+        "sentiment": {
+          "type": "float"
+        }
+      }
+    }
+  }
+}
