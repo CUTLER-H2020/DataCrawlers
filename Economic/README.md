@@ -15,7 +15,21 @@ Description of the folders:
 * [spitogatos.gr](spitogatos.gr/): crawler from spitogatos.gr and indexing for elasticsearch, as well as instructions
 * [requirements](requirements/): requiremenst for python crawlers listed 
 
+Description of the crawlers:
+
 Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
+
+|Crawler|Language|Origin|Credentials needed| Schedulling|Notes|
+| ------------- | ------------- | ------------- | ------------- |------------- |------------|
+| [OECD.R](OECD.R)| R |API|||OECD databases|
+| [anta_eco_several_codes.py](anta_eco_several_codes.py)| python |EXCEL||||
+| [antalya_econ_cityofantalya_city...pasengernumber_monthly.py](antalya_econ_cityofantalya_cityzonepuplictransportationpasengernumber_monthly.py)|  python |EXCEL ||||
+| [antalya_econ_cityofantalya_shopsrentearn_year.py](antalya_econ_cityofantalya_shopsrentearn_year.py)|  python|EXCEL||||
+| [cork_eco_visitors_daily.py](cork_eco_visitors_daily.py)|  python|EXCEL||||
+| [thess_eco_thessalokini_municipality_budget.py](thess_eco_thessalokini_municipality_budget.py)|  python | URL||Yes||
+| [thess_eco_thessalokini_municipality_budget_batch.py](thess_eco_thessalokini_municipality_budget_batch.py)|  python | URL||||
+| [thess_eco_thessaloniki_parking_data.py](thess_eco_thessaloniki_parking_data.py)|  python | EXCEL ||||
+| [thess_eco_thessaloniki_traffic_fines.p](thess_eco_thessaloniki_traffic_fines.py)|  python | EXCEL ||||
 
 ## Python Crawlers
 General instructions for python crawlers. Further instructions can be found under each data crawler folder
@@ -68,7 +82,7 @@ You need to create a virtual environment, activate it and install the correspond
 ### Running as stand alone
 
 #### Prerequisites
-Apart from those detailed in the [Installation](#installation) section, some scripts may need further prerequisites (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found **in each script**. 
+Apart from those detailed in the [Installation](#installation) section, some scripts **may need further prerequisites** (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found **in each script**. 
 
 #### Run the script
 All the python scrips run the same way
@@ -78,6 +92,12 @@ python3 name_of_the_script.py
 ```
 
 ### Deployment with Hadoop
+
+We use Apache Flume to pass the data from local folder to HDFS of Hadoop cluster. More information at [HadoopDeployment](../HadoopDeployment/)
+
+### Schedulling
+
+Some scripts crawl data from sites that are updated periodically. Those scripts require a cron scheduler based on the corresponding acquisition frequency.
 
 ## R Crawlers
 

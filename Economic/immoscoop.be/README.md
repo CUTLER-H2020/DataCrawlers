@@ -1,22 +1,34 @@
 # Crawler for immoscoop.be
 
 DUTH's crawler to download data from immoscoop.be
+The crawler downloads several information regarding the house prices for the city of Antwerp
+The table bellow presents the fields used by the crawler:
+
+| Field on immoscoop.be  | Description |
+| ------------- | ------------- |
+| Category  | Property category (eg. Apartment, Office, Commercial)  |
+| Postal  | Property postal conde  |
+| Address  | Property address (if applicable)  |
+| Property purpose  | Either Sale or Rent  |
+| Price per m²  | Property price per square meter  |
+| Construction year  | Property construction year  |
+| date  | The date (format: yyyy-mm) the crawler downloaded the data  |
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine. The crawler downloads the data from immoscoop.be and ingest them in an elasticsearch index. The crawler then pushes a message into a Apache KAFKAF topic. 
 
 ### Prerequisites
 
 - Ubuntu Server LTS (16.04) (used in developement)
-- or a alternative debian based distro
+- or a alternative debian based dist
 
-- Apache KAFKA - topics created: 
+- Apache KAFKA - needed topics: 
 ```
 DATA_ANW_ECO_IMMOSCOOPEBE_CRAWLER
 ```
 
-- elasticsearch - indexes created:
+- elasticsearch - needed indexes:
 ```
 antwerp-immoscoop
 ```

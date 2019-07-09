@@ -4,7 +4,7 @@ const moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
-var breakpoints = require('../files/helpers/aqi_breakpoints');
+var breakpoints = require('./files/helpers/aqi_breakpoints');
 
 const client = new elasticsearch.Client({
   host: 'localhost:9200'
@@ -34,7 +34,7 @@ var dailyPM = 0;
 const extractValues = (async () => {
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/anta_air_quality_2018-2019.xlsx', {
+    .extract(__dirname + '/files/anta_air_quality_2018-2019.xlsx', {
       sheet_nr: 0,
       ignore_header: 3
     })

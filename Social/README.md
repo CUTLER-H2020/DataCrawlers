@@ -8,7 +8,7 @@ There is a folder created for each data, so the crawler and other related softwa
 * [facebookCrawler](facebookCrawler/): facebook crawler, deprecated
 * [gdelt](gdelt/): python based news crawled from gdelt, more information in the folder
 * [newsCrawler](newsCrawler/): python based crawler. 
-* [twitterCrawler](twitterCrawler/): In this folder there are two types of crawlers: python based scripts and there is a sample config file for Flume
+* [twitterCrawler](twitterCrawler/): crawlers for twitter; two types: python based scripts and config file for Flume
 
 ## Python Crawlers
 General instructions for python crawlers. Further instructions can be found under each data crawler folder
@@ -69,6 +69,11 @@ All the python scrips run the same way
 ```
 python3 name_of_the_script.py
 ```
+
+### Deployment in Hadoop
+
+We use Apache Flume to pass the data from local folder to HDFS of Hadoop cluster. More information at [HadoopDeployment](../HadoopDeployment/). 
+Specific information for directly injesting data from Twitter to HDFS via Flume can be found at [twitterCrawler](twitterCrawler/)
 
 ### Deployment in ElasticSearch
 
