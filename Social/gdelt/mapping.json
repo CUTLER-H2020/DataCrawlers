@@ -1,22 +1,75 @@
 {
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    },
+    "analysis": {
+      "analyzer": {
+        "analyzer_english": {
+          "tokenizer": "standard",
+          "filter": [ "stemmer_possessive_english", "lowercase", "stop_english", "stop_twitter", "stemmer_light_english" ]
+        }
+      },
+      "filter": {
+        "stemmer_possessive_english": {
+          "type": "stemmer",
+          "language": "possessive_english"
+        },
+        "stop_english": {
+          "type": "stop",
+          "stopwords": "_english_"
+        },
+        "stop_twitter": {
+          "type": "stop",
+          "stopwords_path": "stopwords/stop-twitter.txt"
+        },
+        "stemmer_light_english": {
+          "type": "stemmer",
+          "language": "light_english"
+        }
+      }
+    }
+  },
   "mappings": {
-    "doc": {
+    "_doc": {
       "properties": {
-        "features.geometry.coordinates": {
-          "type": "geo_point"
+        "city": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
         },
-        "features.count.properties": {
-          "type": "long"
+        "location": {
+          "type": "geo_point",
+          "ignore_malformed": true
         },
-        "features.name.properties": {
-          "type": "text"
-        },
-        "features.html.properties": {
-          "type": "text"
-        },
-        "created" : {
+        "created_at": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "yyyyMMddHHmmss"
+        },
+        "source": {
+          "type": "keyword"
+        },
+        "topic": {
+          "type": "keyword"
+        },
+        "themes": {
+          "type": "keyword"
+        },
+        "images": {
+          "type": "text"
+        },
+        "persons": {
+          "type": "text"
+        },
+        "url": {
+          "type": "text"
+        },
+        "sentiment": {
+          "type": "float"
         }
       }
     }
