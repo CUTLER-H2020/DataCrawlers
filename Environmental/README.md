@@ -137,7 +137,7 @@ More information under the correponding folder
 
 ## Javascript Crawlers
 
-General instructions for installing nodejs and running javascript crawlers
+General instructions for installing nodejs and running javascript crawlers and producers/consumers
 
 ### Getting started with nodejs
 
@@ -178,3 +178,31 @@ All the javascript crawlers run the same way
 node name_of_the_script.js
 
 ```
+
+### Consumers / Producers
+
+#### Environment Variables
+
+The following environment variables are required:
+- KAFKA_HOST
+- ELASTICSEARCH_HOST
+
+If these aren't set, you can create an `.env` file in the root of the project and place them inside there.
+
+#### Create Topics
+
+Before any messages can be sent to a topic, it has to be created first.
+
+1. Edit file `lib/Kafka/KafkaTopics.js` and specify the topics that you want to create. Set "replicationFactor" equal to the number of available brokers. Depending on the amount of data the consumers will process, set the "partitions" for the topic. The data will be split across all partitions and then you can assign a consumer to each partition to process them.
+
+2. Run command `node create_all_topics.js`
+
+#### Start Consumer(s)
+
+You can start a consumer by issuing command `node anta_soc_visitors_monthly_draxis_consumer.js`. You can start as many as you want, each consumer will be responsible for processing the items in a specific partition of the topic.
+
+#### Invoke Producer
+
+Run the producer to send data to the kafka topic by issuing command `node anta_soc_visitors_monthly_draxis_producer.js`
+
+

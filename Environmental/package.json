@@ -1,10 +1,16 @@
 {
   "name": "cutler",
   "version": "1.0.0",
-  "description": "This part of the repository gathers all the crawlers for environmental data developed for CUTLER, as well as othere related software.",
-  "main": "CORK_ENV_OPW_WL_15min.js",
+  "description": "This part of the repository gathers all the crawlers for environmental data developed for CUTLER, as well as othere related software.",  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "elasticsearch": "^16.1.1",
+    "kafka-node": "^4.1.3",
+    "moment": "^2.24.0",
+    "xlsx-extract": "^0.1.2"
   },
   "author": "",
   "license": "ISC"
