@@ -16,7 +16,7 @@ The table bellow presents the fields used by the crawler:
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine. The crawler downloads the data from immoscoop.be and ingest them in an elasticsearch index. The crawler then pushes a message into a Apache KAFKAF topic. 
+These instructions will get you a copy of the project up and running on your local machine. The crawler downloads the data from immoscoop.be and ingest them in an elasticsearch index. The crawler pushes two messages into a Apache KAFKAF topic, the first for crawling procedure and the second for the ingestion stage. 
 
 ### Prerequisites
 
@@ -25,7 +25,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Apache KAFKA - needed topics: 
 ```
-DATA_ANW_ECO_IMMOSCOOPEBE_CRAWLER
+DATA_DOWNLOAD_ANW_ECO_IMMOSCOOPEBE_CRAWLER
+DATA_INGESTION_ANW_ECO_IMMOSCOOPEBE_CRAWLER
 ```
 
 - elasticsearch - needed indexes:
