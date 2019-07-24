@@ -67,6 +67,10 @@ def downloadPOI(url_API, purpose, uniqueid_pattern):
         print(e)
         return False
 
+    if page.status_code != 200:
+        print("[-] There was a connection problem with immoscoop.be. Exiting")
+        return False
+
     #  return how many results where found
     poi_pages = int(html.fromstring(page.text).xpath(xpath_category['url_paggination'])[-4])
     print("[+] Pages found: " + str(poi_pages))
@@ -244,10 +248,7 @@ def ingestdatatoelasticsearch(dictionary, index_name):
 
     send_to_elasticsearch(index_name, dictionary, '_doc')
 
-def sendmessagetokafka(message, cityname):
+def sendmessagetokafka(message, cityname, topic):
     from kafka_functions import kafkasendmessage
-
-    citynames = {"antwerp": "ANW"}
-    topic = "DATA_" + citynames[cityname] + "_ECO_IMMOSCOOPEBE_CRAWLER"
     kafkasendmessage(topic, message)
 

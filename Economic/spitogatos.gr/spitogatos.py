@@ -67,6 +67,10 @@ def downloadPOI(url_API, purpose, category, uniqueid_pattern):
         print(e)
         return False
 
+    if page.status_code != 200:
+        print("[-] There was a connection problem with immoscoop.be. Exiting")
+        return []
+
     #  return how many results where found
     poi_pages = int(html.fromstring(page.text).xpath(xpath_category['url_paggination'])[0].replace(".", ""))
     print("[+] POIs found: " + str(poi_pages))
@@ -147,9 +151,9 @@ def downloadPOI(url_API, purpose, category, uniqueid_pattern):
             pois[uniqueid_pattern + str(poi_ascending_counter)] = poi
             poi_ascending_counter += 1
 
-            #break
+#            break
         page_counter += 10
-        #break
+#        break
 
     if DEBUG:
         print("[+] Found:", len(pois))
@@ -165,8 +169,9 @@ def downloadPOI(url_API, purpose, category, uniqueid_pattern):
     return pois
 
 
-def saveNDJSON(dictionary, poi_counter):
+def saveNDJSON(dictionary):
 
+    poi_counter = 0
     if DEBUG:
         print("[+] Saving results in ndjson file")
 
@@ -181,12 +186,13 @@ def saveNDJSON(dictionary, poi_counter):
     print("[+] Saving file", results_filename)
     with open(results_filename, 'a', encoding='utf8') as fp:
         for key, value in dictionary.items():
+            print(key, value)
             fp.write('{"index":{"_id":'+str(poi_counter)+'}}\n')
             value_str = str(value)#.encode('utf-8')
             value_str = str(value_str).replace("\'", "\"") + "\n"
             fp.write(value_str)
             poi_counter += 1
-    return poi_counter
+    return True
 
 def ingestdatatoelasticsearch(dictionary, index_name):
     from elasticsearch_functions import send_to_elasticsearch
@@ -198,11 +204,8 @@ def ingestdatatoelasticsearch(dictionary, index_name):
 
     send_to_elasticsearch(index_name, dictionary, '_doc')
 
-def sendmessagetokafka(message, cityname):
+def sendmessagetokafka(message, cityname, topic):
     from kafka_functions import kafkasendmessage
-
-    citynames = {"thessaloniki": "THE"}
-    topic = "DATA_" + citynames[cityname] + "_ECO_SPITOGATOSGR_CRAWLER"
 
     kafkasendmessage(topic, message)
 

@@ -29,11 +29,20 @@ if __name__ == "__main__":
         "https://www.immoscoop.be/eng/immo.php?search_field=&main_city%5B%5D=2421&s_postcode%5B%5D=56&s_postcode%5B%5D=57&s_postcode%5B%5D=58&s_postcode%5B%5D=59&s_postcode%5B%5D=2420&s_postcode%5B%5D=1546&s_postcode%5B%5D=160&s_postcode%5B%5D=910&s_postcode%5B%5D=61&s_postcode%5B%5D=62&s_postcode%5B%5D=371&s_postcode%5B%5D=231&s_postcode%5B%5D=994&s_postcode%5B%5D=422&s_postcode%5B%5D=158&s_postcode%5B%5D=1521&s_postcode%5B%5D=703&category=&min_price=0&max_price=&bedroom=&baths=&order=city&proptype=Rent&page=",
         "Rent", "rent_")
     #poi_counter = saveNDJSON(dictionary, poi_counter)
-    dictionary_for_all_elements.update(dictionary)
+    if dictionary != False:
+        dictionary_for_all_elements.update(dictionary)
 #    print(dictionary_for_all_elements)
 
     cityname = "antwerp"
+    #save all results to json files in the results directory
+    citynames = {"antwerp": "ANW"}
+    download_topic = "DATA_DOWNLOAD_" + citynames[cityname] + "_ECO_IMMOSCOOPEBE_CRAWLER"
+    ingest_topic = "DATA_INGESTION_" + citynames[cityname] + "_ECO_IMMOSCOOPEBE_CRAWLER"
+
+    sendmessagetokafka("Data for Antwerp - immoscoop were downloaded successfully - Data cat be found in immoscoop_results/immoscoop.json file - Date: " + str(datetime.date.today()), cityname, download_topic)
+    poi_counter = saveNDJSON(dictionary_for_all_elements, poi_counter)
+
     ingestdatatoelasticsearch(dictionary_for_all_elements, "antwerp-immoscoop")
-    sendmessagetokafka("Data for Antwerp - immoscoop were ingested succesfully - Data cat be found in antwerp-immoscoop elasticsearch index - Date: " + str(datetime.date.today()), cityname)
+    sendmessagetokafka("Data for Antwerp - immoscoop were ingested successfully - Data cat be found in antwerp-immoscoop elasticsearch index - Date: " + str(datetime.date.today()), cityname, ingest_topic)
 
 

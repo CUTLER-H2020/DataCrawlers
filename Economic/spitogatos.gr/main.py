@@ -18,7 +18,6 @@ if __name__ == "__main__":
 
     # use poi_counter to save all results in the same json file - avoid memory crashes
 
-    poi_counter = 0
     if os.path.isfile('spitogatos_results/spitogatos.json'):
         os.remove('spitogatos_results/spitogatos.json')
 
@@ -53,11 +52,19 @@ if __name__ == "__main__":
     dictionary = downloadPOI("https://spitogatos.gr/search/results/other/rent/r108/m108m109m110m/offset_", "Ενοικίαση", "Λοιπά ακίνητα", "rent_other_")
     #poi_counter = saveNDJSON(dictionary, poi_counter)
     dictionary_for_all_elements.update(dictionary)
-    
+
 
     # save them in NDjson based on "cityname"
     # saveNDJSON(dictionary, cityname)
     cityname = "thessaloniki"
+    citynames = {"thessaloniki": "THE"}
+
+    download_topic = "DATA_DOWNLOAD_" + citynames[cityname] + "_ECO_SPITOGATOSGR_CRAWLER"
+    ingest_topic = "DATA_INGESTION_" + citynames[cityname] + "_ECO_SPITOGATOSGR_CRAWLER"
+
+    saveNDJSON(dictionary_for_all_elements)
+    sendmessagetokafka("Data for Thessaloniki - spitogatos were downloaded successfully - Data cat be found in spitogatos_results/spitogatos.json file - Date: " + str(datetime.date.today()), cityname, download_topic)
+
     ingestdatatoelasticsearch(dictionary_for_all_elements, "thessaloniki-spitogatos")
-    sendmessagetokafka("Data for Thessaloniki - spitogatos were ingested succesfully - Data cat be found in thessaloniki-spitogatos elasticsearch index - Date: " + str(datetime.date.today()), cityname)
+    sendmessagetokafka("Data for Thessaloniki - spitogatos were ingested successfully - Data cat be found in thessaloniki-spitogatos elasticsearch index - Date: " + str(datetime.date.today()), cityname, ingest_topic)
 
