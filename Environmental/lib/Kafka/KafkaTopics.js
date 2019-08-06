@@ -9,7 +9,7 @@ var topics = {
     replicationFactor: 3
   },
   ANT_ENV_CITYOFANT_GWL: {
-    topic: 'ant_env_cityofant_gwl_(draxis)',
+    topic: 'ant_env_cityofant_gwl_draxis',
     partitions: 6,
     replicationFactor: 3
   },
