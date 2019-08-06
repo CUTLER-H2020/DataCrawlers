@@ -13,7 +13,6 @@ consumer.on('message', function(message) {
   // retrieve item
   var item = JSON.parse(message.value);
   var date = moment(item.date, 'YYYY/MM/DD');
-  var visitors = item.visitors;
 
   // insert record in ES
   es_client.index(

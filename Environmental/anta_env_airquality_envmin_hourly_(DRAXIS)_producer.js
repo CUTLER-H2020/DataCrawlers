@@ -1,9 +1,5 @@
 const XLSX = require('xlsx-extract').XLSX;
-const elasticsearch = require('elasticsearch');
 const moment = require('moment');
-var fs = require('fs');
-var path = require('path');
-var greekUtils = require('greek-utils');
 var breakpoints = require('./files/helpers/aqi_breakpoints');
 
 const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
@@ -11,17 +7,6 @@ const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 
 const topic = kafka_topics.topics.ANTA_ENV_AIRQUALITY_ENVMIN_HOURLY.topic;
 var messages = [];
-
-const client = new elasticsearch.Client({
-  host: 'localhost:9200'
-});
-
-var elIndex = {
-  index: {
-    _index: 'anta_env_airquality_envmin_hourly_draxis',
-    _type: '_doc'
-  }
-};
 
 const units = [
   { pollutant: 'PM10', unit: 'µg/m³' },
@@ -71,29 +56,6 @@ const extractValues = (async () => {
         currentArray.map((row, i) => {
           row.map((r, i) => {
             if (i > 1) {
-              elBody.push(elIndex);
-              elBody.push({
-                station_name: 'Antalya Air Quality Station',
-                station_location: {
-                  lat: 36.8875,
-                  lon: 30.726667
-                },
-                date: moment(row[0]).format('YYYY/MM/DD'),
-                month: moment(row[0]).format('MM'),
-                year: moment(row[0]).format('YYYY'),
-                day: moment(row[0]).format('DD'),
-                time: moment(row[1])
-                  .add(-1, 'hours')
-                  .format('HH:mm'),
-                parameter_name: units[i - 2].pollutant,
-                parameter_fullname: `${units[i - 2].pollutant} ${
-                  units[i - 2].unit
-                }`,
-                unit: units[i - 2].unit,
-                value: r,
-                daily_aqi: pm10AQI
-              });
-
               messages.push(
                 JSON.stringify({
                   station_name: 'Antalya Air Quality Station',

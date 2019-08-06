@@ -1,5 +1,4 @@
 const XLSX = require('xlsx-extract').XLSX;
-const elasticsearch = require('elasticsearch');
 const moment = require('moment');
 
 const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
@@ -8,18 +7,6 @@ const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 const topic = kafka_topics.topics.CORK_ENV_MET_W_DAILY.topic;
 var messages = [];
 
-const client = new elasticsearch.Client({
-  host: 'localhost:9200'
-});
-
-var elIndex = {
-  index: {
-    _index: 'cork_env_met_w_daily',
-    _type: '_doc'
-  }
-};
-
-var elBody = [];
 const metrics = [
   { code: 'date', description: '', unit: '' },
   { code: 'ind', description: '', unit: '' },
@@ -61,28 +48,6 @@ const extractValues = (async () => {
     .on('row', function(row) {
       row.map((r, i) => {
         if (i == 8 || i == 17 || i == 10 || i == 14) {
-          // console.log(r);
-          // console.log(row[0]);
-          // console.log(metrics[i]);
-          elBody.push(elIndex);
-          elBody.push({
-            station_name: 'ROCHES POINT',
-            station_location: {
-              lat: 51.789,
-              lon: -8.24
-            },
-            date: moment(row[0]).format('YYYY/MM/DD'),
-            month: moment(row[0]).format('MM'),
-            year: moment(row[0]).format('YYYY'),
-            parameter: metrics[i].code,
-            parameter_description: metrics[i].description,
-            parameter_unit: metrics[i].unit,
-            parameter_full_name: `${metrics[i].description} (${
-              metrics[i].unit
-            })`,
-            value: parseFloat(r)
-          });
-
           messages.push(
             JSON.stringify({
               station_name: 'ROCHES POINT',

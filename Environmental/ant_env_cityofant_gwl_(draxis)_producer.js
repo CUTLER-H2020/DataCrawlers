@@ -1,41 +1,10 @@
 const XLSX = require('xlsx-extract').XLSX;
-const elasticsearch = require('elasticsearch');
-const moment = require('moment');
-var fs = require('fs');
-var path = require('path');
-var greekUtils = require('greek-utils');
-
 const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
 const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 
 const topic = kafka_topics.topics.ANT_ENV_CITYOFANT_GWL.topic;
 var messages = [];
-
-const client = new elasticsearch.Client({
-  host: 'localhost:9200'
-});
-
-var elIndex = {
-  index: {
-    _index: 'ant_env_cityofant_gwl_(draxis)',
-    _type: '_doc'
-  }
-};
-
-var elBody = [];
 var stations = [];
-
-const saveToElastic = elBody => {
-  client.bulk(
-    {
-      body: elBody
-    },
-    function(err, resp) {
-      if (err) console.log(err);
-      console.log('All files succesfully indexed!');
-    }
-  );
-};
 
 const extractStations = () => {
   let data = [];
@@ -69,19 +38,6 @@ const extractValues = (async () => {
         return station[0] == row[0];
       })[0];
       if (selectedStation && row[2] != undefined) {
-        elBody.push(elIndex);
-        elBody.push({
-          station_id: selectedStation[0].toString(),
-          station_name: selectedStation[9].toString(),
-          station_location: {
-            lat: selectedStation[11],
-            lon: selectedStation[10]
-          },
-          date: row[1],
-          peil_cor: row[2],
-          remarks: row[3].toString()
-        });
-
         messages.push(
           JSON.stringify({
             station_id: selectedStation[0].toString(),

@@ -1,10 +1,5 @@
 const XLSX = require('xlsx-extract').XLSX;
-const elasticsearch = require('elasticsearch');
 const moment = require('moment');
-var fs = require('fs');
-var path = require('path');
-var greekUtils = require('greek-utils');
-var breakpoints = require('../files/helpers/aqi_breakpoints');
 
 const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
 const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
@@ -12,17 +7,6 @@ const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 const topic =
   kafka_topics.topics.ANTA_ENV_WATERQUALITYFLOW_CITYOFANTALYA_MONTHLY.topic;
 var messages = [];
-
-const client = new elasticsearch.Client({
-  host: 'localhost:9200'
-});
-
-var elIndex = {
-  index: {
-    _index: 'anta_env_waterqualityflow_cityofantalya_monthly_draxis',
-    _type: '_doc'
-  }
-};
 
 const units = [
   { pollutant: 'BOD', unit: 'mg/L', DL: 5 },
@@ -51,25 +35,6 @@ const extractValues = (async () => {
       row.map((r, i) => {
         if (i > 3) {
           if (r) r = r.toString().indexOf('<') > -1 ? units[i - 4].DL : r;
-
-          elBody.push(elIndex);
-          elBody.push({
-            station_name: row[1],
-            station_location: {
-              lat: row[2],
-              lon: row[3]
-            },
-            date: moment(row[0]).format('YYYY/MM/DD'),
-            month: moment(row[0]).format('MM'),
-            year: moment(row[0]).format('YYYY'),
-            day: moment(row[0]).format('DD'),
-            parameter_name: units[i - 4].pollutant,
-            parameter_fullname: `${units[i - 4].pollutant} ${
-              units[i - 4].unit
-            }`,
-            unit: units[i - 4].unit,
-            value: r
-          });
 
           messages.push(
             JSON.stringify({

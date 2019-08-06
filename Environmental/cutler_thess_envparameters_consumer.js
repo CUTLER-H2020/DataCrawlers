@@ -13,7 +13,6 @@ consumer.on('message', function(message) {
   // retrieve item
   var item = JSON.parse(message.value);
   var date = moment(item.date, 'YYYY/MM/DD');
-  var visitors = item.visitors;
 
   // insert record in ES
   es_client.index(
@@ -34,7 +33,8 @@ consumer.on('message', function(message) {
         parameter_name: item.parameter_name,
         parameter_fullname: item.parameter_fullname,
         units: item.units,
-        value: item.value
+        value: item.value,
+        daily_aqi: daily_aqi ? daily_aqi : ''
       }
     },
     function(err, resp, status) {

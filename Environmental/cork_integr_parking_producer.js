@@ -1,28 +1,10 @@
 const XLSX = require('xlsx-extract').XLSX;
-const elasticsearch = require('elasticsearch');
-const moment = require('moment');
-var fs = require('fs');
-var path = require('path');
-var greekUtils = require('greek-utils');
 
 const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
 const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 
 const topic = kafka_topics.topics.CORK_INTEGR_PARKING.topic;
 var messages = [];
-
-var elIndex = {
-  index: {
-    _index: 'cork_integr_parking',
-    _type: '_doc'
-  }
-};
-
-const client = new elasticsearch.Client({
-  host: 'localhost:9200'
-});
-
-var elBody = [];
 
 const createIndex = async () => {
   await client.indices.create({
@@ -70,9 +52,6 @@ const extractValues = (async () => {
         'Revenues - Construction cost': row[8]
       };
       if (returnVal) {
-        elBody.push(elIndex);
-        elBody.push(returnVal);
-
         messages.push(JSON.stringify(returnVal));
       }
     })

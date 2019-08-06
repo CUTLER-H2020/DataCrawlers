@@ -1,8 +1,6 @@
 const XLSX = require('xlsx');
-const elasticsearch = require('elasticsearch');
 const moment = require('moment');
 var fs = require('fs');
-var path = require('path');
 var greekUtils = require('greek-utils');
 var breakpoints = require('../elastic/files/helpers/aqi_breakpoints');
 
@@ -11,10 +9,6 @@ const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 
 const topic = kafka_topics.topics.CUTLER_THESS_ENVPARAMETERS.topic;
 var messages = [];
-
-const client = new elasticsearch.Client({
-  host: 'localhost:9200'
-});
 
 fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
   if (err) {

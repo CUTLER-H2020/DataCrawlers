@@ -7,34 +7,37 @@ const moment = require('moment');
 
 var topic = kafka_topics.topics.ANTA_SOC_VISITORS_MONTHLY.topic;
 
-var consumer = kafka_consumer.create({topic});
+var consumer = kafka_consumer.create({ topic });
 
-consumer.on('message', function (message) {
-    // retrieve item
-    var item = JSON.parse(message.value);
-    var date =  moment(item.date, 'YYYY/MM/DD');
-    var visitors =  item.visitors;
+consumer.on('message', function(message) {
+  // retrieve item
+  var item = JSON.parse(message.value);
+  var date = moment(item.date, 'YYYY/MM/DD');
+  var visitors = item.visitors;
 
-    // insert record in ES
-    es_client.index({
+  // insert record in ES
+  es_client.index(
+    {
       index: topic,
       type: '_doc',
       id: date.format('YYYYMMDD'),
       body: {
-          "date": date.format('YYYY/MM/DD'),
-          "month": date.format('MM'),
-          "year": date.format('YYYY'),
-          "visitors": visitors,
+        date: date.format('YYYY/MM/DD'),
+        month: date.format('MM'),
+        year: date.format('YYYY'),
+        visitors: visitors
       }
-    }, function(err, resp, status) {
-        if (status == 200 || status == 201) {
-            console.info('Record ' + resp._id + ' was inserted successfully');
-        } else {
-            console.log(resp);
-        }
-    });
+    },
+    function(err, resp, status) {
+      if (status == 200 || status == 201) {
+        console.info('Record ' + resp._id + ' was inserted successfully');
+      } else {
+        console.log(resp);
+      }
+    }
+  );
 });
 
 consumer.on('error', function(error) {
-    console.error(error);
+  console.error(error);
 });
