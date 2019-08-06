@@ -52,6 +52,16 @@ var topics = {
     topic: 'rain_1',
     partitions: 6,
     replicationFactor: 3
+  },
+  CORK_INTEGR_PARKING: {
+    topic: 'cork_integr_parking',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  CORK_INTEGR_VISITORS: {
+    topic: 'cork_integr_visitors',
+    partitions: 6,
+    replicationFactor: 3
   }
 };
 
