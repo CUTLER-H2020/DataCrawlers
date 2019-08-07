@@ -1,9 +1,6 @@
 const XLSX = require('xlsx-extract').XLSX;
 const elasticsearch = require('elasticsearch');
 const moment = require('moment');
-var fs = require('fs');
-var path = require('path');
-var greekUtils = require('greek-utils');
 const data = require('./files/cork_max_visitors_revenues_yearly');
 
 const kafka_producer = require('./lib/Kafka/KafkaProducer.js');

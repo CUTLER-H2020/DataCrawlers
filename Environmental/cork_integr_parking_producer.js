@@ -56,7 +56,7 @@ const extractValues = (async () => {
       }
     })
     .on('end', function(err) {
-      if (elBody.length) saveToElastic(elBody);
+      if (messages.length) saveToElastic(messages);
       console.log('Data succesfully indexed');
     });
 })();

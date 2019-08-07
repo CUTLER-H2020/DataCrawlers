@@ -1,5 +1,5 @@
-// const XLSX = require('xlsx-extract').XLSX;
-const XLSX = require('xlsx');
+const XLSX = require('xlsx-extract').XLSX;
+// const XLSX = require('xlsx');
 
 const moment = require('moment');
 var fs = require('fs');
@@ -8,30 +8,6 @@ const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
 const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 
 const topic = kafka_topics.topics.CUTLER_THESS_SPEEDMEASUREMENTS.topic;
-
-client.indices.create(
-  {
-    index: 'cork_soc_visitors_daily_draxis',
-    body: {
-      settings: {
-        number_of_shards: 1
-      },
-      mappings: {
-        _doc: {
-          properties: {
-            station_location: {
-              type: 'geo_point'
-            }
-          }
-        }
-      }
-    }
-  },
-  (err, resp) => {
-    // if (err) console.log(err);
-    console.log('Index Created Succesfully');
-  }
-);
 
 fs.readdir(__dirname + '/files', function(err, files) {
   if (err) {

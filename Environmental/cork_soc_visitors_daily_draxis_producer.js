@@ -10,7 +10,7 @@ var messages = [];
 const extractValues = (async () => {
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/visitor_numbers_cork.xlsx', {
+    .extract(__dirname + '/files/visitor_numbers_cork.xlsx', {
       sheet_nr: 0,
       ignore_header: 1
     })

@@ -10,7 +10,7 @@ const extractStations = () => {
   let data = [];
   return new Promise((resolve, reject) => {
     new XLSX()
-      .extract(__dirname + '/Export_CUTLER_v40.xlsx', {
+      .extract(__dirname + '/files/Export_CUTLER_v40.xlsx', {
         sheet_nr: 0,
         ignore_header: 1
       })

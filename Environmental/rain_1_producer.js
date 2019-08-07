@@ -41,8 +41,6 @@ const saveToElastic = async (index, elBody) => {
   );
 };
 
-createIndex();
-
 const extractValues = (async () => {
   let index = 0;
   console.log('Opening file');

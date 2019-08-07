@@ -1,8 +1,8 @@
-const XLSX = require('xlsx');
+const XLSX = require('xlsx-extract').XLSX;
 const moment = require('moment');
 var fs = require('fs');
 var greekUtils = require('greek-utils');
-var breakpoints = require('../elastic/files/helpers/aqi_breakpoints');
+var breakpoints = require('./files/helpers/aqi_breakpoints');
 
 const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
 const kafka_topics = require('./lib/Kafka/KafkaTopics.js');

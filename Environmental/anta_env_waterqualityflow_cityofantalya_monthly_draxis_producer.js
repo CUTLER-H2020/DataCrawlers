@@ -27,7 +27,7 @@ var elBody = [];
 const extractValues = (async () => {
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/anta_water_quality_flow_2018_2019.xlsx', {
+    .extract(__dirname + '/files/anta_water_quality_flow_2018_2019.xlsx', {
       sheet_nr: 0,
       ignore_header: 1
     })
