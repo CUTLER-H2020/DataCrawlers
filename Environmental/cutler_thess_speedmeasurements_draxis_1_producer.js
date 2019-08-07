@@ -1,4 +1,4 @@
-const XLSX = require('xlsx-extract').XLSX;
+const XLSX = require('xlsx');
 // const XLSX = require('xlsx');
 
 const moment = require('moment');
@@ -23,11 +23,11 @@ fs.readdir(__dirname + '/files', function(err, files) {
       cellDates: true,
       cellStyles: true
     });
+    var messages = [];
 
     workbook.SheetNames.map(sheet => {
       // console.log(workbook.Sheets[sheet]);
       var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
-      var messages = [];
       xlData.map(row => {
         messages.push(
           JSON.stringify({

@@ -1,4 +1,4 @@
-const XLSX = require('xlsx-extract').XLSX;
+const XLSX = require('xlsx');
 const moment = require('moment');
 var fs = require('fs');
 var greekUtils = require('greek-utils');
