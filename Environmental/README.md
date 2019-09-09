@@ -48,7 +48,7 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 | [antalya_env_cityofantalya_perminute_batch.py](antalya_env_cityofantalya_perminute_batch.py)                           | python     | URL       | -                  | -           | -                    |
 | [cork_env_met_w_daily_draxis.js](cork_env_met_w_daily_draxis.js)                                                       | javascript | -         | -                  | -           | -                    |
 | [cork_soc_visitors_daily_draxis.js](cork_soc_visitors_daily_draxis.js)                                                 | javascript | -         | -                  | -           | -                    |
-| [cutler_thess_speedmeasurements_draxis_1.js](cutler_thess_speedmeasurements_draxis.js)                                   | javascript | -         | -                  | -           | -                    |
+| [cutler_thess_speedmeasurements_draxis_1.js](cutler_thess_speedmeasurements_draxis_1.js)                                   | javascript | -         | -                  | -           | -                    |
 | [stations_crawler.js](stations_crawler.js)                                                                             | javascript | -         | -                  | -           | -                    |
 | [thess_env_cityofthess_dailyyearly.py](thess_env_cityofthess_dailyyearly.py)                                           | python     | URL+EXCEL | -                  | -           | -                    |
 | [thess_env_imet_speed_15min.py](thess_env_imet_speed_15min.py)                                                         | python     | URL+EXCEL | Yes                | Yes         | -                    |
