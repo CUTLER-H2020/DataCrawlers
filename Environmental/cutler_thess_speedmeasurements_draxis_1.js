@@ -50,11 +50,14 @@ fs.readdir(__dirname + '/files', function(err, files) {
     console.log('Opening file: ' + file);
     var elBody = [];
 
-    var workbook = XLSX.readFile(__dirname + '/files/' + file, {
-      type: 'binary',
-      cellDates: true,
-      cellStyles: true
-    });
+    var workbook = XLSX.readFile(
+      __dirname + '/files/thess_speedmeasurements_files/' + file,
+      {
+        type: 'binary',
+        cellDates: true,
+        cellStyles: true
+      }
+    );
 
     workbook.SheetNames.map(sheet => {
       // console.log(workbook.Sheets[sheet]);

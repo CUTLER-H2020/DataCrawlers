@@ -7,7 +7,7 @@ const kafka_producer = require('./lib/Kafka/KafkaProducer.js');
 const kafka_topics = require('./lib/Kafka/KafkaTopics.js');
 
 const topic = kafka_topics.topics.ANTA_SOC_VISITORS_MONTHLY.topic;
-const xlsx_file = __dirname + '/visitor_numbers.xlsx';
+const xlsx_file = __dirname + '/files/visitor_numbers.xlsx';
 
 var messages = [];
 
@@ -33,20 +33,25 @@ const extractValues = (async () => {
         visitors: parseInt(row[1])
       };
 
-      console.log('Reading row - date: ' + message.date + ' | visitors: ' + message.visitors);
-      
+      console.log(
+        'Reading row - date: ' +
+          message.date +
+          ' | visitors: ' +
+          message.visitors
+      );
+
       // push row values as "message"
       messages.push(JSON.stringify(message));
     })
     .on('end', function(err) {
-      kafka_producer.send({topic, messages}, function (err, data) {
+      kafka_producer.send({ topic, messages }, function(err, data) {
         if (!err) {
-            console.log('All messages succesfully sent!');
+          console.log('All messages succesfully sent!');
         } else {
-            console.log('Failed to send the messages!');
-            console.log(err)
+          console.log('Failed to send the messages!');
+          console.log(err);
         }
-    
+
         kafka_producer.client.close();
       });
     });

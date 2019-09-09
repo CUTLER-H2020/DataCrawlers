@@ -49,7 +49,6 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 | [cork_env_met_w_daily_draxis.js](cork_env_met_w_daily_draxis.js)                                                       | javascript | -         | -                  | -           | -                    |
 | [cork_soc_visitors_daily_draxis.js](cork_soc_visitors_daily_draxis.js)                                                 | javascript | -         | -                  | -           | -                    |
 | [cutler_thess_speedmeasurements_draxis.js](cutler_thess_speedmeasurements_draxis.js)                                   | javascript | -         | -                  | -           | -                    |
-| [stations_crawler.js](stations_crawler.js)                                                                             | javascript | -         | -                  | -           | -                    |
 | [thess_env_cityofthess_dailyyearly.py](thess_env_cityofthess_dailyyearly.py)                                           | python     | URL+EXCEL | -                  | -           | -                    |
 | [thess_env_imet_speed_15min.py](thess_env_imet_speed_15min.py)                                                         | python     | URL+EXCEL | Yes                | Yes         | -                    |
 | [thess_env_imet_speed_15min_batch.py](thess_env_imet_speed_15min_batch.py)                                             | python     | URL+EXCEL | Yes                | -           | -                    |
@@ -184,6 +183,7 @@ node name_of_the_script.js
 #### Environment Variables
 
 The following environment variables are required:
+
 - KAFKA_HOST
 - ELASTICSEARCH_HOST
 
@@ -204,5 +204,3 @@ You can start a consumer by issuing command `node anta_soc_visitors_monthly_drax
 #### Invoke Producer
 
 Run the producer to send data to the kafka topic by issuing command `node anta_soc_visitors_monthly_draxis_producer.js`
-
-
