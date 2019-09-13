@@ -1,5 +1,6 @@
 # CUTLER Data Crawlers
-This is the official repository of data crawlers and parsers developed for [CUTLER project](https://www.cutler-h2020.eu/). 
+This is the official repository of data crawlers and parsers developed for [CUTLER project](https://www.cutler-h2020.eu/).
+In this repo you will find the crawlers and their technical documentation. Please, refer also to the [User Manual for Data Crawling Software](https://www.cutler-h2020.eu/download/664)
 
 
 ## Project Structure
