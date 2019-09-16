@@ -1,8 +1,0 @@
-tesseract
-pytesseract
-Image
-Pillow
-requests
-lxml
-elasticsearch
-kafka-python
