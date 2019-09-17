@@ -4,13 +4,15 @@ This part of the repository gathers all the crawlers for environmental data deve
 
 ## Structure of the folder
 
-There are folders created for some data sources, so the crawler and other related software, as well as instructions.
+There are folders created for the crawlers of some data sources, that contain the crawler and other related software, as well as the corresponding instructions.
 The rest of the crawlers are files listed in this folder, mainly written in python or in R. There is a folder that contains the requirements for those python crawlers.
 
-Description of the folders:
+#### Description of the folders:
 
 - [IMEC Data Crawler](ANT_ENV_IMEC/): java based crawler that gets data from API
 - [requirements](requirements/): requiremenst for python crawlers listed
+
+#### Description of the crawlers:
 
 Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
 
