@@ -1,7 +1,6 @@
 # Crawler for Eurostat
 
-DUTH's crawler to download data from Eurostat.
-The crawler downloads data for several economic indicators from Eurostat for the 4 pilot-cities and their regions (Antalya, Antwerp, Cork, Thessaloniki).
+Economic data collected from Eurostat to assess the regional economic impact of planned policies in the four pilot cities, i.e. Antalya, Antwerp, Cork, and Thessaloniki. The data is used in the context of WP4 for economics-related analytics and data visualisations.
 The table bellow presents both the economic indicators and the fields used by the crawler:
 
 | Dataset  | Fields |
