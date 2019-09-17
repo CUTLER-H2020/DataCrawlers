@@ -14,44 +14,44 @@ Description of the folders:
 
 Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
 
-| Crawler                                                                                                                | Language   | Origin    | Credentials needed | Schedulling | Notes                |
-| ---------------------------------------------------------------------------------------------------------------------- | ---------- | --------- | ------------------ | ----------- | -------------------- |
-| [CORK*ENV* MARINEINSTITUTE1_DAILY_1.py](CORK_ENV_%20MARINEINSTITUTE1_DAILY_1.py)                                       | python     | URL       | -                  | -           | -                    |
-| [CORK*ENV* MARINEINSTITUTE2_DAILY_1.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_1.py)                                       | python     | URL       | -                  | -           | -                    |
-| [CORK*ENV* MARINEINSTITUTE2_DAILY_2.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_2.py)                                       | python     | URL       | -                  | -           | -                    |
-| [CORK*ENV* MARINEINSTITUTE2_DAILY_3.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_3.py)                                       | python     | URL       | -                  | -           | -                    |
-| [CORK*ENV* MARINEINSTITUTE2_DAILY_4.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_4.py)                                       | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_IDO_DAILY_1.py](CORK_ENV_IDO_DAILY_1.py)                                                                     | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_IDO_DAILY_2.py](CORK_ENV_IDO_DAILY_2.py)                                                                     | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_MET_HOURLY_1.py](CORK_ENV_MET_HOURLY%20_1.py)                                                                | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_MET_W_DAILY.py](CORK_ENV_MET_W_DAILY.py)                                                                     | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_NMCI Hourly_3.py](CORK_ENV_NMCI%20_Hourly_3.py)                                                              | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_OPW_EPA_DAILY_1.py](CORK_ENV_OPW_EPA_DAILY_1.py)                                                             | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_OPW_EPA_DAILY_2.py](CORK_ENV_OPW_EPA_DAILY_2.py)                                                             | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_OPW_EPA_DAILY_3.py](CORK_ENV_OPW_EPA_DAILY_3.py)                                                             | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_OPW_MINUTE_1.py](CORK_ENV_OPW_MINUTE_1.py)                                                                   | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_OPW_WL_15min.js](CORK_ENV_OPW_WL_15min.js)                                                                   | javascript | -         | -                  | -           | -                    |
-| [CORK_ENV_OPW_WL_15min.py](CORK_ENV_OPW_WL_15min.py)                                                                   | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_SEAI_DAILY_1_1.py](CORK_ENV_SEAI_DAILY_1_1.py)                                                               | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_SEAI_DAILY_1_2.py](CORK_ENV_SEAI_DAILY_1_2.py)                                                               | python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_SEAI_DAILY_1_3.py](CORK_ENV_SEAI_DAILY_1_3.py)                                                               | python     | URL       | -                  | -           | -                    |
-| [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)                                         | python     | SHP FILE  |                    |             | shapefile to GeoJSON |  |
-| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)                                                                   | python     | EXCEL     | -                  | -           | -                    | - |
-| [ant*env_cityofant_gwl*(draxis).js](<ant_env_cityofant_gwl_(draxis).js>)                                               | javascript | -         | -                  | -           | -                    |
-| [ant_env_cityofant_histprec.py](ant_env_cityofant_histprec.py)                                                         | python     | EXCEL     | -                  | -           | -                    |
-| [anta*env_airquality_envmin_hourly*(DRAXIS).js](<anta_env_airquality_envmin_hourly_(DRAXIS).js>)                       | javascript | -         | -                  | -           | -                    |
-| [anta_env_cityofantalya2_monthly.py](anta_env_cityofantalya2_monthly.py)                                               | python     | EXCEL     | -                  | -           | -                    |
-| [anta_env_waterqualityflow_cityofantalya_monthly.py](anta_env_waterqualityflow_cityofantalya_monthly.py)               | python     | EXCEL     | -                  | -           | -                    |
-| [anta_env_waterqualityflow_cityofantalya_monthly_draxis.js](anta_env_waterqualityflow_cityofantalya_monthly_draxis.js) | javascript | -         | -                  | -           | -                    |
-| [anta_soc_visitors_monthly_draxis.js](anta_soc_visitors_monthly_draxis.js)                                             | javascript | -         | -                  | -           | -                    |
-| [antalya_env_cityofantalya_perminute.py](antalya_env_cityofantalya_perminute.py)                                       | python     | URL       | -                  | Yes         | -                    |
-| [antalya_env_cityofantalya_perminute_batch.py](antalya_env_cityofantalya_perminute_batch.py)                           | python     | URL       | -                  | -           | -                    |
-| [cork_env_met_w_daily_draxis.js](cork_env_met_w_daily_draxis.js)                                                       | javascript | -         | -                  | -           | -                    |
-| [cork_soc_visitors_daily_draxis.js](cork_soc_visitors_daily_draxis.js)                                                 | javascript | -         | -                  | -           | -                    |
-| [cutler_thess_speedmeasurements_draxis.js](cutler_thess_speedmeasurements_draxis.js)                                   | javascript | -         | -                  | -           | -                    |
-| [thess_env_cityofthess_dailyyearly.py](thess_env_cityofthess_dailyyearly.py)                                           | python     | URL+EXCEL | -                  | -           | -                    |
-| [thess_env_imet_speed_15min.py](thess_env_imet_speed_15min.py)                                                         | python     | URL+EXCEL | Yes                | Yes         | -                    |
-| [thess_env_imet_speed_15min_batch.py](thess_env_imet_speed_15min_batch.py)                                             | python     | URL+EXCEL | Yes                | -           | -                    |
+| Crawler | Description                                                                                                               | Language   | Origin    | Credentials needed | Schedulling | Notes                |
+| -------------------------------------------------------------------------------------------------|--------------------- | ---------- | --------- | ------------------ | ----------- | -------------------- |
+| [CORK_ENV_MARINEINSTITUTE1_DAILY_1.py](CORK_ENV_%20MARINEINSTITUTE1_DAILY_1.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_MARINEINSTITUTE2_DAILY_1.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_1.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_MARINEINSTITUTE2_DAILY_2.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_2.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_MARINEINSTITUTE2_DAILY_3.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_3.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_MARINEINSTITUTE2_DAILY_4.py](CORK_ENV_%20MARINEINSTITUTE2_DAILY_4.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_IDO_DAILY_1.py](CORK_ENV_IDO_DAILY_1.py) | ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_IDO_DAILY_2.py](CORK_ENV_IDO_DAILY_2.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_MET_HOURLY_1.py](CORK_ENV_MET_HOURLY%20_1.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_MET_W_DAILY.py](CORK_ENV_MET_W_DAILY.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_NMCI Hourly_3.py](CORK_ENV_NMCI%20_Hourly_3.py) | ---------- | python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_OPW_EPA_DAILY_1.py](CORK_ENV_OPW_EPA_DAILY_1.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_OPW_EPA_DAILY_2.py](CORK_ENV_OPW_EPA_DAILY_2.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_OPW_EPA_DAILY_3.py](CORK_ENV_OPW_EPA_DAILY_3.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_OPW_MINUTE_1.py](CORK_ENV_OPW_MINUTE_1.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_OPW_WL_15min.js](CORK_ENV_OPW_WL_15min.js)| ---------- | javascript | -         | -                  | -           | -                    |
+| [CORK_ENV_OPW_WL_15min.py](CORK_ENV_OPW_WL_15min.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_SEAI_DAILY_1_1.py](CORK_ENV_SEAI_DAILY_1_1.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_SEAI_DAILY_1_2.py](CORK_ENV_SEAI_DAILY_1_2.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_SEAI_DAILY_1_3.py](CORK_ENV_SEAI_DAILY_1_3.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)| ----------| python     | SHP FILE  |                    |             | shapefile to GeoJSON |  |
+| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)| ----------| python     | EXCEL     | -                  | -           | -                    | - |
+| [ant*env_cityofant_gwl*(draxis).js](<ant_env_cityofant_gwl_(draxis).js>)| ----------| javascript | -         | -                  | -           | -                    |
+| [ant_env_cityofant_histprec.py](ant_env_cityofant_histprec.py)| ----------| python     | EXCEL     | -                  | -           | -                    |
+| [anta*env_airquality_envmin_hourly*(DRAXIS).js](<anta_env_airquality_envmin_hourly_(DRAXIS).js>)| ----------| javascript | -         | -                  | -           | -                    |
+| [anta_env_cityofantalya2_monthly.py](anta_env_cityofantalya2_monthly.py)| ----------| python     | EXCEL     | -                  | -           | -                    |
+| [anta_env_waterqualityflow_cityofantalya_monthly.py](anta_env_waterqualityflow_cityofantalya_monthly.py)| ----------| python     | EXCEL     | -                  | -           | -                    |
+| [anta_env_waterqualityflow_cityofantalya_monthly_draxis.js](anta_env_waterqualityflow_cityofantalya_monthly_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
+| [anta_soc_visitors_monthly_draxis.js](anta_soc_visitors_monthly_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
+| [antalya_env_cityofantalya_perminute.py](antalya_env_cityofantalya_perminute.py)| ---------- | python     | URL       | -                  | Yes         | -                    |
+| [antalya_env_cityofantalya_perminute_batch.py](antalya_env_cityofantalya_perminute_batch.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [cork_env_met_w_daily_draxis.js](cork_env_met_w_daily_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
+| [cork_soc_visitors_daily_draxis.js](cork_soc_visitors_daily_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
+| [cutler_thess_speedmeasurements_draxis.js](cutler_thess_speedmeasurements_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
+| [thess_env_cityofthess_dailyyearly.py](thess_env_cityofthess_dailyyearly.py)| ----------| python     | URL+EXCEL | -                  | -           | -                    |
+| [thess_env_imet_speed_15min.py](thess_env_imet_speed_15min.py)| ----------| python     | URL+EXCEL | Yes                | Yes         | -                    |
+| [thess_env_imet_speed_15min_batch.py](thess_env_imet_speed_15min_batch.py)| ----------| python     | URL+EXCEL | Yes                | -           | -                    |
 
 ## Python Crawlers
 
