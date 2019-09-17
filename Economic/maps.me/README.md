@@ -1,7 +1,6 @@
 # Crawler for maps.me
 
-DUTH's crawler to download data from maps.me
-The crawler downloads several information regarding some points of interest for the 4 pilot-cities (Antalya, Antwerp, Cork, Thessaloniki)
+The crawler collects data from maps.me app (https://maps.me/). It includes information about several point of interest categories (Shops, Food, Attractions, Entertainment etc.) for Thessaloniki, Antalya, Antwerp and Cork. The data is analysed in WP4 to provide insights about the socioeconomic activities in CUTLER pilot cities. 
 The table bellow presents the fields used by the crawler:
 
 | Field on maps.me  | Description |
