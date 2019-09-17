@@ -10,9 +10,7 @@ The rest of the crawlers are files listed in this folder, mainly written in pyth
 #### Description of the folders:
 
 * [eurostat](eurostat/): crawler from eurostat databases
-* [immoscoop.be](immoscoop.be/): crawler from immoscoop.be and indexing for elasticsearch, as well as instructions
 * [maps.me](maps.me/): crawler from maps.me and indexing for elasticsearch, as well as instructions
-* [spitogatos.gr](spitogatos.gr/): crawler from spitogatos.gr and indexing for elasticsearch, as well as instructions
 * [requirements](requirements/): requiremenst for python crawlers listed 
 
 #### Description of the crawlers:
@@ -29,7 +27,9 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 | [thess_eco_thessalokini_municipality_budget.py](thess_eco_thessalokini_municipality_budget.py)|------------- |  python | URL||Yes||
 | [thess_eco_thessalokini_municipality_budget_batch.py](thess_eco_thessalokini_municipality_budget_batch.py)|------------- |  python | URL||||
 | [thess_eco_thessaloniki_parking_data.py](thess_eco_thessaloniki_parking_data.py)|------------- |  python | EXCEL ||||
-| [thess_eco_thessaloniki_traffic_fines.p](thess_eco_thessaloniki_traffic_fines.py)|------------- |  python | EXCEL ||||
+| [thess_eco_thessaloniki_traffic_fines.py](thess_eco_thessaloniki_traffic_fines.py)|------------- |  python | EXCEL ||||
+| [Eurostat Crawler](eurostat)| The Eurostat Crawler collects data from Eurostat for the four pilot cities, i.e. Antalya, Antwerp, Cork, and Thessaloniki. The data is used in the context of WP4 for economics-related analytics and data visualisations.  |  python | JSON | NO |||
+| [Maps.me](maps.me)| The crawler collects data from maps.me app for the pilot cities of Thessaloniki, Antalya, Antwerp and Cork. |  python | NDJSON | NO |||
 
 ## Python Crawlers
 General instructions for python crawlers. Further instructions can be found under each data crawler folder
