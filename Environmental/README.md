@@ -2,7 +2,7 @@
 
 This part of the repository gathers all the crawlers for environmental data developed for CUTLER, as well as othere related software.
 
-## Structure of the folder
+## Structure of this folder
 
 There are folders created for the crawlers of some data sources, that contain the crawler and other related software, as well as the corresponding instructions.
 The rest of the crawlers are files listed in this folder, mainly written in python or in R. There is a folder that contains the requirements for those python crawlers.
