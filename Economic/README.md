@@ -7,7 +7,7 @@ This part of the repository gathers all the crawlers for economic data developed
 There are folders created for some data sources, so the crawler and other related software, as well as instructions. 
 The rest of the crawlers are files listed in this folder, mainly written in python or in R. There is a folder that contains the requirements for those python crawlers.
 
-Description of the folders:
+#### Description of the folders:
 
 * [eurostat](eurostat/): crawler from eurostat databases
 * [immoscoop.be](immoscoop.be/): crawler from immoscoop.be and indexing for elasticsearch, as well as instructions
@@ -15,7 +15,7 @@ Description of the folders:
 * [spitogatos.gr](spitogatos.gr/): crawler from spitogatos.gr and indexing for elasticsearch, as well as instructions
 * [requirements](requirements/): requiremenst for python crawlers listed 
 
-Description of the crawlers:
+#### Description of the crawlers:
 
 Most of the names of the crawlers are descriptive. They contain the name of the city and some reference to the data set they are crawling.
 
