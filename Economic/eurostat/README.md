@@ -1,7 +1,7 @@
 # Crawler for Eurostat
 
-DUTH's crawler to download data from Eurostat
-The crawler downloads data for several economic indicators from Eurostat for the 4 pilot-cities and their regions (Antalya, Antwerp, Cork, Thessaloniki)
+DUTH's crawler to download data from Eurostat.
+The crawler downloads data for several economic indicators from Eurostat for the 4 pilot-cities and their regions (Antalya, Antwerp, Cork, Thessaloniki).
 The table bellow presents both the economic indicators and the fields used by the crawler:
 
 | Dataset  | Fields |
@@ -40,7 +40,8 @@ The table bellow describes the fields used by the crawler
 | cities  | geopolitical entity (declaring)  |
 | indic_ur  | urban audit indicator  |
 
-## Getting Started
+
+## Technical Information
 
 These instructions will get you a copy of the project up and running on your local machine. The crawler downloads the data from Eurostat and saves them in JSON files.
 
