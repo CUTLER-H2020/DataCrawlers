@@ -37,8 +37,8 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 | [CORK_ENV_SEAI_DAILY_1_1.py](CORK_ENV_SEAI_DAILY_1_1.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_SEAI_DAILY_1_2.py](CORK_ENV_SEAI_DAILY_1_2.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_SEAI_DAILY_1_3.py](CORK_ENV_SEAI_DAILY_1_3.py)| ----------| python     | URL       | -                  | -           | -                    |
-| [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)| ----------| python     | SHP FILE  |                    |             | shapefile to GeoJSON |  |
-| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)|Collects historical dataset of groundwater levels on 460 different sites in Antwerp| python     | EXCEL     | -                  | -           | -                    | Needs raw data in file|
+| [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)| ----------| python     | SHP FILE  |                    |             | shapefile to GeoJSON | 
+| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)|Collects historical dataset of groundwater levels on 460 different sites in Antwerp| python     | EXCEL     | -                  | -           | Needs raw data in file|
 | [ant*env_cityofant_gwl*(draxis).js](<ant_env_cityofant_gwl_(draxis).js>)| ----------| javascript | -         | -                  | -           | -                    |
 | [ant_env_cityofant_histprec.py](ant_env_cityofant_histprec.py)|Collects measurements from twelve rain gauges located at the city of Antwerp| python     | EXCEL     | -                  | -           |Needs raw data in file|
 | [anta*env_airquality_envmin_hourly*(DRAXIS).js](<anta_env_airquality_envmin_hourly_(DRAXIS).js>)| ----------| javascript | -         | -                  | -           | -                    |
