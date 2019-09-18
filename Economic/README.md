@@ -19,15 +19,15 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 
 |Crawler|Description|Language|Origin|Credentials needed| Schedulling|Notes|
 | ------------- |------------- | ------------- | ------------- | ------------- |------------- |------------|
-| [OECD.R](OECD.R)|------------- | R |API|||OECD databases|
-| [anta_eco_several_codes.py](anta_eco_several_codes.py)| ------------- |python |EXCEL||||
-| [antalya_econ_cityofantalya_city...pasengernumber_monthly.py](antalya_econ_cityofantalya_cityzonepuplictransportationpasengernumber_monthly.py)|------------- |  python |EXCEL ||||
-| [antalya_econ_cityofantalya_shopsrentearn_year.py](antalya_econ_cityofantalya_shopsrentearn_year.py)|------------- |  python|EXCEL||||
-| [cork_eco_visitors_daily.py](cork_eco_visitors_daily.py)|------------- |  python|EXCEL||||
-| [thess_eco_thessalokini_municipality_budget.py](thess_eco_thessalokini_municipality_budget.py)|------------- |  python | URL||Yes||
-| [thess_eco_thessalokini_municipality_budget_batch.py](thess_eco_thessalokini_municipality_budget_batch.py)|------------- |  python | URL||||
-| [thess_eco_thessaloniki_parking_data.py](thess_eco_thessaloniki_parking_data.py)|------------- |  python | EXCEL ||||
-| [thess_eco_thessaloniki_traffic_fines.py](thess_eco_thessaloniki_traffic_fines.py)|------------- |  python | EXCEL ||||
+| [OECD.R](OECD.R)|Collects data for the four pilots from OECD statistics related to employment, Labour Force, GDP, GVA and Regional Income| R |API|No|No||
+| [anta_eco_several_codes.py](anta_eco_several_codes.py)| Parses economical data from Antalya related to the Dude Waterfall recreation area|python |EXCEL|No|No|Needs raw data in file (private)|
+| [antalya_econ_cityofantalya_city...pasengernumber_monthly.py](antalya_econ_cityofantalya_cityzonepuplictransportationpasengernumber_monthly.py)|Parses data from Antalya related to public transportation |  python |EXCEL |No|No|Needs raw data in file (private)|
+| [antalya_econ_cityofantalya_shopsrentearn_year.py](antalya_econ_cityofantalya_shopsrentearn_year.py)| Parses data from Antalya related to economical activity in Duden Waterfall Area |  python|EXCEL|No|No|Needs raw data in file (private)|
+| [cork_eco_visitors_daily.py](cork_eco_visitors_daily.py)|Collects data related to visitors in the Camden Fort Meagher area|  python|EXCEL|||Needs raw data in file|
+| [thess_eco_thessalokini_municipality_budget.py](thess_eco_thessalokini_municipality_budget.py)|Collects updated data from Thessaloniki municipal budget from https://gaiacrmkea.c-gaia.gr/city_thessaloniki/index.php   |  python | URL|No|Yes||
+| [thess_eco_thessalokini_municipality_budget_batch.py](thess_eco_thessalokini_municipality_budget_batch.py)|Collects historical data from Thessaloniki municipal budget from https://gaiacrmkea.c-gaia.gr/city_thessaloniki/index.php|  python | URL|No|No||
+| [thess_eco_thessaloniki_parking_data.py](thess_eco_thessaloniki_parking_data.py)|Collects data related to parking in Thessaloniki|  python | EXCEL |No|No|Needs raw data in file|
+| [thess_eco_thessaloniki_traffic_fines.py](thess_eco_thessaloniki_traffic_fines.py)|Collects data related to traffic fines in Thessaloniki|  python | EXCEL |No|No|Needs raw data in file|
 | [Eurostat Crawler](eurostat)| The Eurostat Crawler collects data from Eurostat for the four pilot cities, i.e. Antalya, Antwerp, Cork, and Thessaloniki. The data is used in the context of WP4 for economics-related analytics and data visualisations.  |  python | JSON | NO |||
 | [Maps.me](maps.me)| The crawler collects data from maps.me app for the pilot cities of Thessaloniki, Antalya, Antwerp and Cork. |  python | NDJSON | NO |||
 
