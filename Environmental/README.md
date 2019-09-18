@@ -37,23 +37,23 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 | [CORK_ENV_SEAI_DAILY_1_1.py](CORK_ENV_SEAI_DAILY_1_1.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_SEAI_DAILY_1_2.py](CORK_ENV_SEAI_DAILY_1_2.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_SEAI_DAILY_1_3.py](CORK_ENV_SEAI_DAILY_1_3.py)| ----------| python     | URL       | -                  | -           | -                    |
-| [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)| ----------| python     | SHP FILE  |                    |             | shapefile to GeoJSON | 
+| [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)| Collects data associated to maps in shapefile format into GeoJSON format| python     | SHP FILE  |                    |             | shapefiles are needed | 
 | [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)|Collects historical dataset of groundwater levels on 460 different sites in Antwerp| python     | EXCEL     | -                  | -           | Needs raw data in file|
 | [ant*env_cityofant_gwl*(draxis).js](<ant_env_cityofant_gwl_(draxis).js>)| ----------| javascript | -         | -                  | -           | -                    |
 | [ant_env_cityofant_histprec.py](ant_env_cityofant_histprec.py)|Collects measurements from twelve rain gauges located at the city of Antwerp| python     | EXCEL     | -                  | -           |Needs raw data in file|
 | [anta*env_airquality_envmin_hourly*(DRAXIS).js](<anta_env_airquality_envmin_hourly_(DRAXIS).js>)| ----------| javascript | -         | -                  | -           | -                    |
-| [anta_env_cityofantalya2_monthly.py](anta_env_cityofantalya2_monthly.py)| ----------| python     | EXCEL     | -                  | -           | Needs raw data in file|
-| [anta_env_waterqualityflow_cityofantalya_monthly.py](anta_env_waterqualityflow_cityofantalya_monthly.py)| ----------| python     | EXCEL     | -                  | -           | Needs raw data in file|
+| [anta_env_cityofantalya2_monthly.py](anta_env_cityofantalya2_monthly.py)|  Collects measurements from water samples taken from 8 points of the Duden Brook| python     | EXCEL     | -                  | -           | Needs raw data in file|
+| [anta_env_waterqualityflow_cityofantalya_monthly.py](anta_env_waterqualityflow_cityofantalya_monthly.py)|Collects historical data on measurements from water samples (quality, flow and velocity) taken from 6 points of the Duden Brook| python     | EXCEL     | -                  | -           | Needs raw data in file|
 | [anta_env_waterqualityflow_cityofantalya_monthly_draxis.js](anta_env_waterqualityflow_cityofantalya_monthly_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
 | [anta_soc_visitors_monthly_draxis.js](anta_soc_visitors_monthly_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
-| [antalya_env_cityofantalya_perminute.py](antalya_env_cityofantalya_perminute.py)| ---------- | python     | URL       | -                  | Yes         | -                    |
-| [antalya_env_cityofantalya_perminute_batch.py](antalya_env_cityofantalya_perminute_batch.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [antalya_env_cityofantalya_perminute.py](antalya_env_cityofantalya_perminute.py)| Collects updated information on historical Air Quality Measurements from Station of the Ministry of Environment and Urbanism  (http://www.havaizleme.gov.tr/Default.ltr.aspx)| python     | URL       | -                  | Yes         | -                    |
+| [antalya_env_cityofantalya_perminute_batch.py](antalya_env_cityofantalya_perminute_batch.py)|Collects historical Air Quality Measurements from Station of the Ministry of Environment and Urbanism (http://www.havaizleme.gov.tr/Default.ltr.aspx)| python     | URL       | -                  | -           | -                    |
 | [cork_env_met_w_daily_draxis.js](cork_env_met_w_daily_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
 | [cork_soc_visitors_daily_draxis.js](cork_soc_visitors_daily_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
 | [cutler_thess_speedmeasurements_draxis.js](cutler_thess_speedmeasurements_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
-| [thess_env_cityofthess_dailyyearly.py](thess_env_cityofthess_dailyyearly.py)| ----------| python     | URL+EXCEL | -                  | -           | -                    |
-| [thess_env_imet_speed_15min.py](thess_env_imet_speed_15min.py)| ----------| python     | URL+EXCEL | Yes                | Yes         | -                    |
-| [thess_env_imet_speed_15min_batch.py](thess_env_imet_speed_15min_batch.py)| ----------| python     | URL+EXCEL | Yes                | -           | -                    |
+| [thess_env_cityofthess_dailyyearly.py](thess_env_cityofthess_dailyyearly.py)|Collects historical data on measurement of air pollution from six air quality monitoring stations located at the city of Thessaloniki (Thessaloniki Open Data Portal)| python     | URL+EXCEL | -                  | -           | -                    |
+| [thess_env_imet_speed_15min.py](thess_env_imet_speed_15min.py)|Updates  data of vehicles’ speed for four (4) roads of Thessaloniki| python     | URL+EXCEL | Yes                | Yes         | -                    |
+| [thess_env_imet_speed_15min_batch.py](thess_env_imet_speed_15min_batch.py)| Collects historic data of vehicles’ speed for four (4) roads of Thessaloniki| python     | URL+EXCEL | Yes                | -           | -                    |
 
 ## Python Crawlers
 
