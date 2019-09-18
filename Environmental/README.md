@@ -26,24 +26,24 @@ Most of the names of the crawlers are descriptive. They contain the name of the 
 | [CORK_ENV_IDO_DAILY_1.py](CORK_ENV_IDO_DAILY_1.py) | ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_IDO_DAILY_2.py](CORK_ENV_IDO_DAILY_2.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_MET_HOURLY_1.py](CORK_ENV_MET_HOURLY%20_1.py)| ----------| python     | URL       | -                  | -           | -                    |
-| [CORK_ENV_MET_W_DAILY.py](CORK_ENV_MET_W_DAILY.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_MET_W_DAILY.py](CORK_ENV_MET_W_DAILY.py)|Collects weather information for Ireland from Station ROCHES POINT| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_NMCI Hourly_3.py](CORK_ENV_NMCI%20_Hourly_3.py) | ---------- | python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_OPW_EPA_DAILY_1.py](CORK_ENV_OPW_EPA_DAILY_1.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_OPW_EPA_DAILY_2.py](CORK_ENV_OPW_EPA_DAILY_2.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_OPW_EPA_DAILY_3.py](CORK_ENV_OPW_EPA_DAILY_3.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_OPW_MINUTE_1.py](CORK_ENV_OPW_MINUTE_1.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_OPW_WL_15min.js](CORK_ENV_OPW_WL_15min.js)| ---------- | javascript | -         | -                  | -           | -                    |
-| [CORK_ENV_OPW_WL_15min.py](CORK_ENV_OPW_WL_15min.py)| ----------| python     | URL       | -                  | -           | -                    |
+| [CORK_ENV_OPW_WL_15min.py](CORK_ENV_OPW_WL_15min.py)| Collects historic water levels data provided by the OPW for station 19069 Ringaskiddy NMCI| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_SEAI_DAILY_1_1.py](CORK_ENV_SEAI_DAILY_1_1.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_SEAI_DAILY_1_2.py](CORK_ENV_SEAI_DAILY_1_2.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [CORK_ENV_SEAI_DAILY_1_3.py](CORK_ENV_SEAI_DAILY_1_3.py)| ----------| python     | URL       | -                  | -           | -                    |
 | [SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py](SHAPE_FILE_TO_GEOJSON_CORK&ANTWERP.py)| ----------| python     | SHP FILE  |                    |             | shapefile to GeoJSON |  |
-| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)| ----------| python     | EXCEL     | -                  | -           | -                    | - |
+| [ant_env_cityofant_gwl.py](ant_env_cityofant_gwl.py)|Collects historical dataset of groundwater levels on 460 different sites in Antwerp| python     | EXCEL     | -                  | -           | -                    | Needs raw data in file|
 | [ant*env_cityofant_gwl*(draxis).js](<ant_env_cityofant_gwl_(draxis).js>)| ----------| javascript | -         | -                  | -           | -                    |
-| [ant_env_cityofant_histprec.py](ant_env_cityofant_histprec.py)| ----------| python     | EXCEL     | -                  | -           | -                    |
+| [ant_env_cityofant_histprec.py](ant_env_cityofant_histprec.py)|Collects measurements from twelve rain gauges located at the city of Antwerp| python     | EXCEL     | -                  | -           |Needs raw data in file|
 | [anta*env_airquality_envmin_hourly*(DRAXIS).js](<anta_env_airquality_envmin_hourly_(DRAXIS).js>)| ----------| javascript | -         | -                  | -           | -                    |
-| [anta_env_cityofantalya2_monthly.py](anta_env_cityofantalya2_monthly.py)| ----------| python     | EXCEL     | -                  | -           | -                    |
-| [anta_env_waterqualityflow_cityofantalya_monthly.py](anta_env_waterqualityflow_cityofantalya_monthly.py)| ----------| python     | EXCEL     | -                  | -           | -                    |
+| [anta_env_cityofantalya2_monthly.py](anta_env_cityofantalya2_monthly.py)| ----------| python     | EXCEL     | -                  | -           | Needs raw data in file|
+| [anta_env_waterqualityflow_cityofantalya_monthly.py](anta_env_waterqualityflow_cityofantalya_monthly.py)| ----------| python     | EXCEL     | -                  | -           | Needs raw data in file|
 | [anta_env_waterqualityflow_cityofantalya_monthly_draxis.js](anta_env_waterqualityflow_cityofantalya_monthly_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
 | [anta_soc_visitors_monthly_draxis.js](anta_soc_visitors_monthly_draxis.js)| ----------| javascript | -         | -                  | -           | -                    |
 | [antalya_env_cityofantalya_perminute.py](antalya_env_cityofantalya_perminute.py)| ---------- | python     | URL       | -                  | Yes         | -                    |
