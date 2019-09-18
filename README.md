@@ -4,15 +4,20 @@ In this repo you will find the crawlers and their technical documentation. Pleas
 
 
 ## Project Structure
-The crawlers are grouped according to the type of data crawled: 
+
+#### Crawlers
+
+The crawlers are grouped in different folders according to the type of data crawled: 
 
 * [Economic](Economic/) contains crawlers and other software related to economic data as well as instructions to run those
 * [Environmental](Environmental/) contains crawlers and other software related to environmental data  as well as instructions to run those
 * [Social](Social/) contains crawlers and other software related to social data  as well as instructions to run those
 
-Crawlers have been implemented using different programming languages (R, python, javascript, java). Crawlers are used to inject data either to a Hadoop Distributed File System ([HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html)) or [ElasticSearch](https://www.elastic.co/).  However, most of the crawlers can also be used as stand-alone. You can find more specific documentation under the different folders. 
+Crawlers have been implemented using different programming languages (R, python, javascript, java). Crawlers are used to inject data either to a Hadoop Distributed File System ([HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html)) or [ElasticSearch](https://www.elastic.co/).  However, most of the crawlers can also be used as stand-alone. You can find more specific documentation under the different folders listed above. 
 
-General information on the deployment in Hadoop:
+#### Deployment in Hadoop:
+
+General information on the deployment in Hadoop can be found in the following folder
 
 * [HadoopDeployment](HadoopDeployment/): scripts, configuration files and instructions related to data injestion into/from Hadoop HDFS
 
