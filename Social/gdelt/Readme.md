@@ -1,3 +1,7 @@
+# Crawlers and Indexer for twitter
+
+This folder contains different crawlers for the GDELT dataset.
+
 **Indexing GDELT GEO API data into Elasticsearch**
 
 **1) Retrieve data from Geo API** 
