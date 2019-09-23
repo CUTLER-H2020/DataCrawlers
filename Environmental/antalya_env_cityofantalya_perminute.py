@@ -53,6 +53,10 @@ import os
 import uuid
 import time
 from datetime import timedelta, date
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
@@ -60,7 +64,7 @@ __origin__ = "UbiComp - University of Oulu"
 
 origin_url = 'http://www.havaizleme.gov.tr/STN/STN_Report/StationDataDownload'
 code = 'antalya_env_cityofantalya_perminute'
-
+logging.basicConfig(level=logging.INFO)
 path_to_webdriver_c = path_to_chrome_webdriver
 params=['HavaSicakligi','HavaBasinc','RuzgarHizi', 'RuzgarYon','PM10','SO2'] 
 
@@ -601,6 +605,12 @@ class antalya_env_cityofantalya_perminute (object):
 
 		#create the file with just new values
 		df_final.to_csv(tfilename, mode='w', encoding='utf-8-sig', index=False)#header=False
+
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "ANTALYA_ENV_CITYOFANTALYA_PERMINUTE_DATA_INGESTION"
+		producer.send(topic, b'City of antalya perminute environmental data ingested to HDFS').get(timeout=30)
 
 if __name__ == '__main__':
 	a = antalya_env_cityofantalya_perminute(origin_url)

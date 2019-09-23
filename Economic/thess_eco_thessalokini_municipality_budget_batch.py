@@ -23,12 +23,16 @@ import os
 #import sys
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-
+logging.basicConfig(level=logging.INFO)
 origin_url = 'https://gaiacrmkea.c-gaia.gr/city_thessaloniki/index.php'
 code = 'thess_eco_thessaloniki_municipality_budget'
 
@@ -156,7 +160,12 @@ class thess_eco_thessaloniki_municipality_budget (object):
 		if not os.path.exists(f_outdir):
 			os.mkdir(f_outdir)
 		shutil.copy(l_temp_path+code+'/'+l_temp_file, filname)
-		 
+
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "THESS_ECO_THESSALONIKI_MUNICIPALITY_BUDGET_DATA_INGESTION"
+		producer.send(topic, b'Thessaloniki municipality budget data ingested to HDFS').get(timeout=30)
 	
 
 if __name__ == '__main__':
@@ -164,6 +173,8 @@ if __name__ == '__main__':
 	d= a.get_session()
 	if (d):
 		a.parse_tables(d)
+		a.producer()
 		#end the Selenium browser session
 		d.close()
 		d.quit()
+

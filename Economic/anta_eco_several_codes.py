@@ -22,11 +22,15 @@ import os
 import pandas as pd
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
-
+logging.basicConfig(level=logging.INFO)
 #codes and corresponding columns in the datasheet
 codes= [['anta_eco_cityofantalya_visitorticket_monthly','Visitor Ticket','Entrance Fee'],
 ['anta_eco_citiofantalya_otopark_monthly','Otopark Ticket','Parking Fee'],
@@ -118,8 +122,23 @@ class anta_eco_several_codes(object):
 			fullname = os.path.join(outdir, csvfile)
 
 			df_data_filter.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
+
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "ANTA_ECO_CITYOFANTALYA_VISITORTICKET_MONTHLY_DATA_INGESTION"
+		topic_1 = "ANTA_ECO_CITIOFANTALYA_OTOPARK_MONTHLY_DATA_INGESTION"
+		topic_2 = "ANTA_ECO_CITYOFANTALYA_GENERALELECTIRICBILL_MONTHLY_DATA_INGESTION"
+		topic_3 = "ANTA_ECO_CITYOFANTALYA_WATERPOMPS_MONTHLY_DATA_INGESTION"
+		topic_4 = "ANTA_ECO_CITYOFANTALYA_OPERATIONEMPLOYEESALARY_MONTHLY"
+		producer.send(topic, b'Antalya visitor ticketing one-time data ingested to HDFS').get(timeout=30)
+		producer.send(topic_1, b'Antalya otopark one-time data ingested to HDFS	').get(timeout=30)
+		producer.send(topic_2, b'Antalya electricity one-time data ingested to HDFS	').get(timeout=30)
+		producer.send(topic_3, b'Antalya water pump one-time data ingested to HDFS').get(timeout=30)
+		producer.send(topic_4, b'Antalya employee salary one-time data ingested to HDFS').get(timeout=30)
 			
 
 if __name__ == '__main__':
 	a = anta_eco_several_codes()
-	a.parse_file()	
+	a.parse_file()
+	a.producer()

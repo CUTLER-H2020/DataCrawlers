@@ -26,13 +26,16 @@ import os
 import pandas as pd
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
 
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-
+logging.basicConfig(level=logging.INFO)
 code = "thess_eco_thessaloniki_parking_data"
 xlfrevenues ='esoda_ana_tomea.xls'
 xlfoccupacies ='plirotita_thesewn_live.xls'
@@ -96,8 +99,15 @@ class thess_eco_thessaloniki_parking_data (object):
 		print ('writing to folder '+code+'_1')
 		fullname = os.path.join(outdir2, csvfile)
 		df.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
+
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "THESS_ECO_THESSALONIKI_PARKING_ECONOMIC_DATA_DATA_INGESTION"
+		producer.send(topic, b'THESS_ECO_THESSALONIKI_PARKING_ECONOMIC_DATA_DATA_INGESTION').get(timeout=30)
 		
 
 if __name__ == '__main__':
 	a = thess_eco_thessaloniki_parking_data ()
-	a.parse_files()	
+	a.parse_files()
+	a.producer()

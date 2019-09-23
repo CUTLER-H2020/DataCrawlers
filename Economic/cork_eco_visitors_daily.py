@@ -18,11 +18,15 @@ import os
 import pandas as pd
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
 
+import logging
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
+logging.basicConfig(level=logging.INFO)
 #codes and corresponding columns in the datasheet
 code='cork_eco_visitors_daily'
 
@@ -73,7 +77,12 @@ class cork_soc_visitors_daily(object):
 
 		df_data.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 			
-
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "CORK_ECO_VISITORS_DAILY"
+		producer.send(topic, b'Cork visitors data ingested to HDFS	').get(timeout=30)
 if __name__ == '__main__':
 	a = cork_soc_visitors_daily()
-	a.parse_file()	
+	a.parse_file()
+	a.producer()

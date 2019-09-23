@@ -22,12 +22,16 @@ import os
 import pandas as pd
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-
+logging.basicConfig(level=logging.INFO)
 code= 'anta_eco_citiofantalya_ShopsRentEarn_year' 
 
 l_temp_path = './temp/'
@@ -73,8 +77,14 @@ class anta_eco_ShopsRentEarn_year(object):
 		fullname = os.path.join(outdir, csvfile)
 
 		df_data.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "ANTA_ECO_CITIOFANTALYA_SHOPSRENTEARN_YEAR"
+		producer.send(topic, b'Antalya duden shop rental data ingested to HDFS').get(timeout=30)
 
 
 if __name__ == '__main__':
 	a = anta_eco_ShopsRentEarn_year()
-	a.parse_file()	
+	a.parse_file()
+	a.producer()

@@ -5,10 +5,15 @@
 
 import uuid
 import pandas as pd
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+import logging
 
 __author__ = "Hassan Mehmood"
 __email__ = "hassan.mehmood@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
+
+logging.basicConfig(level=logging.INFO)
 
 def historicWeatherInfo():
 
@@ -25,5 +30,11 @@ def historicWeatherInfo():
     df_final['DateTime'] = pd.to_datetime(df_final['DateTime']) # Transforms available time information in string to datetime format
     df_final['DateTime'] = df_final["DateTime"].dt.strftime("%Y-%m-%dT%H:%M+00") # Transforms available time information to ISO 8601
     df_final.to_csv(filname, index = False)
+def producer():
+    """ This function sends data to kafka bus"""
+    producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+    topic = "CORK_ENV_MET_W_DAILY_DATA INGESTION"
+    producer.send(topic, b'Historical weather information for Ireland ingested to HDFS').get(timeout=30)
 
 historicWeatherInfo()
+producer()

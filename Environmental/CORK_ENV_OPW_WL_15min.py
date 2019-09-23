@@ -6,10 +6,14 @@
 """ - After cleaning data, it is stored in .CSV format with unique name"""
 import uuid
 import pandas as pd
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+import logging
 __author__ = "Hassan Mehmood"
 __email__ = "hassan.mehmood@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
+logging.basicConfig(level=logging.INFO)
 def getWaterLevel():
 
     """This function fetches the data from the source and after cleaning stores it to .CSV file"""
@@ -28,5 +32,11 @@ def getWaterLevel():
     df_final["station_id"] = "19069 Ringaskiddy" #Adds station identifier
     df_final.to_csv(filname, index=False)
 
-getWaterLevel()
+def producer():
+    """ This function sends data to kafka bus"""
+    producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+    topic = "CORK_ENV_OPW_WL_15min_DATA_INGESTION"
+    producer.send(topic, b'Historic water levels data by the OPW for station 19069 Ringaskiddy NMCI for Cork Pilot ingested to HDFS').get(timeout=30)
 
+getWaterLevel()
+producer()

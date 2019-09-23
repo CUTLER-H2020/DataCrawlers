@@ -22,12 +22,16 @@ import os
 import pandas as pd
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-
+logging.basicConfig(level=logging.INFO)
 code= 'ant_env_cityofant_gwl' 
 
 l_temp_path = './temp/'
@@ -120,6 +124,13 @@ class ant_env_cityofant_gwl(object):
 			index+=1
 		print (count)
 
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "ANT_ENV_CITYOFANT_GWL_DATA_INGESTION"
+		producer.send(topic, b'	GWL data for antwerp ingested to HDFS').get(timeout=30)
+
 if __name__ == '__main__':
 	a = ant_env_cityofant_gwl()
-	a.parse_files()	
+	a.parse_files()
+	a.producer()

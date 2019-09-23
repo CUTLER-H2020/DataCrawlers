@@ -43,12 +43,15 @@ import os
 import pandas as pd
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
 
+import logging
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-
+logging.basicConfig(level=logging.INFO)
 code= 'anta_env_cityofantalya2_monthly' 
 
 l_temp_path = './temp/'
@@ -159,9 +162,14 @@ class anta_env_cityofantalya2_monthly(object):
 		print ('writing to folder '+code)
 		fullname = os.path.join(outdir2, csvfile)
 		df_final.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
-
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "ANTA_ENV_CITYOFANTALYA2_MONTHLY_DATA_INGESTION"
+		producer.send(topic, b'Antalya environmental data from 2012-2017 ingested to HDFS').get(timeout=30)
 		
 
 if __name__ == '__main__':
 	a = anta_env_cityofantalya2_monthly()
-	a.parse_file()	
+	a.parse_file()
+	a.producer()

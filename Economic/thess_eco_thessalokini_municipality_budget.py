@@ -23,12 +23,16 @@ import pandas as pd
 import os
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-
+logging.basicConfig(level=logging.INFO)
 origin_url = 'https://gaiacrmkea.c-gaia.gr/city_thessaloniki/index.php'
 code = 'thess_eco_thessaloniki_municipality_budget'
 path_to_webdriver_c = 'C:\\Users\\martacor\\Development\\python\\cuttler\\libs\\chromedriver.exe'
@@ -182,6 +186,11 @@ class thess_eco_thessaloniki_municipality_budget (object):
 			#print ('appending to df_old')
 			df_old = df_old.append(rows_in_df_not_in_dfold, ignore_index=True)
 			df_old.to_csv(filename, mode='w', encoding='utf-8-sig', index=False)
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "THESS_ECO_THESSALONIKI_MUNICIPALITY_BUDGET_DATA_INGESTION"
+		producer.send(topic, b'Thessaloniki municipality budget data ingested to HDFS').get(timeout=30)
 	
 
 if __name__ == '__main__':
@@ -189,5 +198,6 @@ if __name__ == '__main__':
 	d= a.get_session()
 	if (d):
 		a.parse_tables(d)
+		a.producer()
 		d.close()
 		d.quit()

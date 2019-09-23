@@ -43,7 +43,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+import logging
 import re
 import pandas as pd
 import datetime
@@ -60,7 +62,7 @@ __origin__ = "UbiComp - University of Oulu"
 
 basic_url = 'https://www.trafficthessreports.imet.gr'
 origin_url = basic_url+'/export.aspx'
-
+logging.basicConfig(level=logging.INFO)
 code = 'thess_env_imet_speed_15min'
 
 path_to_webdriver_c = path_to_chrome_webdriver
@@ -380,7 +382,11 @@ class thess_env_imet_speed_15min_batch (object):
 		#shutil.copy(old_name, fullname)
 		print ("done")
 
-
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "THESS_ENV_IMET_SPEED_15MIN_SCHEDULED_DATA_INGESTION"
+		producer.send(topic, b'Thessaloniki car speed scheduled data ingested to HDFS').get(timeout=30)
 
 if __name__ == '__main__':
 	a = thess_env_imet_speed_15min_batch(origin_url)
@@ -393,6 +399,7 @@ if __name__ == '__main__':
 		#d.quit()
 		#copy files from temp folder
 		a.copy_file_in_one()
+		a.producer()
 		d.close()
 		d.quit()
 

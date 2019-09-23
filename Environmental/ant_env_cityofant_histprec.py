@@ -24,12 +24,16 @@ import shutil
 import uuid
 #import pytz
 import datetime
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-
+logging.basicConfig(level=logging.INFO)
 code = "ant_env_cityofant_histprec"
 xlfnames =['alladata_v20_deel1.xlsx','alladata_v20_deel2.xlsx']
 xlflocations = 'sensors_antwerpen.xlsx'
@@ -119,8 +123,13 @@ class ant_env_cityofant_histprec (object):
 					fullname = os.path.join(outdir, csvfile)
 					df_temp.rename(columns={'NR':'Sensor code'},inplace=True)
 					df_temp.to_csv(fullname, mode='a', encoding='utf-8-sig', index=False)
-			
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "ANT_ENV_CITYOFANT_HISTPREC_DATA_INGESTION"
+		producer.send(topic, b'Historic precipitation data for antwerp ingested to HDFS').get(timeout=30)
 
 if __name__ == '__main__':
 	a = ant_env_cityofant_histprec()
-	a.parse_files()	
+	a.parse_files()
+	a.producer()

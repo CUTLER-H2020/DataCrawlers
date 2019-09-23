@@ -29,18 +29,22 @@ from collections import deque
 import pandas as pd
 import shutil
 import uuid
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
+
+import logging
 
 __author__ = "Marta Cortes"
 __mail__ = "marta.cortes@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
 
-
+logging.basicConfig(level=logging.INFO)
 code = 'thess_env_cityofthess_dailyyearly'
 stations = {'Στ. ΕΓΝΑΤΙΑΣ':[40.63753, 22.94095],'Στ. 25ης ΜΑΡΤΙΟΥ':[40.60102, 22.96017],'Στ. ΛΑΓΚΑΔΑ':[40.65233, 22.93514],'Στ. ΕΠΤΑΠΥΡΓΙΟΥ':[40.64407, 22.95837],'Στ. ΜΑΛΑΚΟΠΗΣ':[40.61637, 22.98233],'Μτ.Στ. ΔΩΜΑ ΠΑΛ. ΔΗΜΑΡ.':[40.62381, 22.95312]}
 names = {'Στ. ΕΓΝΑΤΙΑΣ':'Egnatia','Στ. 25ης ΜΑΡΤΙΟΥ':'Martiou','Στ. ΛΑΓΚΑΔΑ':'Lagada','Στ. ΕΠΤΑΠΥΡΓΙΟΥ':'Eptapyrgio','Στ. ΜΑΛΑΚΟΠΗΣ':'Malakopi','Μτ.Στ. ΔΩΜΑ ΠΑΛ. ΔΗΜΑΡ.':'Dimarxeio'}
 origin_url = 'https://opendata.thessaloniki.gr/el/dataset/%CE%BC%CE%B5%CF%84%CF%81%CE%AE%CF%83%CE%B5%CE%B9%CF%82-%CE%B4%CE%B7%CE%BC%CE%BF%CF%84%CE%B9%CE%BA%CE%BF%CF%8D-%CE%B4%CE%B9%CE%BA%CF%84%CF%8D%CE%BF%CF%85-%CF%83%CF%84%CE%B1%CE%B8%CE%BC%CF%8E%CE%BD-%CE%B5%CE%BB%CE%AD%CE%B3%CF%87%CE%BF%CF%85-%CE%B1%CF%84%CE%BC%CE%BF%CF%83%CF%86%CE%B1%CE%B9%CF%81%CE%B9%CE%BA%CE%AE%CF%82-%CF%81%CF%8D%CF%80%CE%B1%CE%BD%CF%83%CE%B7%CF%82-%CF%84%CE%BF%CF%85-%CE%B4%CE%AE%CE%BC%CE%BF%CF%85-%CE%B8%CE%B5%CF%83%CF%83%CE%B1%CE%BB%CE%BF%CE%BD%CE%AF%CE%BA%CE%B7%CF%82' 
-#TODO
+#
 l_temp_path = './temp/'
 l_final_path = './data/'
 
@@ -157,7 +161,13 @@ class thess_env_cityofthess_dailyyearly (object):
 			xlfname = self.folder+'/'+fileName#
 			xl = pd.ExcelFile(xlfname)
 			for sheet in xl.sheet_names:
-				self.parse_sheet(xl,sheet)			
+				self.parse_sheet(xl,sheet)
+
+	def producer(self):
+		""" This function sends data to kafka bus"""
+		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		topic = "THESS_ENV_CITYOFTHESS_DAILY_YEARLY_DATA_INGESTION"
+		producer.send(topic, b'City of thessaloniki environmental data ingested to HDFS').get(timeout=30)
 
 if __name__ == '__main__':
 	a = thess_env_cityofthess_dailyyearly(origin_url)
