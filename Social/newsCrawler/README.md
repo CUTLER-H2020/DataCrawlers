@@ -1,4 +1,7 @@
-# Documentation
+# News and Comment Crawler - UNIKO
+This is the news and comment crawler developed by UNIKO. The crawler retrieves comments from news articles for the given keyword(s) and the given timeframe. It uses the [News API](https://newsapi.org/) and the data quantity and quality therefore depend on which kind of API key the user has. The crawler further uses a [comment classifier](https://github.com/CUTLER-H2020/unikob-comment-classifier) developed by UNIKO to filter out the non-comments.
+
+For details please refer to [Deliverable 6.1](https://www.cutler-h2020.eu/download/538).
 
 ## Requirements
 1. Installation of the Mozilla Geckodriver is needed for the Selenium Middleware to run.
