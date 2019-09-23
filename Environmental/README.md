@@ -142,9 +142,11 @@ More information under the correponding folder
 
 ## Javascript Crawlers
 
-Information about the javascript crawlers and the relevant data can be found in deliverable 5.1 here: https://zenodo.org/record/3385992#.XYirLCj7RnI and deliverable 5.2 here: https://zenodo.org/record/3386009#.XYirMCj7RnI.   
-
 General instructions for installing nodejs and running javascript crawlers and producers/consumers
+
+Information about the javascript crawlers and the relevant data can be found in deliverable 5.1 here: https://zenodo.org/record/3385992#.XYirLCj7RnI 
+and deliverable 5.2 here: https://zenodo.org/record/3386009#.XYirMCj7RnI.   
+
 
 ### Getting started with nodejs
 
