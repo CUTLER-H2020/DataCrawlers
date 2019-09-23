@@ -133,10 +133,10 @@ def downloadPOI(element_xpath_dictionary, country_locality):
                                              "poi_geo_point": poi_goe_point,
                                              "date": date}
 
-            #break #  uncomment to take only the first poi of the page
+#            break #  uncomment to take only the first poi of the page
         #  scrape next page
         url_API_next_page += 1
-        #break #  uncomment to take only the first page for the category
+#        break #  uncomment to take only the first page for the category
 
         # sleep 10 secs everytime you change category
         time.sleep(10)
@@ -203,10 +203,7 @@ def ingestdatatoelasticsearch(dictionary, cityname):
 
     send_to_elasticsearch(index_name, dictionary, '_doc')
 
-def sendmessagetokafka(message, cityname):
+def sendmessagetokafka(message, topic):
     from kafka_functions import kafkasendmessage
-
-    citynames = {"antalya": "ANT", "cork": "CRK", "antwerp": "ANW", "thessaloniki": "THE"}
-    topic = "DATA_" + citynames[cityname] + "_ECO_MAPSME_CRAWLER"
 
     kafkasendmessage(topic, message)

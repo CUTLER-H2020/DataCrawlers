@@ -4,7 +4,7 @@ This folder contains different crawlers for twitter developed in Cutler
 
 ## Structure of the folder
 
-There are two types of files:
+There are two types of crawlers:
 
 * Python based crawler
   * TweetCrawler.py, tweet-json2csv.py, tweet-sentiment.py, tweet-wordcloud.py

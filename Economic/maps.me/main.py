@@ -24,6 +24,7 @@ if __name__ == "__main__":
         print("[+] Downloading data for Town:", cityname)
         dictionary = downloadPOI(xpaths_hotel, country_locality)
         dictionary.update(downloadPOI(xpaths_guest_houses, country_locality))
+        '''
         dictionary.update(downloadPOI(xpaths_motels, country_locality))
         dictionary.update(downloadPOI(xpaths_camping, country_locality))
         dictionary.update(downloadPOI(xpaths_hostels, country_locality))
@@ -105,10 +106,17 @@ if __name__ == "__main__":
         dictionary.update(downloadPOI(xpaths_place_of_worship_taoist, country_locality))
         print("[+] Done, for attractions category")
         print("=====================\n[+] Done!")
+        '''
+
+        citynames = {"Antalya - Turkey": "ANT", "Cork - Ireland": "CRK", "Antwerp - Belgium": "ANW", "Thessaloniki - Greece": "THE"}
+        download_topic = "DATA_DOWNLOAD_" + citynames[cityname] + "_ECO_MAPSME_CRAWLER"
+        ingest_topic = "DATA_INGESTION_" + citynames[cityname] + "_ECO_MAPSME_CRAWLER"
 
         # save them in NDjson based on "cityname"
-        # saveNDJSON(dictionary, cityname)
+        saveNDJSON(dictionary, cityname)
+        sendmessagetokafka("Data for " + cityname + " were downloaded successfully - Data cat be found in maps_me_results/" + cityname + ".json file - Date: " + str(datetime.date.today()), download_topic)
+
         cityname = (cityname.split(" ")[0]).lower()
         ingestdatatoelasticsearch(dictionary, cityname)
-        sendmessagetokafka("Data for " + cityname + " were ingested succesfully - Data cat be found in " + cityname + "-mapsme-dashboard elasticsearch index - Date: " + str(datetime.date.today()), cityname)
+        sendmessagetokafka("Data for " + cityname + " were ingested successfully - Data cat be found in " + cityname + "-mapsme-dashboard elasticsearch index - Date: " + str(datetime.date.today()), ingest_topic)
 

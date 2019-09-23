@@ -24,13 +24,16 @@ def connect_elasticsearch():
             print('[+] Connected to elasticsearch successfully')
         else:
             print('[-] Couldn\'t connect to elasticsearch')
+            return False
     return _es
 
 def send_to_elasticsearch(index_name, dictionary, doc_type):
 
     es = connect_elasticsearch()
-    for key, value in dictionary.items():
-        res = es.index(index=index_name, doc_type=doc_type, body=value)
-#    print(res['result'])
-
+    if es != False:
+        for key, value in dictionary.items():
+            res = es.index(index=index_name, doc_type=doc_type, body=value)
+    #    print(res['result'])
+    else:
+        print("[-] There was a problem connecting to the Elastic Search... skipping")
 
