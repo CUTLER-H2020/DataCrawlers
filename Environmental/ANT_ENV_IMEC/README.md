@@ -9,6 +9,7 @@ Crawler to get data from several sensors in Antwerp from IMEC API:
 * from four rain gauges located at the city of Antwerp
 * from six οpen water level sensors located at the city of Antwerp
 * from three pressure sensors located at the city of Antwerp
+
 |Language|Origin|Credentials needed| Schedulling|Notes|
 | ------------- | ------------- | ------------- | ------------- |------------- |
 |Java|API|Yes|-|This data is private |
