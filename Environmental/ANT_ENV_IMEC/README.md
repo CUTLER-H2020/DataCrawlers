@@ -12,7 +12,7 @@ Crawler to get data from several sensors in Antwerp from IMEC API:
 
 |Language|Origin|Credentials needed| Schedulling|Notes|
 | ------------- | ------------- | ------------- | ------------- |------------- |
-|Java|API|Yes|-|This data is private |
+|Java|API|Yes|-| |
 
 ### Getting started
 #### Prerequisites
