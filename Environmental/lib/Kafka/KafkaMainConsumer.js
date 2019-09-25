@@ -1,6 +1,9 @@
 'use strict';
 const kafka = require('kafka-node'),
-  client = new kafka.KafkaClient({ kafkaHost: '10.10.2.51:9092' }),
+  client = new kafka.KafkaClient({
+    kafkaHost: '10.10.2.51:9092',
+    connectTimeout: 100000
+  }),
   Consumer = kafka.Consumer,
   topics = require('./KafkaTopics'),
   EventEmitter = (require('events').EventEmitter.defaultMaxListeners = 0);
