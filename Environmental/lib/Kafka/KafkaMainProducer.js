@@ -13,7 +13,7 @@ module.exports = msg => {
   ];
   producer
     .on('ready', function() {
-      console.log('sending');
+      console.log('Sending...');
 
       producer.send(payloads, function(err, data) {
         console.log(data);
