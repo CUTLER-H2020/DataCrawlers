@@ -3,11 +3,9 @@ const kafka = require('kafka-node'),
   client = new kafka.KafkaClient({ kafkaHost: '10.10.2.51:9092' }),
   Consumer = kafka.Consumer,
   topics = require('./KafkaTopics'),
-  EventEmitter = require('events');
+  EventEmitter = (require('events').EventEmitter.defaultMaxListeners = 0);
 
-const emitter = new EventEmitter();
-emitter.setMaxListeners(100000);
-
+var consumerTopics = [];
 Object.values(topics.topics).map(async ({ topic }, index) => {
   //Check if topic exist, if it doesnt it creates it
   await client.loadMetadataForTopics([topic], async (err, resp) => {
@@ -15,9 +13,7 @@ Object.values(topics.topics).map(async ({ topic }, index) => {
       client.createTopics(
         [
           {
-            topic: topic,
-            partitions: 1,
-            replicationFactor: 2
+            topic: topic
           }
         ],
         (error, result) => {
@@ -26,17 +22,17 @@ Object.values(topics.topics).map(async ({ topic }, index) => {
       );
     }
   });
-  //End topic existance check
+  // End topic existance check
 
-  //Initialise Consumer
-  new Consumer(client, [{ topic: topic, partition: 0 }])
-    .on('message', function(message) {
-      console.log(message);
-    })
-    .on('error', function(err) {
-      console.log(err);
-    });
-  //End of initiliasation
+  consumerTopics.push({ topic: topic, partition: 0 });
 });
+
+new Consumer(client, consumerTopics)
+  .on('message', function(message) {
+    console.log(message);
+  })
+  .on('error', function(err) {
+    console.log(err);
+  });
 
 console.log('Consumers started...');

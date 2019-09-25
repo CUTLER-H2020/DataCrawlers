@@ -6,16 +6,18 @@ const kafka = require('kafka-node'),
 module.exports = msg => {
   const payloads = [
     {
-      topic: 'ANTA_SOC_VISITORS_FINISH_MONTHLY',
-      messages: 'hi',
-      partition: 0
+      topic: 'ANTA_SOC_VISITORS_MONTHLY',
+      messages: 'hi'
     }
   ];
+
   producer
     .on('ready', function() {
       console.log('Sending...');
 
       producer.send(payloads, function(err, data) {
+        if (err) return console.log(err);
+
         console.log(data);
         client.close();
       });
