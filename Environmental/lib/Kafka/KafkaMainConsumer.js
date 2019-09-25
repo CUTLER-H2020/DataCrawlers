@@ -32,7 +32,8 @@ Object.values(topics.topics).map(({ topic }, index) => {
 
 new Consumer(client, consumerTopics)
   .on('message', function(message) {
-    console.log(message);
+    var item = JSON.parse(message.value);
+    console.log(item);
   })
   .on('error', function(err) {
     console.log(err);
