@@ -6,7 +6,7 @@ const kafka = require('kafka-node'),
 module.exports = msg => {
   const payloads = [
     {
-      topic: 'ANTA_SOC_VISITORS_MONTHLY',
+      topic: 'THESS_ENV_SPEEDMEASUREMENTS_FINISH_15MIN',
       messages: 'hi'
     }
   ];

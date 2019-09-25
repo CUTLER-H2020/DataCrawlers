@@ -6,9 +6,9 @@ const kafka = require('kafka-node'),
   EventEmitter = (require('events').EventEmitter.defaultMaxListeners = 0);
 
 var consumerTopics = [];
-Object.values(topics.topics).map(async ({ topic }, index) => {
+Object.values(topics.topics).map(({ topic }, index) => {
   //Check if topic exist, if it doesnt it creates it
-  await client.loadMetadataForTopics([topic], async (err, resp) => {
+  client.loadMetadataForTopics([topic], (err, resp) => {
     if (!resp[1].metadata[topic]) {
       client.createTopics(
         [
