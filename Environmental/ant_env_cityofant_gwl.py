@@ -126,7 +126,7 @@ class ant_env_cityofant_gwl(object):
 
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "ANT_ENV_CITYOFANT_GWL_DATA_INGESTION"
 		producer.send(topic, b'	GWL data for antwerp ingested to HDFS').get(timeout=30)
 

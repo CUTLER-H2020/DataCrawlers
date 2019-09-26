@@ -79,7 +79,7 @@ class anta_eco_ShopsRentEarn_year(object):
 		df_data.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "ANTA_ECO_CITIOFANTALYA_SHOPSRENTEARN_YEAR"
 		producer.send(topic, b'Antalya duden shop rental data ingested to HDFS').get(timeout=30)
 

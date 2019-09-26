@@ -608,7 +608,7 @@ class antalya_env_cityofantalya_perminute (object):
 
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "ANTALYA_ENV_CITYOFANTALYA_PERMINUTE_DATA_INGESTION"
 		producer.send(topic, b'City of antalya perminute environmental data ingested to HDFS').get(timeout=30)
 

@@ -79,7 +79,7 @@ class cork_soc_visitors_daily(object):
 			
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "CORK_ECO_VISITORS_DAILY"
 		producer.send(topic, b'Cork visitors data ingested to HDFS	').get(timeout=30)
 if __name__ == '__main__':
