@@ -1,6 +1,8 @@
 # Crawlers and Indexer for twitter
 
-This folder contains different crawlers for the GDELT dataset.
+This folder contains different crawlers for the GDELT dataset. [GDELT](https://www.gdeltproject.org/) is a project, which monitors news from all over the world and in more than 100 languages in order to gather data about current events. As part of the project, events are indexed in a 15-minute timeframe and can be retrieved with different methods. The indexed data comprises features such as date, number of mentions, average sentiment and geolocations. A schema of the indexed data can be found in the [GDELT GitHub repository](https://github.com/linwoodc3/gdelt2HeaderRows/tree/master/schema_csvs).
+
+For details please refer to [Deliverable 6.1](https://www.cutler-h2020.eu/download/538).
 
 **Indexing GDELT GEO API data into Elasticsearch**
 

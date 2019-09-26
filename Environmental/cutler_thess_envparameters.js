@@ -4,7 +4,8 @@ const moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
-var breakpoints = require('../elastic/files/helpers/aqi_breakpoints');
+var breakpoints = require('./files/helpers/aqi_breakpoints');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 const client = new elasticsearch.Client({
   host: 'localhost:9200'
@@ -247,15 +248,17 @@ fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
     });
   });
 
-  checkClient();
+  // checkClient(elBody);
 
-  client.bulk(
-    {
-      body: elBody
-    },
-    function(err, resp) {
-      if (err) console.log(err);
-      console.log('All files succesfully indexed!');
-    }
-  );
+  KafkaProducer(elBody, 'THESS_ENV_ENVPARAMETERS_DAILY_YEARLY');
+
+  // client.bulk(
+  //   {
+  //     body: elBody
+  //   },
+  //   function(err, resp) {
+  //     if (err) console.log(err);
+  //     console.log('All files succesfully indexed!');
+  //   }
+  // );
 });

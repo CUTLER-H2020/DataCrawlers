@@ -4,62 +4,122 @@ const client = require('./KafkaClient.js');
 
 var topics = {
   ANTA_SOC_VISITORS_MONTHLY: {
-    topic: 'anta_soc_visitors_monthly_draxis',
+    topic: 'ANTA_SOC_VISITORS_MONTHLY',
     partitions: 6,
     replicationFactor: 3
   },
-  ANT_ENV_CITYOFANT_GWL: {
-    topic: 'ant_env_cityofant_gwl_draxis',
+  ANTA_SOC_VISITORS_FINISH_MONTHLY: {
+    topic: 'ANTA_SOC_VISITORS_FINISH_MONTHLY',
     partitions: 6,
     replicationFactor: 3
   },
-  ANTA_ENV_AIRQUALITY_ENVMIN_HOURLY: {
-    topic: 'anta_env_airquality_envmin_hourly_draxis',
+  ANTW_ENV_GWL_2MONTHS: {
+    topic: 'ANTW_ENV_GWL_2MONTHS',
     partitions: 6,
     replicationFactor: 3
   },
-  ANTA_ENV_WATERQUALITYFLOW_CITYOFANTALYA_MONTHLY: {
-    topic: 'anta_env_waterqualityflow_cityofantalya_monthly_draxis',
+  ANTW_ENV_GWL_FINISH_2MONTHS: {
+    topic: 'ANTW_ENV_GWL_FINISH_2MONTHS',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  ANTA_ENV_AIRQUALITY_HOURLY: {
+    topic: 'ANTA_ENV_AIRQUALITY_HOURLY',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  ANTA_ENV_AIRQUALITY_FINISH_HOURLY: {
+    topic: 'ANTA_ENV_AIRQUALITY_FINISH_HOURLY',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  ANTA_ENV_WATERQUALITYFLOW_MONTHLY: {
+    topic: 'ANTA_ENV_WATERQUALITYFLOW_MONTHLY',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  ANTA_ENV_WATERQUALITYFLOW_FINISH_MONTHLY: {
+    topic: 'ANTA_ENV_WATERQUALITYFLOW_FINISH_MONTHLY',
     partitions: 6,
     replicationFactor: 3
   },
   CORK_ENV_MET_W_DAILY: {
-    topic: 'cork_env_met_w_daily',
+    topic: 'CORK_ENV_MET_W_DAILY',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  CORK_ENV_MET_W_FINISH_DAILY: {
+    topic: 'CORK_ENV_MET_W_FINISH_DAILY',
     partitions: 6,
     replicationFactor: 3
   },
   CORK_ENV_OPW_WL_15MIN: {
-    topic: 'cork_env_opw_wl_15min_draxis',
+    topic: 'CORK_ENV_OPW_WL_15MIN',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  CORK_ENV_OPW_WL_FINISH_15MIN: {
+    topic: 'CORK_ENV_OPW_WL_FINISH_15MIN',
     partitions: 6,
     replicationFactor: 3
   },
   CORK_SOC_VISITORS_DAILY: {
-    topic: 'cork_soc_visitors_daily_draxis',
+    topic: 'CORK_SOC_VISITORS_DAILY',
     partitions: 6,
     replicationFactor: 3
   },
-  CUTLER_THESS_SPEEDMEASUREMENTS: {
-    topic: 'cutler_thess_speedmeasurements_1',
+  CORK_SOC_VISITORS_FINISH_DAILY: {
+    topic: 'CORK_SOC_VISITORS_FINISH_DAILY',
     partitions: 6,
     replicationFactor: 3
   },
-  CUTLER_THESS_ENVPARAMETERS: {
-    topic: 'cutler_thess_envparameters',
+  THESS_ENV_SPEEDMEASUREMENTS_15MIN: {
+    topic: 'THESS_ENV_SPEEDMEASUREMENTS_15MIN',
     partitions: 6,
     replicationFactor: 3
   },
-  RAIN_1: {
-    topic: 'rain_1',
+  THESS_ENV_SPEEDMEASUREMENTS_FINISH_15MIN: {
+    topic: 'THESS_ENV_SPEEDMEASUREMENTS_FINISH_15MIN',
     partitions: 6,
     replicationFactor: 3
   },
-  CORK_INTEGR_PARKING: {
-    topic: 'cork_integr_parking',
+  THESS_ENV_ENVPARAMETERS_DAILY_YEARLY: {
+    topic: 'THESS_ENV_ENVPARAMETERS_DAILY_YEARLY',
     partitions: 6,
     replicationFactor: 3
   },
-  CORK_INTEGR_VISITORS: {
-    topic: 'cork_integr_visitors',
+  THESS_ENV_ENVPARAMETERS_DAILY_FINISH_YEARLY: {
+    topic: 'THESS_ENV_ENVPARAMETERS_DAILY_FINISH_YEARLY',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  ANTW_ENV_HISTPREC_10MIN: {
+    topic: 'ANTW_ENV_HISTPREC_10MIN',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  ANTW_ENV_HISTPREC_FINISH_10MIN: {
+    topic: 'ANTW_ENV_HISTPREC_FINISH_10MIN',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  CORK_ENV_PARKING_PILOTINTEGR_ONCE: {
+    topic: 'CORK_ENV_PARKING_PILOTINTEGR_ONCE',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  CORK_ENV_PARKING_PILOTINTEGR_FINISH_ONCE: {
+    topic: 'CORK_ENV_PARKING_PILOTINTEGR_FINISH_ONCE',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  CORK_SOC_VISITORS_PILOTINTEGR_DAILY: {
+    topic: 'CORK_SOC_VISITORS_PILOTINTEGR_DAILY',
+    partitions: 6,
+    replicationFactor: 3
+  },
+  CORK_SOC_VISITORS_PILOTINTEGR_FINISH_DAILY: {
+    topic: 'CORK_SOC_VISITORS_PILOTINTEGR_FINISH_DAILY',
     partitions: 6,
     replicationFactor: 3
   }
