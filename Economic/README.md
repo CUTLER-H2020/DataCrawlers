@@ -119,7 +119,7 @@ Needed packages can be found in each R script
 Apart from those detailed in the [Installation](#installation-1) section, some scripts may need further prerequisites (e.g. certain file located in certain folder, or some credentials for accessing the data in a web page). That information can be found in each script. 
 
 #### Kafka integration with R
-The script uses the package [rkafka] (https://cran.r-project.org/web/packages/rkafka/rkafka.pdf)that allows R developers to use the messaging functionalities provided by Apache Kafka. 
+The script uses R package [rkafka] (https://cran.r-project.org/web/packages/rkafka/rkafka.pdf)that allows R developers to use the messaging functionalities provided by Apache Kafka. 
 
 #### Run the script
 
