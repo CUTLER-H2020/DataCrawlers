@@ -9,7 +9,7 @@ const kafka = new Kafka({
 
 const topics = require('./KafkaTopics');
 
-const consumer = kafka.consumer({ groupId: 'kaf-pis' });
+const consumer = kafka.consumer({ groupId: 'kaf-data' });
 
 consumer.connect();
 
@@ -57,7 +57,9 @@ consumer.run({
     if (topics.topics[topic].finish) {
       var item = JSON.parse(message.value.toString());
       // console.log({
-      //   count: count
+      //   count: count,
+      //   msg: 'proelastic',
+      //   ropic: topics.topics[topic].index
       // });
       // count++;
       elasticSearchclient
@@ -67,12 +69,15 @@ consumer.run({
           body: item
         })
         .then(res => {
-          console.log({
-            count: count
-          });
-          count++;
+          // console.log({
+          //   count: count
+          // });
+          // count++;
         })
-        .catch(err => {});
+        .catch(err => {
+          console.log(err);
+          
+        });
     }
   }
 });

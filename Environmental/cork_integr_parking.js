@@ -4,6 +4,7 @@ const moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 var elIndex = {
   index: {
@@ -30,16 +31,17 @@ const createIndex = async () => {
 };
 
 const saveToElastic = async elBody => {
-  return await client.bulk(
-    {
-      requestTimeout: 600000,
-      body: elBody
-    },
-    function(err, resp) {
-      if (err) console.log(err.response);
-      else console.log('Data succesfully indexed!');
-    }
-  );
+  // return await client.bulk(
+  //   {
+  //     requestTimeout: 600000,
+  //     body: elBody
+  //   },
+  //   function(err, resp) {
+  //     if (err) console.log(err.response);
+  //     else console.log('Data succesfully indexed!');
+  //   }
+  // );
+  KafkaProducer(elBody, 'CORK_ENV_PARKING_PILOTINTEGR_ONCE');
 };
 
 // createIndex();
@@ -64,7 +66,7 @@ const extractValues = (async () => {
         'Revenues - Construction cost': row[8]
       };
       if (returnVal) {
-        elBody.push(elIndex);
+        // elBody.push(elIndex);
         elBody.push(returnVal);
       }
     })

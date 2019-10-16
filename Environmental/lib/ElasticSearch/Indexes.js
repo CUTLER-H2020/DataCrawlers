@@ -150,66 +150,10 @@ const indexes = [
   {
     index: 'cork_env_opw_wl_15min_draxis',
     mapping: {
-      date: {
-        type: 'date',
-        format: 'yyyy/MM/dd HH:mm||yyyy/MM/dd||epoch_millis'
-      },
-      date_hour: {
-        type: 'date',
-        format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
-      },
-      hour: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      month: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
       station_location: {
         type: 'geo_point'
       },
-      station_name: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      unit: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      water_level: {
-        type: 'float'
-      },
-      year: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      }
-    }
+     }
   },
   {
     index: 'cork_soc_visitors_daily_draxis',
@@ -281,56 +225,11 @@ const indexes = [
         type: 'date',
         format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
       },
-      id: {
-        type: 'long'
-      },
-      mileage: {
-        type: 'float'
-      },
-      mileage_unit: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      name: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      samples: {
-        type: 'long'
-      },
-      speed: {
-        type: 'long'
-      },
-      unit: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      }
     }
   },
   {
     index: 'cutler_thess_envparameters',
     mapping: {
-      aa: {
-        type: 'long'
-      },
-      daily_aqi: {
-        type: 'long'
-      },
       date: {
         type: 'date',
         format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
@@ -338,95 +237,23 @@ const indexes = [
       loc: {
         type: 'geo_point'
       },
-      month_: {
-        type: 'long'
-      },
-      parameter_fullname: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      parameter_name: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      station_name: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      units: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      value: {
-        type: 'long'
-      },
-      year_: {
-        type: 'long'
-      }
     }
   },
   {
     index: 'rain_1',
     mapping: {
-      code: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
       date: {
         type: 'date',
         format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
       },
-      measurement: {
-        type: 'long'
-      },
       station_location: {
         type: 'geo_point'
       },
-      station_name: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      }
     }
   },
   {
     index: 'cork_integr_visitors',
     mapping: {
-      'No of Visitors': {
-        type: 'long'
-      },
-      Revenues: {
-        type: 'long'
-      },
       date: {
         type: 'date',
         format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
@@ -456,33 +283,6 @@ const indexes = [
   {
     index: 'cork_integr_parking',
     mapping: {
-      Area: {
-        type: 'long'
-      },
-      'Construction Cost': {
-        type: 'long'
-      },
-      'Construction Cost per space': {
-        type: 'long'
-      },
-      'Max visitors per day': {
-        type: 'long'
-      },
-      'Parking Option': {
-        type: 'long'
-      },
-      'Revenues - Construction cost': {
-        type: 'long'
-      },
-      'Revenues per day': {
-        type: 'long'
-      },
-      'Revenues per space': {
-        type: 'long'
-      },
-      Spaces: {
-        type: 'long'
-      }
     }
   },
   {

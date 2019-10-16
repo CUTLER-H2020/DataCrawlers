@@ -16,11 +16,6 @@ const kafka = new Kafka({
 });
 const producer = kafka.producer();
 
-producer
-  .connect()
-  .then(res => console.log('Producer Connected'))
-  .catch(err => console.log(err));
-
 const _ = require('lodash');
 
 const KafkaTopics = require('./KafkaTopics');
@@ -61,36 +56,38 @@ module.exports = (msg, topicName) => {
   // producer
   //   .on('ready', async function() {
   console.log('Sending... Before');
-  Promise.all(
-    _.chunk(msg, chunkNumber).map(async (m, i) => {
-      return await broadcastMessageToKafka(m, i);
-    })
-  );
+  producer
+  .connect()
+  .then(res => {
+    console.log('Producer Connected')
+    Promise.all(
+      _.chunk(msg, chunkNumber).map(async (m, i) => {
+        return await broadcastMessageToKafka(m, i);
+      })
+    );
+  })
+  .catch(err => console.log(err));
   console.log('Succesfully Broadcast All messages!');
   console.log('Broadcasting to finish!');
   console.log(`Broadcasted ${count} messages`);
 
-  // producer.send(
-  //   [
-  //     {
-  //       topic: KafkaTopics.topics[topicName].finish,
-  //       messages: [
-  //         {
-  //           msg: 'finish'
-  //         }
-  //       ]
-  //     }
-  //   ],
-  //   function(err, data) {
-  //     if (err) return console.log(err);
-  //     console.log(data);
-  //     console.log('Message broadcasted to Finish topic. Client will close.');
+  producer.send(
+    [
+      {
+        topic: KafkaTopics.topics[topicName].finish,
+        messages: [
+          {
+            msg: 'finish'
+          }
+        ]
+      }
+    ],
+    function(err, data) {
+      if (err) return console.log(err);
+      console.log(data);
+      console.log('Message broadcasted to Finish topic. Client will close.');
 
-  //     // client.close();
-  //   }
-  // );
-  // })
-  // .on('error', function(err) {
-  //   console.log(err);
-  // });
+      // client.close();
+    }
+  );
 };

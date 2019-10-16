@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
 const data = require('./files/cork_max_visitors_revenues_yearly');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 var elIndex = {
   index: {
@@ -20,6 +21,9 @@ const client = new elasticsearch.Client({
 var elBody = [];
 
 const saveToElastic = async elBody => {
+
+  KafkaProducer(elBody, 'CORK_SOC_VISITORS_PILOTINTEGR_DAILY');
+  return;
   return await client.bulk(
     {
       requestTimeout: 600000,
@@ -41,7 +45,7 @@ const extractValues = (async () => {
         Revenues: d['Revenues']
       };
       if (returnVal) {
-        elBody.push(elIndex);
+        // elBody.push(elIndex);
         elBody.push(returnVal);
       }
     }

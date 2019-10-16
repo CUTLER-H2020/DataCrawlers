@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
 const stations = require('./files/stations');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 var elIndex = {
   index: {
@@ -40,6 +41,9 @@ const createIndex = async () => {
 };
 
 const saveToElastic = async (index, elBody) => {
+  KafkaProducer(elBody, 'ANTW_ENV_HISTPREC_10MIN');
+
+  return;
   return await client.bulk(
     {
       requestTimeout: 600000,
@@ -52,7 +56,7 @@ const saveToElastic = async (index, elBody) => {
   );
 };
 
-createIndex();
+// createIndex();
 
 const extractValues = (async () => {
   let index = 0;
@@ -77,7 +81,7 @@ const extractValues = (async () => {
           };
 
           if (returnVal) {
-            elBody.push(elIndex);
+            // elBody.push(elIndex);
             elBody.push(returnVal);
           }
         }
