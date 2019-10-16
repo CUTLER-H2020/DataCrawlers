@@ -1,6 +1,7 @@
 const XLSX = require('xlsx-extract').XLSX;
 const elasticsearch = require('elasticsearch');
 const moment = require('moment');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 const client = new elasticsearch.Client({
   host: 'localhost:9200'
@@ -23,7 +24,7 @@ const extractValues = (async () => {
       ignore_header: 1
     })
     .on('row', function(row) {
-      elBody.push(elIndex);
+      // elBody.push(elIndex);
       elBody.push({
         date: moment(row[0]).format('YYYY/MM/DD'),
         month: moment(row[0]).format('MM'),
@@ -33,37 +34,39 @@ const extractValues = (async () => {
     })
     .on('end', function(err) {
       console.log('Saving to elastic');
-      client.indices.create(
-        {
-          index: 'anta_soc_visitors_monthly_draxis',
-          body: {
-            settings: {
-              number_of_shards: 1
-            },
-            mappings: {
-              _doc: {
-                properties: {
-                  station_location: {
-                    type: 'geo_point'
-                  }
-                }
-              }
-            }
-          }
-        },
-        (err, resp) => {
-          if (err) console.log(err);
-          client.bulk(
-            {
-              requestTimeout: 600000,
-              body: elBody
-            },
-            function(err, resp) {
-              if (err) console.log(err.response);
-              else console.log('All files succesfully indexed!');
-            }
-          );
-        }
-      );
+      KafkaProducer(elBody, 'ANTA_SOC_VISITORS_MONTHLY');
+      // client.indices.create(
+      //   {
+      //     index: 'anta_soc_visitors_monthly_draxis',
+      //     body: {
+      //       settings: {
+      //         number_of_shards: 1
+      //       },
+      //       mappings: {
+      //         _doc: {
+      //           properties: {
+      //             station_location: {
+      //               type: 'geo_point'
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   },
+      //   (err, resp) => {
+      //     if (err) console.log(err);
+
+      //     // client.bulk(
+      //     //   {
+      //     //     requestTimeout: 600000,
+      //     //     body: elBody
+      //     //   },
+      //     //   function(err, resp) {
+      //     //     if (err) console.log(err.response);
+      //     //     else console.log('All files succesfully indexed!');
+      //     //   }
+      //     // );
+      //   }
+      // );
     });
 })();

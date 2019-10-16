@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
 var breakpoints = require('./files/helpers/aqi_breakpoints');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 const client = new elasticsearch.Client({
   host: 'localhost:9200'
@@ -65,7 +66,7 @@ const extractValues = (async () => {
         currentArray.map((row, i) => {
           row.map((r, i) => {
             if (i > 1) {
-              elBody.push(elIndex);
+              // elBody.push(elIndex);
               elBody.push({
                 station_name: 'Antalya Air Quality Station',
                 station_location: {
@@ -80,9 +81,7 @@ const extractValues = (async () => {
                   .add(-1, 'hours')
                   .format('HH:mm'),
                 parameter_name: units[i - 2].pollutant,
-                parameter_fullname: `${units[i - 2].pollutant} ${
-                  units[i - 2].unit
-                }`,
+                parameter_fullname: `${units[i - 2].pollutant} ${units[i - 2].unit}`,
                 unit: units[i - 2].unit,
                 value: r,
                 daily_aqi: pm10AQI
@@ -96,37 +95,38 @@ const extractValues = (async () => {
     })
     .on('end', function(err) {
       console.log('Saving to elastic');
-      client.indices.create(
-        {
-          index: 'anta_env_airquality_envmin_hourly_draxis',
-          body: {
-            settings: {
-              number_of_shards: 1
-            },
-            mappings: {
-              _doc: {
-                properties: {
-                  station_location: {
-                    type: 'geo_point'
-                  }
-                }
-              }
-            }
-          }
-        },
-        (err, resp) => {
-          if (err) console.log(err);
-          client.bulk(
-            {
-              requestTimeout: 600000,
-              body: elBody
-            },
-            function(err, resp) {
-              if (err) console.log(err.response);
-              else console.log('All files succesfully indexed!');
-            }
-          );
-        }
-      );
+      KafkaProducer(elBody, 'ANTA_ENV_AIRQUALITY_HOURLY');
+      // client.indices.create(
+      //   {
+      //     index: 'anta_env_airquality_envmin_hourly_draxis',
+      //     body: {
+      //       settings: {
+      //         number_of_shards: 1
+      //       },
+      //       mappings: {
+      //         _doc: {
+      //           properties: {
+      //             station_location: {
+      //               type: 'geo_point'
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   },
+      //   (err, resp) => {
+      //     if (err) console.log(err);
+      //     client.bulk(
+      //       {
+      //         requestTimeout: 600000,
+      //         body: elBody
+      //       },
+      //       function(err, resp) {
+      //         if (err) console.log(err.response);
+      //         else console.log('All files succesfully indexed!');
+      //       }
+      //     );
+      //   }
+      // );
     });
 })();

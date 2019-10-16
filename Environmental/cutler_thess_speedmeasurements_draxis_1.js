@@ -4,6 +4,7 @@ const XLSX = require('xlsx');
 const elasticsearch = require('elasticsearch');
 const moment = require('moment');
 var fs = require('fs');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 const client = new elasticsearch.Client({
   host: 'localhost:9200'
@@ -40,7 +41,10 @@ client.indices.create(
   }
 );
 
-fs.readdir(__dirname + '/files', function(err, files) {
+fs.readdir(__dirname + '/files/thess_speedmeasurements_files', function(
+  err,
+  files
+) {
   if (err) {
     console.error('Could not list the directory.', err);
     process.exit(1);
@@ -78,7 +82,7 @@ fs.readdir(__dirname + '/files', function(err, files) {
         //     .format('YYYY/MM/DD HH:mm')
         // );
 
-        elBody.push(elIndex);
+        // elBody.push(elIndex);
         elBody.push({
           date: moment(row.Timestamp).format('YYYY/MM/DD HH:mm'),
           day: moment(row.Timestamp).format('DD'),
@@ -96,15 +100,17 @@ fs.readdir(__dirname + '/files', function(err, files) {
       });
     });
 
-    client.bulk(
-      {
-        requestTimeout: 600000,
-        body: elBody
-      },
-      function(err, resp) {
-        if (err) console.log(err.response);
-        else console.log('All files for ' + file + ' succesfully indexed!');
-      }
-    );
+    KafkaProducer(elBody, 'THESS_ENV_SPEEDMEASUREMENTS_15MIN');
+
+    // client.bulk(
+    //   {
+    //     requestTimeout: 600000,
+    //     body: elBody
+    //   },
+    //   function(err, resp) {
+    //     if (err) console.log(err.response);
+    //     else console.log('All files for ' + file + ' succesfully indexed!');
+    //   }
+    // );
   });
 });

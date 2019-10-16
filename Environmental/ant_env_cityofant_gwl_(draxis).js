@@ -4,6 +4,7 @@ const moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 const client = new elasticsearch.Client({
   host: 'localhost:9200'
@@ -35,7 +36,7 @@ const extractStations = () => {
   let data = [];
   return new Promise((resolve, reject) => {
     new XLSX()
-      .extract(__dirname + '/Export_CUTLER_v40.xlsx', {
+      .extract(__dirname + '/files/Export_CUTLER_v40.xlsx', {
         sheet_nr: 0,
         ignore_header: 1
       })
@@ -63,7 +64,7 @@ const extractValues = (async () => {
         return station[0] == row[0];
       })[0];
       if (selectedStation && row[2] != undefined) {
-        elBody.push(elIndex);
+        // elBody.push(elIndex);
         elBody.push({
           station_id: selectedStation[0].toString(),
           station_name: selectedStation[9].toString(),
@@ -79,37 +80,38 @@ const extractValues = (async () => {
     })
     .on('end', function(err) {
       console.log('Saving to elastic');
-      client.indices.create(
-        {
-          index: 'ant_env_cityofant_gwl_(draxis)',
-          body: {
-            settings: {
-              number_of_shards: 1
-            },
-            mappings: {
-              _doc: {
-                properties: {
-                  station_location: {
-                    type: 'geo_point'
-                  }
-                }
-              }
-            }
-          }
-        },
-        (err, resp) => {
-          if (err) console.log(err);
-          client.bulk(
-            {
-              requestTimeout: 600000,
-              body: elBody
-            },
-            function(err, resp) {
-              if (err) console.log(err.response);
-              else console.log('All files succesfully indexed!');
-            }
-          );
-        }
-      );
+      KafkaProducer(elBody, 'ANTW_ENV_GWL_2MONTHS');
+      // client.indices.create(
+      //   {
+      //     index: 'ant_env_cityofant_gwl_(draxis)',
+      //     body: {
+      //       settings: {
+      //         number_of_shards: 1
+      //       },
+      //       mappings: {
+      //         _doc: {
+      //           properties: {
+      //             station_location: {
+      //               type: 'geo_point'
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   },
+      //   (err, resp) => {
+      //     if (err) console.log(err);
+      //     client.bulk(
+      //       {
+      //         requestTimeout: 600000,
+      //         body: elBody
+      //       },
+      //       function(err, resp) {
+      //         if (err) console.log(err.response);
+      //         else console.log('All files succesfully indexed!');
+      //       }
+      //     );
+      //   }
+      // );
     });
 })();

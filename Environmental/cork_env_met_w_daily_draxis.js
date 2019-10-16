@@ -1,9 +1,10 @@
 const XLSX = require('xlsx-extract').XLSX;
 const elasticsearch = require('elasticsearch');
 const moment = require('moment');
+const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 const client = new elasticsearch.Client({
-  host: 'localhost:9200'
+  host: '10.10.2.51:9092'
 });
 
 var elIndex = {
@@ -48,7 +49,7 @@ const metrics = [
 const extractValues = (async () => {
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/CORK_ENV_MET_W_DAILY.xlsx', {
+    .extract(__dirname + '/files/CORK_ENV_MET_W_DAILY.xlsx', {
       sheet_nr: 0,
       ignore_header: 22
     })
@@ -58,7 +59,7 @@ const extractValues = (async () => {
           // console.log(r);
           // console.log(row[0]);
           // console.log(metrics[i]);
-          elBody.push(elIndex);
+          // elBody.push(elIndex);
           elBody.push({
             station_name: 'ROCHES POINT',
             station_location: {
@@ -71,9 +72,7 @@ const extractValues = (async () => {
             parameter: metrics[i].code,
             parameter_description: metrics[i].description,
             parameter_unit: metrics[i].unit,
-            parameter_full_name: `${metrics[i].description} (${
-              metrics[i].unit
-            })`,
+            parameter_full_name: `${metrics[i].description} (${metrics[i].unit})`,
             value: parseFloat(r)
           });
         }
@@ -81,37 +80,38 @@ const extractValues = (async () => {
     })
     .on('end', function(err) {
       console.log('Saving to elastic');
-      client.indices.create(
-        {
-          index: 'cork_env_met_w_daily',
-          body: {
-            settings: {
-              number_of_shards: 1
-            },
-            mappings: {
-              _doc: {
-                properties: {
-                  station_location: {
-                    type: 'geo_point'
-                  }
-                }
-              }
-            }
-          }
-        },
-        (err, resp) => {
-          if (err) console.log(err);
-          client.bulk(
-            {
-              requestTimeout: 600000,
-              body: elBody
-            },
-            function(err, resp) {
-              if (err) console.log(err.response);
-              else console.log('All files succesfully indexed!');
-            }
-          );
-        }
-      );
+      KafkaProducer(elBody, 'CORK_ENV_MET_W_DAILY');
+      // client.indices.create(
+      //   {
+      //     index: 'cork_env_met_w_daily',
+      //     body: {
+      //       settings: {
+      //         number_of_shards: 1
+      //       },
+      //       mappings: {
+      //         _doc: {
+      //           properties: {
+      //             station_location: {
+      //               type: 'geo_point'
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   },
+      //   (err, resp) => {
+      //     if (err) console.log(err);
+      //     client.bulk(
+      //       {
+      //         requestTimeout: 600000,
+      //         body: elBody
+      //       },
+      //       function(err, resp) {
+      //         if (err) console.log(err.response);
+      //         else console.log('All files succesfully indexed!');
+      //       }
+      //     );
+      //   }
+      // );
     });
 })();

@@ -71,7 +71,7 @@ fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
 
   var elIndex = {
     index: {
-      _index: 'cutler_thess_envparameters',
+      _index: 'cutler_thess_envparameters_test',
       _type: '_doc'
     }
   };
@@ -161,7 +161,9 @@ fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
                   lat: coords.lat,
                   lon: coords.lon
                 },
-                date: moment(res['Ημερο -\r\nμηνία']).format('YYYY/MM/DD'),
+                date: moment(res['Ημερο -\r\nμηνία'])
+                  .add(1, 'days')
+                  .format('YYYY/MM/DD'),
                 month_: parseInt(moment(res['Ημερο -\r\nμηνία']).format('MM')),
                 year_: parseInt(moment(res['Ημερο -\r\nμηνία']).format('YYYY')),
                 aa: res['A.A.'],
@@ -236,7 +238,7 @@ fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
               //   returnVal['daily_aqi'] = Math.round(this.maxAqi);
               // }
               if (returnVal.value) {
-                elBody.push(elIndex);
+                // elBody.push(elIndex);
                 elBody.push(returnVal);
               }
             }
