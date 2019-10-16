@@ -34,7 +34,7 @@ def shapeConvertor():
     df.to_json(filname)
 def producer():
     """ This function sends data to kafka bus"""
-    producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+    producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
     topic = "ANT_ENV_CITYOFANT_MAPS_DATA_INGESTION"
     topic_1 = "CORK_ENV_CAR_PARKING_DATA_INGESTION"
     topic_2 = "CORK_ENV_CCC3_LAND_2014_DATA_INGESTION"

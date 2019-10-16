@@ -164,7 +164,7 @@ class anta_env_cityofantalya2_monthly(object):
 		df_final.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "ANTA_ENV_CITYOFANTALYA2_MONTHLY_DATA_INGESTION"
 		producer.send(topic, b'Antalya environmental data from 2012-2017 ingested to HDFS').get(timeout=30)
 		

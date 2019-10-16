@@ -1,0 +1,117 @@
+## Written by Panos Kostakos
+## University of Oulu
+## 2018
+## Kafka integration, Sep 2019
+
+## R version 3.4.4 (2018-03-15)
+## Kafka version kafka_2.12-2.2.1.tgz
+## Ubuntu Server 18.04.3 LTS
+## The code sends requests to OECD.stat using the OECD Library and returns a list of tables based on
+## user-defined locations and economic indicators. 
+
+library(tidyverse)
+library(OECD)
+library(rkafka)
+
+ip =("10.0.1.18")
+port=("9092")
+topic1<- "topic1"
+topic2<- "topic2"
+
+
+# Step 1: Define Locations (L3)
+locations <- data_frame(
+  location_name = c("PiThess", "PiCork", "PiAntw", "PiAntal"), 
+  location_code = c(
+    "1+2+3_PU+3_IN+3_PR+NOG.GRC+EL522", "1+2+3_PU+3_IN+3_PR+NOG.IRL+IE025",
+    "1+2+3_PU+3_IN+3_PR+NOG.BEL+BE211", "1+2+3_PU+3_IN+3_PR+NOG.TUR+TR611"
+  )
+)
+
+# Step 2: Define the economic Indicators we are interested.  
+indicators <- data_frame(
+  indic_id = c(
+    "Eco_OECD_RegionLabour_EmpPlaRes", "Eco_OECD_RegionLabour_LfPartRa", 
+    "Eco_OECD_RegionLabour_UnemReg",   "Eco_OECD_RegionEco_RegGdpTL2", 
+    "Eco_OECD_RegionEco_GDPLT3",       "Eco_OECD_RegionEco_RegEmIndu", 
+    "Eco_OECD_RegionEco_RegGVAWorker", "Eco_OECD_RegionEco_RegIncPC"
+  ),
+  dataset = c(
+    "REGION_LABOUR", "REGION_LABOUR", "REGION_LABOUR", "REGION_ECONOM", 
+    "REGION_ECONOM", "REGION_ECONOM", "REGION_ECONOM", "REGION_ECONOM"
+  ), 
+  indicator = c(
+    "EMP_Y15_MAX+EMP_Y15_64+EMP_Y15_24+EMP_RA_15_MAX+EMP_RA_15_64+EMP_RA_15_MAX_GR_2001+EMP_RA_15_64_GR_2001+EMP_RA_15_MAX_GR_2007+EMP_RA_15_64_GR_2007+EMP_RA_15_64_SEXDIF+EMP_RA_15_MAX_SEXDIF+EMP_PT+EMP_PT_SH+EMP_PT_SH_SEXDIF.T+F+M.ALL",
+    "REG_LFS+POP_Y15_MAX+POP_Y15_64+LF_Y15_MAX+LF_Y15_64+LF_Y15_24+PARTIC_RA_15_MAX+PARTIC_RA_15_64+PARTIC_RA_15_MAX_GR_2001+PARTIC_RA_15_64_GR_2001+PARTIC_RA_15_MAX_GR_2007+PARTIC_RA_15_64_GR_2007+PARTIC_RA_15_MAX_SEXDIF+PARTIC_RA_15_64_SEXDIF.T+F+M.ALL",
+    "UNEM+UNEM_RA_15_MAX+UNEM_RA_15_64+UNEM_RA_15_MAX_GR_2007+UNEM_RA_15_64_GR_2007+UNEM_RA_15_MAX_SEXDIF+UNEM_RA_15_64_SEXDIF.T+F+M.ALL",
+    "SNA_2008.GDP.REG+CURR_PR+USD_PPP+REAL_PR+REAL_PPP+PC+PC_CURR_PR+PC_USD_PPP+PC_REAL_PR+PC_REAL_PPP+GWTH_2007+GWTH_REAL_PR_2007+GWTH_PC_REAL_PR_2007+GWTH_2001+GWTH_REAL_PR_2001+GWTH_PC_REAL_PR_2001.ALL",
+    "SNA_2008.GDP.REG+CURR_PR+USD_PPP+REAL_PR+REAL_PPP+PC+PC_CURR_PR+PC_USD_PPP+PC_REAL_PR+PC_REAL_PPP+GWTH_2007+GWTH_REAL_PR_2007+GWTH_PC_REAL_PR_2007+GWTH_2001+GWTH_REAL_PR_2001+GWTH_PC_REAL_PR_2001.ALL",
+    "SNA_2008.EMP_IND_TOTAL+EMP_IND_10_VA+EMP_IND_10_VC+EMP_IND_10_VB_E+EMP_IND_10_VF+EMP_IND_10_VG_I+EMP_IND_10_VJ+EMP_IND_10_VK+EMP_IND_10_VL+EMP_IND_10_VM_N+EMP_IND_10_VO_Q+EMP_IND_10_VR_U.PER.ALL",
+    "SNA_2008.GVA_IND_TOTAL+GVA_IND_10_VA+GVA_IND_10_VC+GVA_IND_10_VB_E+GVA_IND_10_VF+GVA_IND_10_VG_I+GVA_IND_10_VJ+GVA_IND_10_VK+GVA_IND_10_VL+GVA_IND_10_VM_N+GVA_IND_10_VO_Q+GVA_IND_10_VR_U.PW_CURR_PR+PW_USD_PPP+PW_REAL_PR+PW_REAL_PPP.ALL",
+    "SNA_2008.INCOME_DISP+INCOME_PRIM.PC_CURR_PR+PC_USD_PPP+PC_REAL_PR+PC_REAL_PPP.ALL"
+  )
+)
+
+# Creating requests table
+# Joining by dummy variable to get all possible combinations of locations and indicators
+requests <- locations %>%
+  mutate(dummy = 1) %>%
+  inner_join(
+    indicators %>% mutate(dummy = 1), 
+    by = "dummy"
+  ) %>%
+  select(-dummy)
+
+# Create filters 
+requests <- requests %>%
+  mutate(
+    filter = paste(location_code, indicator, sep=".")
+  )
+
+# Infinite loop
+while (TRUE) {
+  while (TRUE){
+  
+      # Run get_dataset for every request
+      data_frames <- map2(requests$dataset, 
+                          requests$filter, 
+                          safely(~get_dataset(.x, filter = .y, pre_formatted = TRUE)))
+      
+      # Set names to resulting list
+      names(data_frames) <- paste(requests$location_name, requests$indic_id, sep = "_")
+      
+      # If all errors are NULL, i.e. there is no errors break from loop
+      if (all(map_lgl(data_frames, ~is.null(.$error)))) {
+        break
+      }
+      producer1=rkafka.createProducer(paste(ip,port, sep = ":"))
+      rkafka.send(producer1, topic1, paste(ip,port, sep = ":"),"something went wrong with the OECD API, I will try again in 30 minutes")
+      rkafka.closeProducer(producer1)
+      # Sleep for half an hour before next try
+      Sys.sleep(10)
+      producer1=rkafka.createProducer(paste(ip,port, sep = ":"))
+      rkafka.send(producer1, topic1, paste(ip,port, sep = ":"),"now trying again")
+      rkafka.closeProducer(producer1)
+  }
+
+producer1=rkafka.createProducer(paste(ip,port, sep = ":"))
+rkafka.send(producer1,topic2, paste(ip,port, sep = ":"),"all is good, going into hibernation mode for 1 day")
+rkafka.closeProducer(producer1)  
+Sys.sleep(10)
+producer1=rkafka.createProducer(paste(ip, port, sep = ":"))
+rkafka.send(producer1,topic2,paste(ip, port, sep = ":"),"all is good, waking up from hibernation to crawl OECD data")
+rkafka.closeProducer(producer1) 
+  
+}
+
+
+# # You can access that list by index or name
+# data_frames[[1]]
+# data_frames[["PiThess_Eco_OECD_RegionLabour_EmpPlaRes"]]
+# 
+# # First element of every list is dataframe: 
+# data_frames[["PiThess_Eco_OECD_RegionLabour_EmpPlaRes"]]$result
+# 
+# # Second elemnet is error
+# # If error is NULL there weren't any errors during execution
+# data_frames[["PiThess_Eco_OECD_RegionLabour_EmpPlaRes"]]$error

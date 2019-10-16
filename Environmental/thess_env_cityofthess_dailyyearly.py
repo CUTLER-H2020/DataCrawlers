@@ -165,7 +165,7 @@ class thess_env_cityofthess_dailyyearly (object):
 
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "THESS_ENV_CITYOFTHESS_DAILY_YEARLY_DATA_INGESTION"
 		producer.send(topic, b'City of thessaloniki environmental data ingested to HDFS').get(timeout=30)
 

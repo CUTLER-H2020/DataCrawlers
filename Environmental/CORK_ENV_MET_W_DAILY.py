@@ -32,7 +32,7 @@ def historicWeatherInfo():
     df_final.to_csv(filname, index = False)
 def producer():
     """ This function sends data to kafka bus"""
-    producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+    producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
     topic = "CORK_ENV_MET_W_DAILY_DATA INGESTION"
     producer.send(topic, b'Historical weather information for Ireland ingested to HDFS').get(timeout=30)
 

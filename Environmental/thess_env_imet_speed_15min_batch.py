@@ -416,7 +416,7 @@ class thess_env_imet_speed_15min_batch (object):
 
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "THESS_ENV_IMET_SPEED_15MIN_BATCH_DATA_INGESTION"
 		producer.send(topic, b'Thessaloniki car speed batch data ingested to HDFS').get(timeout=30)
 

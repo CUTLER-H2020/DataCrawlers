@@ -125,7 +125,7 @@ class ant_env_cityofant_histprec (object):
 					df_temp.to_csv(fullname, mode='a', encoding='utf-8-sig', index=False)
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
 		topic = "ANT_ENV_CITYOFANT_HISTPREC_DATA_INGESTION"
 		producer.send(topic, b'Historic precipitation data for antwerp ingested to HDFS').get(timeout=30)
 

@@ -125,7 +125,7 @@ class anta_eco_several_codes(object):
 
 	def producer(self):
 		""" This function sends data to kafka bus"""
-		producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+		producer = KafkaProducer(bootstrap_servers=['HOST_IP:PORT'], api_version=(2, 2, 1))
 		topic = "ANTA_ECO_CITYOFANTALYA_VISITORTICKET_MONTHLY_DATA_INGESTION"
 		topic_1 = "ANTA_ECO_CITIOFANTALYA_OTOPARK_MONTHLY_DATA_INGESTION"
 		topic_2 = "ANTA_ECO_CITYOFANTALYA_GENERALELECTIRICBILL_MONTHLY_DATA_INGESTION"

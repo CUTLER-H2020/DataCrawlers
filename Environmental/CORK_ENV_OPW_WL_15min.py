@@ -34,7 +34,7 @@ def getWaterLevel():
 
 def producer():
     """ This function sends data to kafka bus"""
-    producer = KafkaProducer(bootstrap_servers=['10.10.2.51:9092'], api_version=(2, 2, 1))
+    producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
     topic = "CORK_ENV_OPW_WL_15min_DATA_INGESTION"
     producer.send(topic, b'Historic water levels data by the OPW for station 19069 Ringaskiddy NMCI for Cork Pilot ingested to HDFS').get(timeout=30)
 
