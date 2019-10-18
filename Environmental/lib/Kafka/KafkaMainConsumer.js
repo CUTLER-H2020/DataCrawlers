@@ -75,7 +75,7 @@ consumer.run({
           // count++;
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.meta.body.error);
           
         });
     }

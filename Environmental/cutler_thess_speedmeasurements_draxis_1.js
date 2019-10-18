@@ -17,29 +17,29 @@ var elIndex = {
   }
 };
 
-client.indices.create(
-  {
-    index: 'cork_soc_visitors_daily_draxis',
-    body: {
-      settings: {
-        number_of_shards: 1
-      },
-      mappings: {
-        _doc: {
-          properties: {
-            station_location: {
-              type: 'geo_point'
-            }
-          }
-        }
-      }
-    }
-  },
-  (err, resp) => {
-    // if (err) console.log(err);
-    console.log('Index Created Succesfully');
-  }
-);
+// client.indices.create(
+//   {
+//     index: 'cork_soc_visitors_daily_draxis',
+//     body: {
+//       settings: {
+//         number_of_shards: 1
+//       },
+//       mappings: {
+//         _doc: {
+//           properties: {
+//             station_location: {
+//               type: 'geo_point'
+//             }
+//           }
+//         }
+//       }
+//     }
+//   },
+//   (err, resp) => {
+//     // if (err) console.log(err);
+//     console.log('Index Created Succesfully');
+//   }
+// );
 
 fs.readdir(__dirname + '/files/thess_speedmeasurements_files', function(
   err,
