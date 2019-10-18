@@ -24,7 +24,7 @@ if __name__ == "__main__":
         print("[+] Downloading data for Town:", cityname)
         dictionary = downloadPOI(xpaths_hotel, country_locality)
         dictionary.update(downloadPOI(xpaths_guest_houses, country_locality))
-        '''
+        
         dictionary.update(downloadPOI(xpaths_motels, country_locality))
         dictionary.update(downloadPOI(xpaths_camping, country_locality))
         dictionary.update(downloadPOI(xpaths_hostels, country_locality))
@@ -106,11 +106,11 @@ if __name__ == "__main__":
         dictionary.update(downloadPOI(xpaths_place_of_worship_taoist, country_locality))
         print("[+] Done, for attractions category")
         print("=====================\n[+] Done!")
-        '''
+
 
         citynames = {"Antalya - Turkey": "ANT", "Cork - Ireland": "CRK", "Antwerp - Belgium": "ANW", "Thessaloniki - Greece": "THE"}
-        download_topic = "DATA_DOWNLOAD_" + citynames[cityname] + "_ECO_MAPSME_CRAWLER"
-        ingest_topic = "DATA_INGESTION_" + citynames[cityname] + "_ECO_MAPSME_CRAWLER"
+        download_topic = citynames[cityname] + "_ECO_MAPSMECRAWLER_DATADOWNLOAD_YEARLY"
+        ingest_topic = citynames[cityname] + "_ECO_MAPSMECRAWLER_DATAINGESTION_YEARLY"
 
         # save them in NDjson based on "cityname"
         saveNDJSON(dictionary, cityname)

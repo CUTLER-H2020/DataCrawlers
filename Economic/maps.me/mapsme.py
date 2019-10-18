@@ -65,6 +65,7 @@ def downloadPOI(element_xpath_dictionary, country_locality):
         page = requests.get(url_API + str(url_API_next_page), headers=headers)
     except requests.exceptions.RequestException as e:
         print(e)
+        sendmessagetokafka("There was a problem downloading data for " + str(country_locality) + " by using the mapsme crawler - Date: " + str(date))
         return False
 
     pages_for_poi = html.fromstring(page.text).xpath(xpath_category['url_paggination'])
@@ -88,6 +89,7 @@ def downloadPOI(element_xpath_dictionary, country_locality):
             next_page = requests.get(url_API + str(url_API_next_page), headers=headers)
         except requests.exceptions.RequestException as e:
             print(e)
+	        sendmessagetokafka("There was a problem downloading data for " + str(country_locality) + " by using the mapsme crawler - Date: " + str(date))
             return False
 
         # save everything to the pois dictionary
@@ -113,6 +115,7 @@ def downloadPOI(element_xpath_dictionary, country_locality):
                 poi_page = requests.get(xpath_category['poi_url'] + str(poi_url), headers=headers)
             except requests.exceptions.RequestException as e:
                 print(e)
+		        sendmessagetokafka("There was a problem downloading data for " + str(country_locality) + " by using the mapsme crawler - Date: " + str(date))
                 return False
 
             # for every poi, take its location (latitude, longitude)
