@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
+""" This code is open-sourced software licensed under the MIT license""" 
+""" Copyright  2019 Marta Cortes, UbiComp - University of Oulu""" 
+""" Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+""" 
+""" 
+DISCLAIMER
+This code is used to crawl/parse data from several files from Antalya. By downloading this code, you agree to contact the corresponding data provider and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process) all data obtained from the data source.
+""" 
 
 """ Parse excel files into correct format in csv files. """
 """ """
-"""	Data are stored in an excel file named antalya_cutler_all_data_ (version 1).xlsx in different sheets """
+""" Data are stored in an excel file named antalya_cutler_all_data_ (version 1).xlsx in different sheets """
 """ Sheet name:
 
 	- ECON_SHOP_RENT
-	- ECON_EMPLOYERS
-	- ECON_GENERAL ELECTIRICK
-	- ECON_WATER POMP ELECTIRIC
-	- ECON_DUDENZONE HOUSING INDEX
-	- TRANSPORT_VML55A, TRANSPORT_VC56, TRANSPORT_KC35, TRANSPORT_KC35A, TRANSPORT_CV17A, TRANSPORT_MZ78, TRANSPORT_MK80, TRANSPORT_MK80A, TRANSPORT_VF66
 """
 """ Original files must be previously saved in folder temp"""
 """ """
