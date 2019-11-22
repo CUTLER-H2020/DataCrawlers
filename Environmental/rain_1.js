@@ -4,7 +4,8 @@ const moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var greekUtils = require('greek-utils');
-const stations = require('./files/stations');
+const stations = require('./files/stations_alladata_v21_deel1');
+// const stations = require('./files/stations_alladata_v20_deel2');
 const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 var elIndex = {
@@ -62,7 +63,8 @@ const extractValues = (async () => {
   let index = 0;
   console.log('Opening file');
   new XLSX()
-    .extract(__dirname + '/files/alladata_v20_deel2.xlsx', {
+    .extract(__dirname + '/files/alladata_v21_deel1.xlsx', {
+      // .extract(__dirname + '/files/alladata_v20_deel2.xlsx', {
       sheet_nr: 8,
       ignore_header: 1
     })

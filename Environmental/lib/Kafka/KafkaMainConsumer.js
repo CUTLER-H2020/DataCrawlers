@@ -4,7 +4,7 @@ const { Kafka } = require('kafkajs');
 
 const kafka = new Kafka({
   clientId: 'cutler',
-  brokers: ['10.10.2.51:9092']
+  brokers: ['172.16.32.30:9092']
 });
 
 const topics = require('./KafkaTopics');
@@ -15,7 +15,7 @@ consumer.connect();
 
 // const kafka = require('kafka-node'),
 //   client = new kafka.KafkaClient({
-//     kafkaHost: '10.10.2.51:9092',
+//     kafkaHost: '172.16.32.40:9092',
 //     connectTimeout: 100000,
 //     requestTimeout: 2147483647
 //   }),
@@ -23,7 +23,11 @@ consumer.connect();
 //   topics = require('./KafkaTopics'),
 //   EventEmitter = (require('events').EventEmitter.defaultMaxListeners = 0),
 const elasticSearchclient = new Client({
-  node: 'http://10.10.2.56:9200'
+  node: 'https://172.16.32.40:9200',
+  auth: {
+    username: 'wp4',
+    password: 'wp4-crawler'
+  }
 });
 
 var consumerTopics = [];
@@ -69,14 +73,13 @@ consumer.run({
           body: item
         })
         .then(res => {
-          // console.log({
-          //   count: count
-          // });
-          // count++;
+          console.log({
+            count: count
+          });
+          count++;
         })
         .catch(err => {
           console.log(err.meta.body.error);
-          
         });
     }
   }

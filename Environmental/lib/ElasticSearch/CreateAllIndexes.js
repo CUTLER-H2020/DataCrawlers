@@ -1,15 +1,16 @@
 const { indexes } = require('./Indexes');
 const { Client } = require('@elastic/elasticsearch');
 elasticSearchclient = new Client({
-  node: 'http://10.10.2.56:9200'
+  node: 'https://172.16.32.40:9200',
+  auth: {
+    username: 'wp4',
+    password: 'wp4-crawler'
+  }
 });
 
 const checkIfIndexExist = async index => {
   return new Promise(async resolve => {
     console.log(`Indexing ${index.index}`);
-    let res = await elasticSearchclient.indices.exists({
-      index: 'cutler_thess_envparameters'
-    });
     // if (!res.body) {
     elasticSearchclient.indices
       .create({
@@ -26,7 +27,7 @@ const checkIfIndexExist = async index => {
         console.log(`Succesfully Created: ${index.index}`);
       })
       .catch(err => {
-        console.log(err.body);
+        console.log(err.body.error);
       });
     // }
   });

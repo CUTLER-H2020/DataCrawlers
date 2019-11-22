@@ -6,7 +6,7 @@ const kafka = require('kafka-node');
 
 // create new client
 var KafkaClient = new kafka.KafkaClient({
-    kafkaHost: '10.10.2.51:9092'
+    kafkaHost: '172.16.32.40:9092'
 });
 
 // error event
