@@ -1,4 +1,14 @@
 # -*- coding: utf-8 -*-
+""" This code is open-sourced software licensed under the MIT license (http://opensource.org/licenses/MIT)""" 
+""" Copyright  2019 Marta Cortes, UbiComp - University of Oulu""" 
+""" Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+""" 
+""" 
+DISCLAIMER
+This code is used to crawl/parse data from several files from Antwerp Municipality. By downloading this code, you agree to contact the corresponding data provider and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process) all data obtained from the data source.
+""" 
 
 """ Parse excel files into correct format in csv files. """
 """ """
@@ -111,18 +121,28 @@ class ant_env_cityofant_gwl(object):
 			df_temp =    df_merge[:][df_merge.ID == elem]  
 			#df_temp['Date'] = pd.to_datetime(df_temp['Date'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
 			count += df_temp.count()
-			outdir2 = outdir+'/'+code+'_'+str(index)
-			if not os.path.exists(outdir2):
-				os.mkdir(outdir2)
+			
+			#CODE TO SAVE IN ONE FOLDER
+			outdir2 = outdir
+			#CODE TO SAVE IN SEVERAL FOLDERS
+			#outdir2 = outdir+'/'+code+'_'+str(index)
+			#if not os.path.exists(outdir2):
+			#	os.mkdir(outdir2)
 
-	        #Write to the csv file. Note, put this out of the loop to write all the sheets in same csv file
+	        #Write to the csv file. Note, different code to write all the sheets in same csv file or each in different
 			csvfile = str(uuid.uuid4()) + ".csv"#sheet+'.csv'
 			#print ('writing to folder '+code+'_'+str(index))
 			fullname = os.path.join(outdir2, csvfile)
 			df_temp.rename(columns={'ID':'Sensor code'},inplace=True)
-			df_temp.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
+			#uncomment line towrite in different csv files
+			#df_temp.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 			index+=1
+			#uncomment line (1/2) to write all sheets in same csv file
+			df = df.append(df_temp, ignore_index=True)
+			
 		print (count)
+		#uncomment line (2/2) to write all sheets in same csv file
+		df.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 
 	def producer(self):
 		""" This function sends data to kafka bus"""

@@ -1,7 +1,14 @@
+##This code is open-sourced software licensed under the MIT license
+##Copyright 2019 Karypidis Paris - Alexandros, Democritus University of Thrace (DUTH)
+##Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+##The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+##THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+##
+##DISCLAIMER
+##This code is used to crawl/parse data from Eurostat databases. By downloading this code, you agree to contact the corresponding data provider and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process) all data obtained from the data source.
+
 """
-Written by Karypidis Paris Alexandros
-Democritus University of Thrace (DUTH)
-2018 within CUTLER H2020 Project
+CUTLER H2020 Project
 Python 3.5
 
 headers - Dictionary with headers to be used in requests.get function
@@ -65,6 +72,7 @@ def downloadPOI(element_xpath_dictionary, country_locality):
         page = requests.get(url_API + str(url_API_next_page), headers=headers)
     except requests.exceptions.RequestException as e:
         print(e)
+        sendmessagetokafka("There was a problem downloading data for " + str(country_locality) + " by using the mapsme crawler - Date: " + str(date))
         return False
 
     pages_for_poi = html.fromstring(page.text).xpath(xpath_category['url_paggination'])
@@ -88,6 +96,7 @@ def downloadPOI(element_xpath_dictionary, country_locality):
             next_page = requests.get(url_API + str(url_API_next_page), headers=headers)
         except requests.exceptions.RequestException as e:
             print(e)
+	        sendmessagetokafka("There was a problem downloading data for " + str(country_locality) + " by using the mapsme crawler - Date: " + str(date))
             return False
 
         # save everything to the pois dictionary
@@ -113,6 +122,7 @@ def downloadPOI(element_xpath_dictionary, country_locality):
                 poi_page = requests.get(xpath_category['poi_url'] + str(poi_url), headers=headers)
             except requests.exceptions.RequestException as e:
                 print(e)
+		        sendmessagetokafka("There was a problem downloading data for " + str(country_locality) + " by using the mapsme crawler - Date: " + str(date))
                 return False
 
             # for every poi, take its location (latitude, longitude)
