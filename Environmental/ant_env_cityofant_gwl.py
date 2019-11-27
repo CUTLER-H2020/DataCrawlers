@@ -57,54 +57,64 @@ class ant_env_cityofant_gwl(object):
 		self.local = True
 
 	def parse_files(self):
-		fileName = l_temp_path+code+'/'+xlfname#
-		xl = pd.ExcelFile(fileName)
-		print ('opening file '+fileName)
 
-		#data into dataframe
-		df_clean_data = xl.parse (clean_data_sheetn)
-		#sensor data into dataframe
-		df_sensors = xl.parse (sensors_sheetn)
+		try: 
+			fileName = l_temp_path+code+'/'+xlfname#
+			xl = pd.ExcelFile(fileName)
+			print ('opening file '+fileName)
+		except Exception as e:
+			self.producer("ANT_ENV_CITYOFANT_GWL_DATA_ERROR",'data source not found or cannot be open',e)
+			return False
 		
-		#First cleaning of sensor data column names 
-		df_sensors.columns = df_sensors.columns.str.replace(r"\(.*\)","")#remove all braces and data inside
-		#print (df_sensors.columns.tolist)
+		try:
+			#data into dataframe
+			df_clean_data = xl.parse (clean_data_sheetn)
+			#sensor data into dataframe
+			df_sensors = xl.parse (sensors_sheetn)
+			
+			#First cleaning of sensor data column names 
+			df_sensors.columns = df_sensors.columns.str.replace(r"\(.*\)","")#remove all braces and data inside
+			#print (df_sensors.columns.tolist)
 
-		#get only the rows of interest
-		df_sensors_clean = df_sensors[['ID','Height well ', 'Height ground level ', 'Location','X ','Y ', 'X-coordinate ','Y-coordinate ']].copy()
+			#get only the rows of interest
+			df_sensors_clean = df_sensors[['ID','Height well ', 'Height ground level ', 'Location','X ','Y ', 'X-coordinate ','Y-coordinate ']].copy()
 
-		#all the values in the columns that will work as merging keys, need to be of the same type 
-		df_clean_data["ID"] = df_clean_data["ID"].astype(str)
-		df_sensors_clean["ID"] = df_sensors_clean["ID"].astype(str)
+			#all the values in the columns that will work as merging keys, need to be of the same type 
+			df_clean_data["ID"] = df_clean_data["ID"].astype(str)
+			df_sensors_clean["ID"] = df_sensors_clean["ID"].astype(str)
 
-		#we merge, with the ID values of the sensors data
-		df_merge = pd.merge(df_clean_data,df_sensors_clean, on ='ID', how='right')
+			#we merge, with the ID values of the sensors data
+			df_merge = pd.merge(df_clean_data,df_sensors_clean, on ='ID', how='right')
 
-		#sensord dataframes has 460 unique values as ID
-		#UniqueNames = df_sensors_clean.ID.unique()
-		#print ('sensors'+str(len(UniqueNames)))
-		#merged has the same
-		UniqueNames_merged = df_merge.ID.unique()
-		print ('merged'+str(len(UniqueNames_merged)))
+			#sensord dataframes has 460 unique values as ID
+			#UniqueNames = df_sensors_clean.ID.unique()
+			#print ('sensors'+str(len(UniqueNames)))
+			#merged has the same
+			UniqueNames_merged = df_merge.ID.unique()
+			print ('merged'+str(len(UniqueNames_merged)))
 
 
-		#df_merge_clean['Date'] = pd.to_datetime(df_merge_clean['Date'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+			#df_merge_clean['Date'] = pd.to_datetime(df_merge_clean['Date'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
 
-		df_merge.rename(columns={'Peil_cor2':'Water level','X ':'Longitude','Y ':'Latitude','Height well ':'Height well','X-coordinate ':'X','Y-coordinate ':'Y'},inplace=True)
-		#n=df_clean_data['ID'].count()
-		#print ('df_clean_data rows '+str(n))
-		m=df_merge['ID'].count()
-		print ('df_merge rows '+str(m))
-		#m=df_merge_clean['ID'].count()
-		#print ('df_merge_clean rows '+str(m))
-
+			df_merge.rename(columns={'Peil_cor2':'Water level','X ':'Longitude','Y ':'Latitude','Height well ':'Height well','X-coordinate ':'X','Y-coordinate ':'Y'},inplace=True)
+			
+			m=df_merge['ID'].count()
+			print ('df_merge rows '+str(m))
+			
+		except Exception as e:
+			self.producer("ANT_ENV_CITYOFANT_GWL_DATA_ERROR",'data source format is not as expected',e)
+			return False
 		#save
-		outerdir = l_final_path
-		if not os.path.exists(outerdir):
-			os.mkdir(outerdir)
-		outdir = outerdir+'/'+code
-		if not os.path.exists(outdir):
-			os.mkdir(outdir)
+		try:
+			outerdir = l_final_path
+			if not os.path.exists(outerdir):
+				os.mkdir(outerdir)
+			outdir = outerdir+'/'+code
+			if not os.path.exists(outdir):
+				os.mkdir(outdir)
+		except Exception as e:
+			self.producer("ANT_ENV_CITYOFANT_GWL_DATA_ERROR",'cannot create folder to store data',e)
+			return False
 
 		#
 		#debugging
@@ -114,43 +124,55 @@ class ant_env_cityofant_gwl(object):
 
 		#df_merge.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 
+		df = pd.DataFrame()
 
-		index = 1
-		count = 0
-		for elem in UniqueNames_merged:
-			df_temp =    df_merge[:][df_merge.ID == elem]  
-			#df_temp['Date'] = pd.to_datetime(df_temp['Date'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
-			count += df_temp.count()
-			
-			#CODE TO SAVE IN ONE FOLDER
-			outdir2 = outdir
-			#CODE TO SAVE IN SEVERAL FOLDERS
-			#outdir2 = outdir+'/'+code+'_'+str(index)
-			#if not os.path.exists(outdir2):
-			#	os.mkdir(outdir2)
+		try:
+			index = 1
+			count = 0
+			for elem in UniqueNames_merged:
+				df_temp =    df_merge[:][df_merge.ID == elem]  
+				#df_temp['Date'] = pd.to_datetime(df_temp['Date'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+				count += df_temp.count()
+				
+				#CODE TO SAVE IN ONE FOLDER
+				outdir2 = outdir
+				#CODE TO SAVE IN SEVERAL FOLDERS
+				#outdir2 = outdir+'/'+code+'_'+str(index)
+				#if not os.path.exists(outdir2):
+				#	os.mkdir(outdir2)
 
-	        #Write to the csv file. Note, different code to write all the sheets in same csv file or each in different
+				df_temp.rename(columns={'ID':'Sensor code'},inplace=True)
+
+				#Write to the csv file. Note, next lines shoud be out of loop to write in teh same file
+				#uncomment 3 lines towrite in different csv files
+				#csvfile = str(uuid.uuid4()) + ".csv"#sheet+'.csv'
+				#debug print ('writing to folder '+code+'_'+str(index))
+				#fullname = os.path.join(outdir2, csvfile)
+				#df_temp.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
+				index+=1
+				#uncomment line (1/2) to write all sheets in same csv file
+				df = df.append(df_temp, ignore_index=True)
+				
+			print (count)
+			#uncomment 3 lines (2/2) to write all sheets in same csv file
 			csvfile = str(uuid.uuid4()) + ".csv"#sheet+'.csv'
-			#print ('writing to folder '+code+'_'+str(index))
 			fullname = os.path.join(outdir2, csvfile)
-			df_temp.rename(columns={'ID':'Sensor code'},inplace=True)
-			#uncomment line towrite in different csv files
-			#df_temp.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
-			index+=1
-			#uncomment line (1/2) to write all sheets in same csv file
-			df = df.append(df_temp, ignore_index=True)
-			
-		print (count)
-		#uncomment line (2/2) to write all sheets in same csv file
-		df.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
+			df.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
+		except Exception as e:
+			self.producer("ANT_ENV_CITYOFANT_GWL_DATA_ERROR",'cannot store data in csv file',e)
+			return False
+		
+		return True
 
-	def producer(self):
+	def producer(self,topic,msg,e=None):
 		""" This function sends data to kafka bus"""
 		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
-		topic = "ANT_ENV_CITYOFANT_GWL_DATA_INGESTION"
-		producer.send(topic, b'	GWL data for antwerp ingested to HDFS').get(timeout=30)
+		msg_b = str.encode(msg)
+		producer.send(topic, msg_b).get(timeout=30)
+		if (e):
+			logging.exception('exception happened')
 
 if __name__ == '__main__':
 	a = ant_env_cityofant_gwl()
-	a.parse_files()
-	a.producer()
+	if (a.parse_files()):
+		a.producer("ANT_ENV_CITYOFANT_GWL_DATA_INGESTION",'GWL data for antwerp ingested to HDFS')
