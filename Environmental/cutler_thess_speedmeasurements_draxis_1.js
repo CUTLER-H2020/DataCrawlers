@@ -1,5 +1,6 @@
 // const XLSX = require('xlsx-extract').XLSX;
 const XLSX = require('xlsx');
+var greekUtils = require('greek-utils');
 
 const elasticsearch = require('elasticsearch');
 const moment = require('moment');
@@ -50,9 +51,9 @@ fs.readdir(__dirname + '/files/thess_speedmeasurements_files', function(
     process.exit(1);
   }
 
+  var elBody = [];
   files.map(file => {
     console.log('Opening file: ' + file);
-    var elBody = [];
 
     var workbook = XLSX.readFile(
       __dirname + '/files/thess_speedmeasurements_files/' + file,
@@ -75,22 +76,50 @@ fs.readdir(__dirname + '/files/thess_speedmeasurements_files', function(
         //     .add(1, 'minute')
         //     .format('YYYY/MM/DD HH:mm')
         // );
-        // console.log(
-        //   moment(row.Timestamp)
+        // console.log({
+        //   date: moment(row.Timestamp)
+        //     // .add(1, 'minute')
+        //     .format('YYYY/MM/DD HH:mm:ss'),
+        //   day: moment(row.Timestamp)
         //     .add(1, 'minute')
-        //     .add(-2, 'hours')
-        //     .format('YYYY/MM/DD HH:mm')
-        // );
+        //     .format('DD'),
+        //   month: moment(row.Timestamp)
+        //     .add(1, 'minute')
+        //     .format('MM'),
+        //   year: moment(row.Timestamp)
+        //     .add(1, 'minute')
+        //     .format('YYYY'),
+        //   time: moment(row.Timestamp)
+        //     .add(1, 'minute')
+        //     .format('HH:mm'),
+        //   id: row.PathID,
+        //   name: row.Name ? row.Name.split('. ')[1] : '',
+        //   speed: row.Value,
+        //   samples: row.Samples,
+        //   unit: 'u (km/h)',
+        //   // mileage: row[2] * 5,
+        //   mileage_unit: 'vkm (km*cars)'
+        // });
 
         // elBody.push(elIndex);
         elBody.push({
-          date: moment(row.Timestamp).format('YYYY/MM/DD HH:mm'),
-          day: moment(row.Timestamp).format('DD'),
-          month: moment(row.Timestamp).format('MM'),
-          year: moment(row.Timestamp).format('YYYY'),
-          time: moment(row.Timestamp).format('HH:mm'),
+          date: moment(row.Timestamp)
+            .add(1, 'minute')
+            .format('YYYY/MM/DD HH:mm:ss'),
+          day: moment(row.Timestamp)
+            .add(1, 'minute')
+            .format('DD'),
+          month: moment(row.Timestamp)
+            .add(1, 'minute')
+            .format('MM'),
+          year: moment(row.Timestamp)
+            .add(1, 'minute')
+            .format('YYYY'),
+          time: moment(row.Timestamp)
+            .add(1, 'minute')
+            .format('HH:mm'),
           id: row.PathID,
-          name: row.Name ? row.Name.split('. ')[1] : '',
+          name: row.Name ? greekUtils.toGreeklish(row.Name.split('. ')[1]) : '',
           speed: row.Value,
           samples: row.Samples,
           unit: 'u (km/h)',
@@ -99,8 +128,6 @@ fs.readdir(__dirname + '/files/thess_speedmeasurements_files', function(
         });
       });
     });
-
-    KafkaProducer(elBody, 'THESS_ENV_SPEEDMEASUREMENTS_15MIN');
 
     // client.bulk(
     //   {
@@ -113,4 +140,5 @@ fs.readdir(__dirname + '/files/thess_speedmeasurements_files', function(
     //   }
     // );
   });
+  KafkaProducer(elBody, 'THESS_ENV_SPEEDMEASUREMENTS_15MIN');
 });

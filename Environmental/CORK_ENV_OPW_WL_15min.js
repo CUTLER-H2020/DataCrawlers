@@ -29,7 +29,7 @@ const extractValues = (async () => {
         station_name: 'Ringaskiddy NMCI',
         station_location: {
           lat: 51.84,
-          lon: 3 - 8.304
+          lon: -8.304
         },
         date: moment(row[0]).format('YYYY/MM/DD'),
         date_hour: moment(row[0]).format('YYYY/MM/DD HH:mm'),

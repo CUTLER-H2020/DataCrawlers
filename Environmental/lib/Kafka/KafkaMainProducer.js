@@ -1,7 +1,7 @@
 'use strict';
 // const kafka = require('kafka-node');
 // const client = new kafka.KafkaClient({
-//   kafkaHost: '10.10.2.51:9092',
+//   kafkaHost: '172.16.32.40:9092',
 //   connectTimeout: 100000,
 //   requestTimeout: 2147483647
 // });
@@ -12,7 +12,7 @@ const { Kafka } = require('kafkajs');
 
 const kafka = new Kafka({
   clientId: 'my-app',
-  brokers: ['10.10.2.51:9092']
+  brokers: ['172.16.32.30:9092']
 });
 const producer = kafka.producer();
 
@@ -57,16 +57,16 @@ module.exports = (msg, topicName) => {
   //   .on('ready', async function() {
   console.log('Sending... Before');
   producer
-  .connect()
-  .then(res => {
-    console.log('Producer Connected')
-    Promise.all(
-      _.chunk(msg, chunkNumber).map(async (m, i) => {
-        return await broadcastMessageToKafka(m, i);
-      })
-    );
-  })
-  .catch(err => console.log(err));
+    .connect()
+    .then(res => {
+      console.log('Producer Connected');
+      Promise.all(
+        _.chunk(msg, chunkNumber).map(async (m, i) => {
+          return await broadcastMessageToKafka(m, i);
+        })
+      );
+    })
+    .catch(err => console.log(err));
   console.log('Succesfully Broadcast All messages!');
   console.log('Broadcasting to finish!');
   console.log(`Broadcasted ${count} messages`);

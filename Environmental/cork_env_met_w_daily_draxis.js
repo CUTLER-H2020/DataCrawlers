@@ -4,7 +4,7 @@ const moment = require('moment');
 const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
 
 const client = new elasticsearch.Client({
-  host: '10.10.2.51:9092'
+  host: '172.16.32.40:9092'
 });
 
 var elIndex = {

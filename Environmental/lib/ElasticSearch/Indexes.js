@@ -76,74 +76,8 @@ const indexes = [
         type: 'date',
         format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
       },
-      month: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      parameter: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      parameter_description: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      parameter_full_name: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      parameter_unit: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
       station_location: {
         type: 'geo_point'
-      },
-      station_name: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
-      },
-      value: {
-        type: 'float'
-      },
-      year: {
-        type: 'text',
-        fields: {
-          keyword: {
-            type: 'keyword',
-            ignore_above: 256
-          }
-        }
       }
     }
   },
@@ -152,8 +86,8 @@ const indexes = [
     mapping: {
       station_location: {
         type: 'geo_point'
-      },
-     }
+      }
+    }
   },
   {
     index: 'cork_soc_visitors_daily_draxis',
@@ -224,7 +158,7 @@ const indexes = [
       date: {
         type: 'date',
         format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
-      },
+      }
     }
   },
   {
@@ -236,7 +170,7 @@ const indexes = [
       },
       loc: {
         type: 'geo_point'
-      },
+      }
     }
   },
   {
@@ -248,7 +182,7 @@ const indexes = [
       },
       station_location: {
         type: 'geo_point'
-      },
+      }
     }
   },
   {
@@ -282,8 +216,7 @@ const indexes = [
   },
   {
     index: 'cork_integr_parking',
-    mapping: {
-    }
+    mapping: {}
   },
   {
     index: 'cork_integr_social',

@@ -24,12 +24,12 @@ const units = [
   { pollutant: 'Fecal coliform', unit: 'CFU/100mL' },
   { pollutant: 'Fecal Streptococcus', unit: 'CFU/100mL' },
   { pollutant: 'COD', unit: 'mg/L', DL: 5 },
-  { pollutant: 'pH' },
+  { pollutant: 'pH', unit: '' },
   { pollutant: 'Total Nitrogen', unit: 'mg/L', DL: 1.32 },
   { pollutant: 'Total Coliform', unit: 'CFU/100mL' },
   { pollutant: 'Total Phosphorus', unit: 'mg/L', DL: 0.025 },
-  { pollutant: 'Depth', unit: 'm3/sec' },
-  { pollutant: 'Flow', unit: 'm/sec' }
+  { pollutant: 'Volumetric Flow', unit: 'm3/sec' },
+  { pollutant: 'Water Velocity', unit: 'm/sec' }
 ];
 
 var elBody = [];
