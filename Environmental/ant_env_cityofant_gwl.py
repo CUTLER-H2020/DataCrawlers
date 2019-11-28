@@ -141,7 +141,7 @@ class ant_env_cityofant_gwl(object):
 				#if not os.path.exists(outdir2):
 				#	os.mkdir(outdir2)
 
-				df_temp.rename(columns={'ID':'Sensor code'},inplace=True)
+				df_temp.rename(columns={'ID':'sensor_id'},inplace=True)
 
 				#Write to the csv file. Note, next lines shoud be out of loop to write in teh same file
 				#uncomment 3 lines towrite in different csv files
@@ -159,7 +159,7 @@ class ant_env_cityofant_gwl(object):
 			fullname = os.path.join(outdir2, csvfile)
 			df.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 		except Exception as e:
-			self.producer("ANT_ENV_CITYOFANT_GWL_DATA_ERROR",'cannot store data in csv file',e)
+			self.producer("ANT_ENV_CITYOFANT_GWL_DATA_ERROR",'cannot store data in file',e)
 			return False
 		
 		return True

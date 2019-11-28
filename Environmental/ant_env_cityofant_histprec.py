@@ -120,7 +120,7 @@ class ant_env_cityofant_histprec (object):
 						df = df.append(df_temp, ignore_index=True)
 
 			#for data model			
-			df.rename(columns={'NR':'Sensor_id'},inplace=True)
+			df.rename(columns={'NR':'sensor_id'},inplace=True)
 		
 
 		except Exception as e:
@@ -129,13 +129,14 @@ class ant_env_cityofant_histprec (object):
 
 		try:
 			#create folder/file structure
-			outerdir = l_final_path+code
-			if not os.path.exists(outerdir):
-				os.mkdir(outerdir)
-			#All the data stored in same file, same folder
-			outdir=outerdir
+			outdir = l_final_path+code
 			if not os.path.exists(outdir):
 				os.mkdir(outdir)
+		except Exception as e:
+			self.producer("ANT_ENV_CITYOFANT_HISTPREC_DATA_ERROR",'cannot create folder/file to store data',e)
+			return False
+
+		try:					
 	        #Write to the csv file.
 			csvfile = str(uuid.uuid4()) + ".csv"
 			print ('writing to folder '+code+'_'+name)
@@ -143,7 +144,7 @@ class ant_env_cityofant_histprec (object):
 
 			df.to_csv(fullname, mode='a', encoding='utf-8-sig', index=False)
 		except Exception as e:
-			self.producer("ANT_ENV_CITYOFANT_HISTPREC_DATA_ERROR",'cannot store data in csv file',e)
+			self.producer("ANT_ENV_CITYOFANT_HISTPREC_DATA_ERROR",'cannot store data in file',e)
 			return False
 
 
