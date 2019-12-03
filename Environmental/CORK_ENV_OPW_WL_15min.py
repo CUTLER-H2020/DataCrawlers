@@ -45,7 +45,7 @@ def getWaterLevel():
         url = 'http://waterlevel.ie/hydro-data/stations/19069/Parameter/S/complete.zip'
         df = pd.read_csv(url, compression="zip", sep='\s+', header=None, dtype='unicode')
     except Exception as e:
-        producer("CORK_ENV_OPW_WL_15min_DATA_INGESTION",'data source not found or cannot be open',e)
+        producer("CORK_ENV_OPW_WL_15min_DATA_ERROR",'data source not found or cannot be open',e)
         return False
     try:
         df_1 = df[7:] #Removes unnecessary rows contains duration of data etc.
@@ -57,12 +57,12 @@ def getWaterLevel():
         df_final['Quality'] = df_final['Quality'].str.replace('*', 'NA') # Replaces * values as missing values with NA
         df_final["station_id"] = "19069 Ringaskiddy" #Adds station identifier
     except Exception as e:
-        producer("CORK_ENV_OPW_WL_15min_DATA_INGESTION",'data source format is not as expected',e)
+        producer("CORK_ENV_OPW_WL_15min_DATA_ERROR",'data source format is not as expected',e)
         return False
     try:    
         df_final.to_csv(filname, index=False)
     except Exception as e:
-        producer("CORK_ENV_OPW_WL_15min_DATA_INGESTION",'cannot store data in file')
+        producer("CORK_ENV_OPW_WL_15min_DATA_ERROR",'cannot store data in file')
         return False
     return True  
 
