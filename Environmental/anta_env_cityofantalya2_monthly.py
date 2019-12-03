@@ -104,7 +104,6 @@ class anta_env_cityofantalya2_monthly(object):
 			xl = pd.ExcelFile(fileName)#read_excel(fileName)
 			print ('opening file '+fileName)
 		except Exception as e:
-			#logging.exception('exception happened')
 			self.producer("ANTA_ENV_CITYOFANTALYA2_MONTHLY_DATA_ERROR",'data source not found or cannot be open',e)
 			return False
 
@@ -178,7 +177,7 @@ class anta_env_cityofantalya2_monthly(object):
 			fullname = os.path.join(outdir2, csvfile)
 			df_final.to_csv(fullname, mode='w', encoding='utf-8-sig', index=False)
 		except Exception as e:
-			self.producer("ANTA_ENV_CITYOFANTALYA2_MONTHLY_DATA_ERROR",'cannot store data in csv file')
+			self.producer("ANTA_ENV_CITYOFANTALYA2_MONTHLY_DATA_ERROR",'cannot store data in file')
 			return False
 
 		return True	
