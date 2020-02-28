@@ -1,7 +1,0 @@
-{
-    "require": {
-        "fabpot/goutte": "^3.2",
-        "maatwebsite/excel": "^3.0",
-        "phpoffice/phpspreadsheet": "^1.4"
-    }
-}
