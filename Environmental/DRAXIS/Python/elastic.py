@@ -30,6 +30,20 @@ class ElasticSearchClient:
         return geo_mapping
 
     @staticmethod
+    def define_custom_geo_point_mapping(geo_point_field_name):
+        geo_mapping = {
+            "mappings": {
+                "properties": {
+                    geo_point_field_name: {
+                        "type": "geo_point"
+                    }
+                }
+            }
+
+        }
+        return geo_mapping
+
+    @staticmethod
     def define_date_mapping():
         date_mapping = {
             "mappings": {
