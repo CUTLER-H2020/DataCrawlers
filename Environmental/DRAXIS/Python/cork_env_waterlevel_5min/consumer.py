@@ -1,39 +1,14 @@
 import os
 import json
+import datetime
 from kafka import KafkaConsumer
 from elastic import ElasticSearchClient
 from dotenv import load_dotenv
 from constants import *
 
 
-def insert_modified_data(forecast):
-    # Add the special character to temperature for Kibana visualization reasons
-    forecast['temperature2m']['unit'] = "°C"
-    forecast['temperature2m']['description'] = "Temperature [°C]"
-
-    for variable, data in forecast.items():
-        doc = {"Variable": variable}
-        for time, value in data['data'].items():
-            # for Kibana visualisation reasons, cut values below 0.001
-            if value < 0.001:
-                value = 0.0
-
-            doc['Date'] = time
-            doc['Value'] = value
-
-            doc['Unit'] = data['unit']
-            doc['Description'] = data['description']
-            doc['location'] = {
-                'lat': CORK_LAT,
-                'lon': CORK_LON
-            }
-            id_ = variable + time
-            print(doc)
-            res = es.insert_doc(doc, id_=id_)
-            print(res)
-
-
 load_dotenv()
+
 es = ElasticSearchClient(os.getenv('ES_HOST'), os.getenv('ES_PORT'),
                          use_ssl=os.getenv('ES_USE_SSL', False),
                          verify_certs=os.getenv('ES_VERIFY_CERTS', False),
@@ -55,4 +30,19 @@ kafka_consumer = KafkaConsumer(KAFKA_TOPIC,
                                value_deserializer=lambda m: json.loads(m.decode('utf8')))
 
 for msg in kafka_consumer:
-    insert_modified_data(msg.value)
+    # Data are ready to be inserted to ES from producer.
+
+    # Insert documents, with id's station_name+date eg. "Ringaskiddy NMCI2011-12-31T00:15:00"
+    # in order to avoid duplicate records
+    doc = msg.value
+
+    time = doc['date']
+    station = doc['station_name']
+
+    id_ = station+time
+
+    print("Inserting doc: {}".format(doc))
+    print("with id: {}".format(id_))
+
+    result = es.insert_doc(doc_=doc, id_=id_)
+    print("Status: {}".format(result))

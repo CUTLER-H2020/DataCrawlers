@@ -59,6 +59,22 @@ class ElasticSearchClient:
         }
         return date_mapping
 
+    @staticmethod
+    def define_custom_date_mapping_format(date_field_name, format):
+        date_mapping = {
+            "mappings": {
+                "properties": {
+                    date_field_name: {
+                        "type": "date",
+                        # This is a built-in format of Elasticsearch. Check:
+                        # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-date-format.html#built-in-date-formats
+                        "format": format
+                    }
+                }
+            }
+        }
+        return date_mapping
+
     def create_index(self, index: str, *mappings):
 
         self.index = index

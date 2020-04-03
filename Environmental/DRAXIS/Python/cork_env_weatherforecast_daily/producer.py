@@ -1,17 +1,25 @@
 import os
 import json
 import requests
-
 from kafka import KafkaProducer
 from dotenv import load_dotenv
 from constants import *
 
 
 def get_seven_day_forecast():
+    """
+    Method that issues request to DRAXIS API for the seven day forecast.
+    Check for more info: https://api.draxis.gr/#weather-hourly-data
+
+    Returns:
+        dict: The response data of the forecast.
+
+    """
+
     params = {
         "lat": CORK_LAT,
         "lon": CORK_LON,
-        "resolution": THESS_RESOLUTION,
+        "resolution": CORK_RESOLUTION,
         "from_date": FROM_DATE,
         "to_date": TO_DATE,
         "variables": ','.join(VARIABLES),

@@ -14,6 +14,10 @@ def insert_modified_data(forecast):
     for variable, data in forecast.items():
         doc = {"Variable": variable}
         for time, value in data['data'].items():
+            # for Kibana visualisation reasons, cut values below 0.001
+            if value < 0.001:
+                value = 0.0
+
             doc['Date'] = time
             doc['Value'] = value
 
@@ -23,8 +27,8 @@ def insert_modified_data(forecast):
                 'lat': ANTA_LAT,
                 'lon': ANTA_LON
             }
-
             id_ = variable + time
+            print(doc)
             res = es.insert_doc(doc, id_=id_)
             print(res)
 

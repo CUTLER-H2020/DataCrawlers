@@ -14,6 +14,10 @@ def insert_modified_data(forecast):
     for variable, data in forecast.items():
         doc = {"Variable": variable}
         for time, value in data['data'].items():
+            # for Kibana visualisation reasons, cut values below 0.001
+            if value < 0.001:
+                value = 0.0
+
             doc['Date'] = time
             doc['Value'] = value
 
@@ -23,8 +27,9 @@ def insert_modified_data(forecast):
                 'lat': THESS_LAT,
                 'lon': THESS_LON
             }
+            id_ = variable + time
             print(doc)
-            res = es.insert_doc(doc, id_=variable+time)
+            res = es.insert_doc(doc, id_=id_)
             print(res)
 
 
@@ -50,7 +55,5 @@ kafka_consumer = KafkaConsumer(KAFKA_TOPIC,
                                group_id='group_' + KAFKA_TOPIC,
                                value_deserializer=lambda m: json.loads(m.decode('utf8')))
 
-c = 0
 for msg in kafka_consumer:
-    c += 1
     insert_modified_data(msg.value)

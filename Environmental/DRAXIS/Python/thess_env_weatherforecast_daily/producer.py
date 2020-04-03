@@ -34,7 +34,7 @@ producer = KafkaProducer(bootstrap_servers=["{}:{}".format(os.getenv('KAFKA_HOST
                          value_serializer=lambda m: json.dumps(m).encode('utf8'))
 
 forecast = get_seven_day_forecast()
-
+print(forecast)
 producer.send(KAFKA_TOPIC, forecast)
 
 # Make the assumption that all messages are published and consumed
