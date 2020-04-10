@@ -1,72 +1,93 @@
+/** 
+This code is open-sourced software licensed under the MIT license. (http://opensource.org/licenses/MIT)
+
+Copyright 2020 Stergios Bampakis, DRAXIS ENVIRONMENTAL S.A.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
 'use strict';
+
 const { Client } = require('@elastic/elasticsearch');
 const { Kafka } = require('kafkajs');
+const fs = require('fs');
+const env = require('../config')
 
+// Check is Kafka is configured with SSL
+// and make the appropriate configuration object
+if (env.KAFKA_CERT_FILE == undefined){
+  var kafkaSSLConfig = null;
+} else {
+  var kafkaSSLConfig = {
+    rejectUnauthorized: true,
+    ca: [fs.readFileSync(env.KAFKA_CA_FILE)],
+    key: fs.readFileSync(env.KAFKA_KEY_FILE),
+    cert: fs.readFileSync(env.KAFKA_CERT_FILE)
+  };
+}
+
+// Check is Elasticsearch is configured with SSL
+// and make the appropriate ES client object (due to difference in http/https and certs)
+// We make the assumption that if ES hasn't certifications, it also doesn't have username/password
+if (env.ES_CA_CERTS == undefined) {
+  var elasticClient = {
+    node: `http://${env.ES_HOST}:${env.ES_PORT}`
+  };
+} else {
+  var elasticClient = {
+    node: `https://${env.ES_HOST}:${env.ES_PORT}`,
+    auth: {
+      username: env.ES_USER,
+      password: env.ES_PASSWORD
+    },
+    ssl: {
+      ca: fs.readFileSync(env.ES_CA_CERTS),
+      rejectUnauthorized: true
+    }
+  }
+}
+
+// Init Kafka client
 const kafka = new Kafka({
   clientId: 'cutler',
-  brokers: ['172.16.32.30:9092']
+  brokers: [`${env.KAFKA_HOST}:${env.KAFKA_PORT}`],
+  ssl: kafkaSSLConfig
 });
 
-const topics = require('./KafkaTopics');
+// Init Elasticsearch client
+const elasticSearchclient = new Client(elasticClient);
 
+const topics = require('./KafkaTopics');
 const consumer = kafka.consumer({ groupId: 'kaf-data' });
 
 consumer.connect();
 
-// const kafka = require('kafka-node'),
-//   client = new kafka.KafkaClient({
-//     kafkaHost: '172.16.32.40:9092',
-//     connectTimeout: 100000,
-//     requestTimeout: 2147483647
-//   }),
-//   Consumer = kafka.Consumer,
-//   topics = require('./KafkaTopics'),
-//   EventEmitter = (require('events').EventEmitter.defaultMaxListeners = 0),
-const elasticSearchclient = new Client({
-  node: 'https://172.16.32.40:9200',
-  auth: {
-    username: 'wp4',
-    password: 'wp4-crawler'
-  }
-});
-
 var consumerTopics = [];
 Object.values(topics.topics).map(async ({ topic }, index) => {
-  //Check if topic exist, if it doesnt it creates it
-  // client.loadMetadataForTopics([topic], (err, resp) => {
-  //   if (!resp[1].metadata[topic]) {
-  //     client.createTopics(
-  //       [
-  //         {
-  //           topic: topic
-  //         }
-  //       ],
-  //       (error, result) => {
-  //         if (error) return console.log(error);
-
-  //         console.log(`Topic ${topic} succesfully crated`);
-  //       }
-  //     );
-  //   }
-  // });
-  // End topic existance check
   await consumer.subscribe({ topic: topic });
   consumerTopics.push({ topic: topic, partition: 0 });
 });
+
 var count = 1;
-var countLength = 0;
 
 consumer.run({
   eachMessage: async ({ topic, partition, message }) => {
     if (topics.topics[topic].finish) {
       var item = JSON.parse(message.value.toString());
-      // console.log({
-      //   count: count,
-      //   msg: 'proelastic',
-      //   ropic: topics.topics[topic].index
-      // });
-      // count++;
-      elasticSearchclient
+      
+      await elasticSearchclient
         .index({
           index: topics.topics[topic].index,
           type: '_doc',
@@ -84,33 +105,3 @@ consumer.run({
     }
   }
 });
-
-// new Consumer(client, consumerTopics)
-//   .on('message', function(msg) {
-//     // console.log(topics);
-
-//     // count++;
-//     if (topics.topics[msg.topic].finish) {
-//       var item = JSON.parse(msg.value);
-
-//       elasticSearchclient
-//         .index({
-//           index: topics.topics[msg.topic].index,
-//           type: '_doc',
-//           body: item
-//         })
-//         .then(res => {
-//           console.log({
-//             count: count
-//             // index: topics.topics[msg.topic]
-//           });
-//           count++;
-//         })
-//         .catch(err => {});
-//     }
-//   })
-//   .on('error', function(err) {
-//     console.log(err);
-//   });
-
-console.log('Consumers started...');

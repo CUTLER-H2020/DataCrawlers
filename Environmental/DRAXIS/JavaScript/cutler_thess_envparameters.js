@@ -1,15 +1,37 @@
+/**
+This code is open-sourced software licensed under the MIT license. (http://opensource.org/licenses/MIT)
+
+Copyright 2020 Stergios Bampakis, DRAXIS ENVIRONMENTAL S.A.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+DISCLAIMER
+
+This code is used to crawl/parse data from several files from Thessaloniki Municipality (19891999version1 (2).xlsx, 
+20002009version1 (1).xlsx, 20102013version1 (1).xlsx, Metriseis_2014_2016_version_1 (2).xlsx).
+By downloading this code, you agree to contact the corresponding data provider
+and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process)
+all data obtained from the data source.
+
+*/
+
 const XLSX = require('xlsx');
-const elasticsearch = require('elasticsearch');
 const moment = require('moment');
 var fs = require('fs');
-var path = require('path');
 var greekUtils = require('greek-utils');
 var breakpoints = require('./files/helpers/aqi_breakpoints');
 const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
-
-const client = new elasticsearch.Client({
-  host: 'localhost:9200'
-});
 
 async function checkClient() {
   try {
@@ -68,13 +90,7 @@ fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
       lon: 22.940941000000066
     }
   };
-
-  var elIndex = {
-    index: {
-      _index: 'cutler_thess_envparameters_test',
-      _type: '_doc'
-    }
-  };
+  
   var elBody = [];
 
   files.forEach(function(file, index) {
@@ -220,47 +236,16 @@ fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
               }
 
               returnVal['daily_aqi'] = Math.round(maxAqi);
-
-              // returnVal['PM10_AQI'] = Math.round(pm10AQI);
-              // returnVal['PM_25_AQI'] = Math.round(pm25AQI);
-
-              // if (pm10AQI == maxAqi) {
-              //   if (selectedBp)
-              //     returnVal['AQI_category'] = selectedBp.category;
-              // } else {
-              //   if (selectedBp25)
-              //     returnVal['AQI_category'] = selectedBp25.category;
-              // }
-
-              // }else {
-              //   // let maxAqi;
-
-              //   returnVal['daily_aqi'] = Math.round(this.maxAqi);
-              // }
               if (returnVal.value) {
-                // elBody.push(elIndex);
                 elBody.push(returnVal);
               }
             }
           }
         });
       }
-      //end assignment
-      //end of promise
     });
   });
 
-  // checkClient(elBody);
-
   KafkaProducer(elBody, 'THESS_ENV_ENVPARAMETERS_DAILY_YEARLY');
 
-  // client.bulk(
-  //   {
-  //     body: elBody
-  //   },
-  //   function(err, resp) {
-  //     if (err) console.log(err);
-  //     console.log('All files succesfully indexed!');
-  //   }
-  // );
 });

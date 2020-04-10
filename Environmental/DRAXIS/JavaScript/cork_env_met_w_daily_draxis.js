@@ -1,18 +1,34 @@
+/**
+This code is open-sourced software licensed under the MIT license. (http://opensource.org/licenses/MIT)
+
+Copyright 2020 Stergios Bampakis, DRAXIS ENVIRONMENTAL S.A.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+DISCLAIMER
+
+This code is used to crawl/parse data from file from Cork Municipality (CORK_ENV_MET_W_DAILY.xlsx).
+By downloading this code, you agree to contact the corresponding data provider
+and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process)
+all data obtained from the data source.
+
+*/
+
 const XLSX = require('xlsx-extract').XLSX;
 const elasticsearch = require('elasticsearch');
 const moment = require('moment');
 const KafkaProducer = require('./lib/Kafka/KafkaMainProducer');
-
-const client = new elasticsearch.Client({
-  host: '172.16.32.40:9092'
-});
-
-var elIndex = {
-  index: {
-    _index: 'cork_env_met_w_daily',
-    _type: '_doc'
-  }
-};
 
 var elBody = [];
 const metrics = [
@@ -56,10 +72,6 @@ const extractValues = (async () => {
     .on('row', function(row) {
       row.map((r, i) => {
         if (i == 8 || i == 17 || i == 10 || i == 14) {
-          // console.log(r);
-          // console.log(row[0]);
-          // console.log(metrics[i]);
-          // elBody.push(elIndex);
           elBody.push({
             station_name: 'ROCHES POINT',
             station_location: {
@@ -81,37 +93,5 @@ const extractValues = (async () => {
     .on('end', function(err) {
       console.log('Saving to elastic');
       KafkaProducer(elBody, 'CORK_ENV_MET_W_DAILY');
-      // client.indices.create(
-      //   {
-      //     index: 'cork_env_met_w_daily',
-      //     body: {
-      //       settings: {
-      //         number_of_shards: 1
-      //       },
-      //       mappings: {
-      //         _doc: {
-      //           properties: {
-      //             station_location: {
-      //               type: 'geo_point'
-      //             }
-      //           }
-      //         }
-      //       }
-      //     }
-      //   },
-      //   (err, resp) => {
-      //     if (err) console.log(err);
-      //     client.bulk(
-      //       {
-      //         requestTimeout: 600000,
-      //         body: elBody
-      //       },
-      //       function(err, resp) {
-      //         if (err) console.log(err.response);
-      //         else console.log('All files succesfully indexed!');
-      //       }
-      //     );
-      //   }
-      // );
     });
 })();
