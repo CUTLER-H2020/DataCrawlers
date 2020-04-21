@@ -7,10 +7,38 @@ from kafka import KafkaProducer
 from dotenv import load_dotenv
 from constants import *
 
-# Wind is a special case where we have 2 timeseries data with 2 variables
-# that are not returned in the dataset request.
-# variables: u10, v10
-# final result is the hypotenuse of each value for every date point
+"""
+The way this crawler (and similarly the other 2) works to get data from DRAXIS' Climatology API
+is the following.
+
+For every climatology index (4 in total - temp-avg, wind, rh, total-prec) we issue a request
+to get the path of the dataset, inside a THREDDS server that contains the netCDF file with the data.
+
+However due to intense processing in the backround, the API when for example you ask the first time 
+to get the dataset it may return {status: processing} until it process all the data and after it's ready 
+it returns {status: ready}
+
+From the response we need 2 things.
+    - the path of the dataset
+    - the variable name of the index (which in some cases is different that the one referenced in the constants module)
+
+Specifically the names of the variables of each index we get back from each request are:
+   - temp-avg --> t2m
+   - wind --> u10 AND v10 (2 variables)
+   - rh --> rh
+   - total-prec --> tp
+
+Then after we have the path of the dataset and the variable name
+we issue another request to another endpoint, 
+providing these two information (the path of the dataset is part of the URL, and the variable as a parameter)
+to get back the timeseries data.
+
+(Wind is a special case where we have 2 variables (u10, v10) and hence 2 timeseries data that are not returned 
+in the dataset request. The final result is the combination of these two by 
+using the hypotenuse of each value for every date point)
+
+Finally we broadcast the data through Kafka, we consume them and inserting them to Elasticsearch
+"""
 
 
 def __issue_request(path_dataset, variable):
@@ -108,7 +136,7 @@ def broadcast_data(climatology_index, metadata):
 
     for date, value in values.items():
         # for Kibana visualisation reasons, cut values below 0.001
-        if value < 0.001:
+        if -0.001 < value < 0.001:
             value = 0.0
 
         payload['Date'] = date

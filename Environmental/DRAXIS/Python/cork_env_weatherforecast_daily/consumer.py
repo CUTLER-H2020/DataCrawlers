@@ -15,7 +15,7 @@ def insert_modified_data(forecast):
         doc = {"Variable": variable}
         for time, value in data['data'].items():
             # for Kibana visualisation reasons, cut values below 0.001
-            if value < 0.001:
+            if -0.001 < value < 0.001:
                 value = 0.0
 
             doc['Date'] = time
