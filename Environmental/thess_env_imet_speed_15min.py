@@ -184,8 +184,8 @@ class thess_env_imet_speed_15min_batch (object):
     """
     #TRAFFIC_KEY = os.getenv("TRAFFIC_EMAIL")
     #TRAFFIC_PASSWORD = os.getenv("TRAFFIC_PASSWORD")
-    self.driver.find_element_by_id("Login1_UserName").send_keys('cutler.oulu@gmail.com')
-    self.driver.find_element_by_id("Login1_Password").send_keys('pass1234')
+    self.driver.find_element_by_id("Login1_UserName").send_keys('YOUR_USER')
+    self.driver.find_element_by_id("Login1_Password").send_keys('YOUR_PASSWORD')
 
     self.driver.find_element_by_id("Login1_LoginButton").click()
 
