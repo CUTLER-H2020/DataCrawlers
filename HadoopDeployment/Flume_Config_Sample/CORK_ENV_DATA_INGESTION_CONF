@@ -1,0 +1,55 @@
+
+#Initialize agent source,channel,sinks
+spoolAgent.sources =  splSrc,splSrc1
+spoolAgent.channels =  splChannel,splChannel1
+spoolAgent.sinks =  sinkToHdfs,sinkToHdfs1
+
+# Bind the source and sink to the channel
+spoolAgent.sources.splSrc1.channels = splChannel1
+spoolAgent.sinks.sinkToHdfs1.channel = splChannel1
+spoolAgent.sources.splSrc.channels = splChannel
+spoolAgent.sinks.sinkToHdfs.channel = splChannel
+
+#Define channel and its capacity and source type
+spoolAgent.sources.splSrc.type = spooldir
+spoolAgent.sources.splSrc.channels = splChannel
+spoolAgent.channels.splChannel.capacity = 100000
+spoolAgent.channels.splChannel.transactionCapacity=100000
+spoolAgent.sources.splSrc.spoolDir = /home/oulu/cork/data/environmental/CORK_ENV_OPW_WL_15min
+spoolAgent.sources.splSrc1.type = spooldir
+spoolAgent.sources.splSrc1.channels = splChannel1
+spoolAgent.channels.splChannel1.capacity = 100000
+spoolAgent.channels.splChannel1.transactionCapacity=100
+
+spoolAgent.sinks.sinkToHdfs.type = hdfs
+spoolAgent.sinks.sinkToHdfs.hdfs.fileType = DataStream
+spoolAgent.sinks.sinkToHdfs.hdfs.path = hdfs://HOST_IP:9000/zone/oulu/environmental/CORK_ENV_OPW_WL_15min
+spoolAgent.sinks.sinkToHdfs.hdfs.filePrefix = OPW_Water_Levels
+spoolAgent.sinks.sinkToHdfs.hdfs.batchSize = 100
+spoolAgent.sinks.sinkToHdfs.hdfswriteFormat = Text
+spoolAgent.sinks.sinkToHdfs.hdfs.rollSize = 5000000
+spoolAgent.sinks.sinkToHdfs.hdfs.rollInterval = 0
+spoolAgent.sinks.sinkToHdfs.hdfs.rollCount = 0
+spoolAgent.sources.splSrc1.spoolDir = /home/oulu/cork/data/environmental/CORK_ENV_MET_W_DAILY
+spoolAgent.sources.splSrc1.deletePolicy = immediate
+spoolAgent.sinks.sinkToHdfs1.type = hdfs
+spoolAgent.sinks.sinkToHdfs1.hdfs.fileType = DataStream
+spoolAgent.sinks.sinkToHdfs1.hdfs.path = hdfs://HOST_IP:9000/zone/oulu/environmental/CORK_ENV_MET_W_DAILY
+spoolAgent.sinks.sinkToHdfs1.hdfs.filePrefix = waterLevel
+spoolAgent.sinks.sinkToHdfs1.hdfs.batchSize = 100
+spoolAgent.sinks.sinkToHdfs1.hdfswriteFormat = Text
+spoolAgent.sinks.sinkToHdfs1.hdfs.rollSize = 10485760
+spoolAgent.sinks.sinkToHdfs1.hdfs.rollInterval = 0
+spoolAgent.sinks.sinkToHdfs1.hdfs.rollCount = 0
+
+# Use a channel which buffers events in memory
+spoolAgent.channels.splChannel.type = file
+spoolAgent.channels.splChannel1.type = file
+
+#These directories are usually in flume-ng folder
+spoolAgent.channels.splChannel.checkpointDir = /home/oulu/.flume/file-channel/checkpoint
+spoolAgent.channels.splChannel.dataDirs = /home/oulu/.flume/file-channel/data
+spoolAgent.channels.splChannel1.checkpointDir = /home/oulu/.flume/file-channel1/checkpoint
+spoolAgent.channels.splChannel1.dataDirs = /home/oulu/.flume/file-channel1/data
+
+

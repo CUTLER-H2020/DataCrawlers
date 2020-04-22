@@ -1,15 +1,13 @@
 # -*- coding utf-8 -*-
-""" This code is open-sourced software licensed under the MIT license (http://opensource.org/licenses/MIT)""" 
-""" Copyright  2019 Hassan Mehmood, UbiComp - University of Oulu""" 
+""" This code is open-sourced software licensed under the MIT license (http://opensource.org/licenses/MIT)"""
+""" Copyright  2019 Hassan Mehmood, UbiComp - University of Oulu"""
 """ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-""" 
-""" 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."""
+"""
 DISCLAIMER
 This code is used to crawl/parse data from several files from Irish Meteorological Service. By downloading this code, you agree to contact the corresponding data provider and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process) all data obtained from the data source.
-""" 
-
+"""
 """ -This Crawler+Scraper requests the URL (data.gov.ie - Met Éireann)) and fetches the content of the file containing historical readings of weather condition"""
 """ -The time is reported in UTC which is then converted to ISO 8601 format with UTC offset"""
 """ -The available data is formatted, and   it is stored in .CSV format with unique name"""
@@ -24,46 +22,57 @@ __author__ = "Hassan Mehmood"
 __email__ = "hassan.mehmood@oulu.fi"
 __origin__ = "UbiComp - University of Oulu"
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 def producer(topic,msg,e=None):
-""" This function sends data to kafka bus"""
-    producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
+    """ This function sends data to kafka bus"""
+    producer = KafkaProducer(bootstrap_servers=['HOST_IP','HOST_IP','HOST_IP'], api_version=(2, 2, 1),
+                             security_protocol='SSL',
+                             ssl_check_hostname=True,
+                             ssl_cafile='/home/oulu/certs/ca-cert',
+                             ssl_certfile='/home/oulu/certs/cutler-p2-c2-00.crt',
+                             ssl_keyfile='/home/oulu/certs/cutler-p2-c2-00.key')
     msg_b = str.encode(msg)
+    print("hi")
     producer.send(topic, msg_b).get(timeout=30)
     if (e):
-        logging.exception('exception happened')  
-
+        logging.exception('exception happened')
 
 def historicWeatherInfo():
 
     """This function fetches the data from the source and after cleaning stores it to .CSV file"""
-    path = "" # PATH to storage directory
+    path = "/home/oulu/cork/data/environmental/CORK_ENV_MET_W_DAILY/" # PATH to storage directory
     uFileName = str(uuid.uuid4())
     filname = path + uFileName + ".csv"
+    print("1")
     try:
-        url = 'https://cli.fusio.net/cli/climate_data/webdata/hly1075.csv'
-        df = pd.read_fwf(url)
+      url = 'https://cli.fusio.net/cli/climate_data/webdata/hly1075.csv'
+      df = pd.read_fwf(url)
+      print("2")
     except Exception as e:
-        producer("CORK_ENV_MET_W_DAILY_DATA_ERROR",'data source not found or cannot be open',e)
-        return False   
+      producer("CORK_ENV_MET_W_DAILY_DATA_ERROR",'data source not found or cannot be open',e)
+      print("3")
+      return False
     try:
-        df_1 = df[14:] #Removes unnecessary rows contains duration of data etc.
-        df_final = df_1["Station Name: ROCHES POINT"].str.split(",", n=14, expand=True) # As data is ; separated, additional formatting is done to allocate observation to their corresponding columns
-        df_final.columns = ['DateTime', 'indicator_rain', 'rain', 'indicator_temp', 'temp', 'indicator_wetb', 'wetb', 'dewpt',
-                       'vappr', 'rhum', 'msl', 'indicator_wdsp', 'wdsp', 'indicator_wddir', 'wddir']
-        df_final['DateTime'] = pd.to_datetime(df_final['DateTime']) # Transforms available time information in string to datetime format
-        df_final['DateTime'] = df_final["DateTime"].dt.strftime("%Y-%m-%dT%H:%M+00") # Transforms available time information to ISO 8601
+      df_1 = df[14:] #Removes unnecessary rows contains duration of data etc.
+      df_final = df_1["Station Name: ROCHES POINT"].str.split(",", n=14, expand=True) # As data is ; separated, additional formatting is done to allocate observation to their corresponding columns
+      df_final.columns = ['DateTime', 'indicator_rain', 'rain', 'indicator_temp', 'temp', 'indicator_wetb', 'wetb', 'dewpt',
+                     'vappr', 'rhum', 'msl', 'indicator_wdsp', 'wdsp', 'indicator_wddir', 'wddir']
+      df_final['DateTime'] = pd.to_datetime(df_final['DateTime']) # Transforms available time information in string to datetime format
+      df_final['DateTime'] = df_final["DateTime"].dt.strftime("%Y-%m-%dT%H:%M+00") # Transforms available time information to ISO 8601
+      print("4")
     except Exception as e:
         producer("CORK_ENV_MET_W_DAILY_DATA_ERROR",'data source format is not as expected',e)
-        return False 
-    
+        print("5")
+        return False
     try:
-        df_final.to_csv(filname, index = False)
+      df_final.to_csv(filname, index = False)
+      print("5")
     except Exception as e:
         producer("CORK_ENV_MET_W_DAILY_DATA_ERROR",'cannot store data in file')
+        print("6")
         return False
-    return True 
+    return True
 
 
 if(historicWeatherInfo()):
