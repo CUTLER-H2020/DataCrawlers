@@ -1,0 +1,8 @@
+elasticsearch==7.5.1
+kafka-python==2.0.0
+pandas==1.0.1
+python-dateutil==2.8.1
+python-dotenv==0.11.0
+requests==2.23.0
+xlrd==1.2.0
+beautifulsoup4==4.9.0

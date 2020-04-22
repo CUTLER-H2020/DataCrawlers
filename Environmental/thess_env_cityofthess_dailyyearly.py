@@ -173,13 +173,18 @@ class thess_env_cityofthess_dailyyearly (object):
 			for sheet in xl.sheet_names:
 				self.parse_sheet(xl,sheet)
 
-	def producer(self):
+
+	def producer(self,topic,msg,e=None):
 		""" This function sends data to kafka bus"""
 		producer = KafkaProducer(bootstrap_servers=['HOST_IP'], api_version=(2, 2, 1))
-		topic = "THESS_ENV_CITYOFTHESS_DAILY_YEARLY_DATA_INGESTION"
-		producer.send(topic, b'City of thessaloniki environmental data ingested to HDFS').get(timeout=30)
+		msg_b = str.encode(msg)
+		producer.send(topic, msg_b).get(timeout=30)
+		if (e):
+			logging.exception('exception happened')
+
 
 if __name__ == '__main__':
 	a = thess_env_cityofthess_dailyyearly(origin_url)
-	a.run_downloader()
-	a.parse_files()
+	if (a.run_downloader()):
+		if(a.parse_files()):
+			a.producer("THESS_ENV_CITYOFTHESS_DAILY_YEARLY_DATA_INGESTION",'City of Thessaloniki environmental data ingested to HDFS')

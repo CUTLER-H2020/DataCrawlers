@@ -1,0 +1,4 @@
+.env
+*.xlsx
+.idea/
+/JavaScript/node_modules/

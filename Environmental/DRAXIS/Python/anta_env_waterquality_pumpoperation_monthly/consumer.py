@@ -1,0 +1,50 @@
+import os
+import json
+import datetime
+from kafka import KafkaConsumer
+from elastic import ElasticSearchClient
+from dotenv import load_dotenv
+from constants import *
+
+
+# AQHub measures pollutants values as strings instead of float
+def pollutants_to_int(msg: dict) -> dict:
+    for pollutant in ('CO', 'NO2', 'O3', 'PM10', 'PM25', 'SO2'):
+        msg[pollutant] = float(msg[pollutant]) if msg[pollutant] is not None else None
+
+    return msg
+
+
+load_dotenv()
+
+es = ElasticSearchClient(os.getenv('ES_HOST'), os.getenv('ES_PORT'),
+                         use_ssl=os.getenv('ES_USE_SSL', False),
+                         verify_certs=os.getenv('ES_VERIFY_CERTS', False),
+                         http_auth=(os.getenv('ES_USER'), os.getenv('ES_PASSWORD')) if os.getenv('ES_USER') else None,
+                         ca_certs=os.getenv('ES_CA_CERTS', None))
+
+# for this particular index we don't want the geo-point field to be named "location",
+# but have two separate fields "location before" and "location after".
+# So call the custom function that you pass as a parameter the geo point field name
+geo_point_mapping_before = es.define_custom_geo_point_mapping('location_before')
+geo_point_mapping_after = es.define_custom_geo_point_mapping('location_after')
+
+es.create_index(ELASTICSEARCH_INDEX, geo_point_mapping_before, geo_point_mapping_after)
+
+kafka_consumer = KafkaConsumer(KAFKA_TOPIC,
+                               bootstrap_servers=["{}:{}".format(os.getenv('KAFKA_HOST'), os.getenv('KAFKA_PORT'))],
+                               # auto_offset_reset='earliest',
+                               security_protocol=os.getenv('KAFKA_SECURITY_PROTOCOL', 'PLAINTEXT'),
+                               ssl_cafile=os.getenv('KAFKA_CA_FILE', None),
+                               ssl_certfile=os.getenv('KAFKA_CERT_FILE', None),
+                               ssl_keyfile=os.getenv('KAFKA_KEY_FILE', None),
+                               group_id='group_' + KAFKA_TOPIC,
+                               value_deserializer=lambda m: json.loads(m.decode('utf8')))
+
+c = 0
+for msg in kafka_consumer:
+    c += 1
+    print("Consumed: {} messages".format(c))
+    # data are already processed in the appropriate way from producer's DataFrame
+    # so just insert them to DB
+    print(es.insert_doc(msg.value))
