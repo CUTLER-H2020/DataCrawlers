@@ -424,7 +424,7 @@ class thess_env_imet_speed_15min_batch (object):
         df.rename(columns={'Value':'car_speed','Timestamp':'DateTime','Name':'path_name','PathID':'path_id'},inplace=True)
         print('DateTime format')
         try:
-          df['DateTime'] = pd.to_datetime(df['DateTime'], format='%Y-%m-%d%H:%M:%S').dt.strftime('%Y-%m-%dT%H:%M+02')
+          df['DateTime'] = pd.to_datetime(df['DateTime'], format='%Y-%m-%d %H:%M:%S').dt.strftime('%Y-%m-%dT%H:%M+02')
         except:
           df['DateTime'] = pd.to_datetime(df['DateTime'], format='%Y-%m-%d').dt.strftime('%Y-%m-%dT00:00+02')
 
