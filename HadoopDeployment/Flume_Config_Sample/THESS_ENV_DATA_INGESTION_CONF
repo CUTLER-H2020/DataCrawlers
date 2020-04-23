@@ -1,0 +1,88 @@
+#Initialize agent source,channel,sinks
+spoolAgent.sources =  splSrc,splSrc1,splSrc2
+spoolAgent.channels =  splChannel,splChannel1,splChannel2
+spoolAgent.sinks =  sinkToHdfs,sinkToHdfs1,sinkToHdfs2
+
+# Bind the source and sink to the channel
+spoolAgent.sources.splSrc.channels = splChannel
+spoolAgent.sinks.sinkToHdfs.channel = splChannel
+
+#Define channel and its capacity and source type
+spoolAgent.sources.splSrc.type = spooldir
+spoolAgent.sources.splSrc.channels = splChannel
+spoolAgent.channels.splChannel.capacity = 100000
+spoolAgent.channels.splChannel.transactionCapacity=100000
+spoolAgent.sources.splSrc.spoolDir = /home/oulu/THESS/data/economic/thess_eco_thessaloniki_municipality_budget
+
+# Add HDFS directry
+spoolAgent.sinks.sinkToHdfs.type = hdfs
+spoolAgent.sinks.sinkToHdfs.hdfs.fileType = DataStream
+spoolAgent.sinks.sinkToHdfs.hdfs.path = hdfs://YOUR_IP:9000/zone/economic/thess_eco_thessaloniki_municipality_budget/
+spoolAgent.sinks.sinkToHdfs.hdfs.filePrefix = ThessMunBudget
+spoolAgent.sinks.sinkToHdfs.hdfs.batchSize = 100
+spoolAgent.sinks.sinkToHdfs.hdfswriteFormat = Text
+spoolAgent.sinks.sinkToHdfs.hdfs.rollSize = 5000000
+spoolAgent.sinks.sinkToHdfs.hdfs.rollInterval = 0
+spoolAgent.sinks.sinkToHdfs.hdfs.rollCount = 0
+
+# Use a channel which buffers events in memory
+spoolAgent.channels.splChannel.type = file
+
+#These directories are usually in flume-ng folder
+spoolAgent.channels.splChannel.checkpointDir = /home/oulu/.flume/file-channel/checkpoint
+spoolAgent.channels.splChannel.dataDirs = /home/oulu/.flume/file-channel/data
+
+#Define channel and its capacity and source type
+spoolAgent.sources.splSrc1.channels = splChannel1
+spoolAgent.sinks.sinkToHdfs1.channel = splChannel1
+spoolAgent.sources.splSrc1.type = spooldir
+spoolAgent.sources.splSrc1.channels = splChannel1
+spoolAgent.channels.splChannel1.capacity = 100000
+spoolAgent.channels.splChannel1.transactionCapacity=100000
+spoolAgent.sources.splSrc1.spoolDir = /home/oulu/THESS/data/environmental/thess_env_cityofthess_dailyyearly/thess_env_cityofthess_dailyyearly
+#Add HDFS directory
+
+spoolAgent.sinks.sinkToHdfs1.type = hdfs
+spoolAgent.sinks.sinkToHdfs1.hdfs.fileType = DataStream
+spoolAgent.sinks.sinkToHdfs1.hdfs.path = hdfs://YOUR_IP:9000/zone/environmental/thess_env_cityofthess_dailyyearly
+spoolAgent.sinks.sinkToHdfs1.hdfs.filePrefix = ThessMuncity
+spoolAgent.sinks.sinkToHdfs1.hdfs.batchSize = 100
+spoolAgent.sinks.sinkToHdfs1.hdfswriteFormat = Text
+spoolAgent.sinks.sinkToHdfs1.hdfs.rollSize = 5000000
+spoolAgent.sinks.sinkToHdfs1.hdfs.rollInterval = 0
+spoolAgent.sinks.sinkToHdfs1.hdfs.rollCount = 0
+
+# Use a channel which buffers events in memory
+spoolAgent.channels.splChannel1.type = file
+
+#These directories are usually in flume-ng folder
+spoolAgent.channels.splChannel1.checkpointDir = /home/oulu/.flume/file-channel1/checkpoint
+spoolAgent.channels.splChannel1.dataDirs = /home/oulu/.flume/file-channel1/data
+
+
+#Define channel and its capacity and source type
+spoolAgent.sources.splSrc2.channels = splChannel2
+spoolAgent.sinks.sinkToHdfs2.channel = splChannel2
+spoolAgent.sources.splSrc2.type = spooldir
+spoolAgent.sources.splSrc2.channels = splChannel2
+spoolAgent.channels.splChannel2.capacity = 100000
+spoolAgent.channels.splChannel2.transactionCapacity=100000
+spoolAgent.sources.splSrc2.spoolDir = /home/oulu/THESS/data/environmental/thess_env_imet_speed_15min
+
+#Add HDFS directory
+spoolAgent.sinks.sinkToHdfs2.type = hdfs
+spoolAgent.sinks.sinkToHdfs2.hdfs.fileType = DataStream
+spoolAgent.sinks.sinkToHdfs2.hdfs.path = hdfs://YOUR_IP:9000/zone/environmental/thess_env_imet_speed_15min
+spoolAgent.sinks.sinkToHdfs2.hdfs.filePrefix = ThessMunImet
+spoolAgent.sinks.sinkToHdfs2.hdfs.batchSize = 100
+spoolAgent.sinks.sinkToHdfs2.hdfswriteFormat = Text
+spoolAgent.sinks.sinkToHdfs2.hdfs.rollSize = 5000000
+spoolAgent.sinks.sinkToHdfs2.hdfs.rollInterval = 0
+spoolAgent.sinks.sinkToHdfs2.hdfs.rollCount = 0
+
+# Use a channel which buffers events in memory
+spoolAgent.channels.splChannel2.type = file
+
+#These directories are usually in flume-ng folder
+spoolAgent.channels.splChannel2.checkpointDir = /home/oulu/.flume/file-channel2/checkpoint
+spoolAgent.channels.splChannel2.dataDirs = /home/oulu/.flume/file-channel2/data
