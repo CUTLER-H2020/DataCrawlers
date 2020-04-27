@@ -70,17 +70,13 @@ index "cork_env_waterquality_daily", all you have to do is:
    
    - `python3 consumer.py`
    
-   - (Optional): 
-   
-        If you desire concurrent processing and load balancing in the Kafka cluster
-        you can run 2 more consumers (we support up to 3) in seperate terminals 
-        
    - In another terminal 
-   
+        
         `python3 producer.py`
    
    - Done!
 
+<a id=dell-cloud></a>
 ### Running crawlers in Dell's cloud.
 
 In addition to the above procedure, in order the crawlers to work in the cloud infrastructure, there are 

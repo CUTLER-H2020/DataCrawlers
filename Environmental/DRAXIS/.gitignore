@@ -1,4 +1,6 @@
 .env
+# Allow excel files in order crawlers to be able to run
 *.xlsx
+*.xls
 .idea/
 /JavaScript/node_modules/
