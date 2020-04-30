@@ -34,14 +34,6 @@ from dotenv import load_dotenv
 from constants import *
 
 
-# AQHub measures pollutants values as strings instead of float
-def pollutants_to_int(msg: dict) -> dict:
-    for pollutant in ('CO', 'NO2', 'O3', 'PM10', 'PM25', 'SO2'):
-        msg[pollutant] = float(msg[pollutant]) if msg[pollutant] is not None else None
-
-    return msg
-
-
 load_dotenv()
 
 es = ElasticSearchClient(os.getenv('ES_HOST'), os.getenv('ES_PORT'),

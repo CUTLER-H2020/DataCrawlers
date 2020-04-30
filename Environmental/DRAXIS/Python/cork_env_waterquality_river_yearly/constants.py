@@ -3,5 +3,5 @@ KAFKA_TOPIC_FINISH = 'CORK_ENV_WATERQUALITY_RIVER_FINISH_YEARLY'
 
 ELASTICSEARCH_INDEX = 'cork_env_waterquality_river_yearly'
 
-EXCEL_FILE = "Owenboy Subcatchment Chemistry EN.xlsx"
+EXCEL_FILE = "Owenboy Subcatchment Chemistry EN_public.xlsx"
 

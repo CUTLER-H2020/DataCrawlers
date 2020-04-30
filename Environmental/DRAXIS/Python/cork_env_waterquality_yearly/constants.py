@@ -3,7 +3,7 @@ KAFKA_TOPIC_FINISH = 'CORK_ENV_WATERQUALITY_FINISH_YEARLY'
 
 ELASTICSEARCH_INDEX = 'cork_env_waterquality_yearly'
 
-EXCEL_FILE = "EPA_TRaCData_CorkHarbour_2010_2018 - ΕΝ.xlsx"
+EXCEL_FILE = "EPA_TRaCData_CorkHarbour_2010_2018 - ΕΝ_public.xlsx"
 
 SHEET1 = "Stations"
 COLUMNS1 = ["WB_Name",

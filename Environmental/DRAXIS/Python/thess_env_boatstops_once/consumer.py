@@ -18,7 +18,8 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 
 DISCLAIMER
 
-This code is used to crawl/parse data from file from Antalya Municipality (antalya_all_data.xlsx).
+This code is used to crawl/parse data from file Thessaloniki-boatstops_public.xlsx provided by DRAXIS ENVIRONMENTAL S.A.
+described in D5.3.
 By downloading this code, you agree to contact the corresponding data provider
 and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process)
 all data obtained from the data source.
@@ -27,7 +28,6 @@ all data obtained from the data source.
 
 import os
 import json
-import datetime
 from kafka import KafkaConsumer
 from elastic import ElasticSearchClient
 from dotenv import load_dotenv
@@ -42,13 +42,9 @@ es = ElasticSearchClient(os.getenv('ES_HOST'), os.getenv('ES_PORT'),
                          http_auth=(os.getenv('ES_USER'), os.getenv('ES_PASSWORD')) if os.getenv('ES_USER') else None,
                          ca_certs=os.getenv('ES_CA_CERTS', None))
 
-# for this particular index we don't want the geo-point field to be named "location",
-# but have two separate fields "location before" and "location after".
-# So call the custom function that you pass as a parameter the geo point field name
-geo_point_mapping_before = es.define_custom_geo_point_mapping('location_before')
-geo_point_mapping_after = es.define_custom_geo_point_mapping('location_after')
+geo_point_mapping = es.define_geo_point_mapping()
 
-es.create_index(ELASTICSEARCH_INDEX, geo_point_mapping_before, geo_point_mapping_after)
+es.create_index(ELASTICSEARCH_INDEX, geo_point_mapping)
 
 kafka_consumer = KafkaConsumer(KAFKA_TOPIC,
                                bootstrap_servers=["{}:{}".format(os.getenv('KAFKA_HOST'), os.getenv('KAFKA_PORT'))],
@@ -59,11 +55,9 @@ kafka_consumer = KafkaConsumer(KAFKA_TOPIC,
                                ssl_keyfile=os.getenv('KAFKA_KEY_FILE', None),
                                group_id='group_' + KAFKA_TOPIC,
                                value_deserializer=lambda m: json.loads(m.decode('utf8')))
-
 c = 0
 for msg in kafka_consumer:
     c += 1
     print("Consumed: {} messages".format(c))
-    # data are already processed in the appropriate way from producer's DataFrame
-    # so just insert them to DB
+    # data are already processed in the appropriate way from producer's DataFrame, so just insert them to DB
     print(es.insert_doc(msg.value))

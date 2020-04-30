@@ -59,6 +59,9 @@ def parse_file(excel):
     # Add unit to column 'Waterflow(AfterPump)'
     df = df.rename(columns={'Waterflow(AfterPump)': 'Waterflow(AfterPump) [m³/sec]'})
 
+    # Add new needed column 'Year' based on the 'Date'
+    df['Year'] = df.apply(lambda x: x['Date'].year, axis=1)
+
     sent_messages = 0
     for index, row in df.iterrows():
         data = row.to_dict()
@@ -69,6 +72,21 @@ def parse_file(excel):
 
         data['location_before'] = {'lat': LOCATION_BEFORE[0], 'lon': LOCATION_BEFORE[1]}
         data['location_after'] = {'lat': LOCATION_AFTER[0], 'lon': LOCATION_AFTER[1]}
+
+        # Add the four new fields about KPIs based on the current kw/hour if it's not None (September)
+        if data['kw/hour'] is not None:
+            kw_hour = data['kw/hour']
+
+            data['CO2_emissions (t)'] = kw_hour * 436 / 1000000
+            data['kWh_coal'] = kw_hour * 33.2 / 100
+            data['kWh_natural_gas'] = kw_hour * 15.2 / 100
+            data['kWh_oil'] = kw_hour * 1 / 100
+        else:
+            data['CO2_emissions (t)'] = None
+            data['kWh_coal'] = None
+            data['kWh_natural_gas'] = None
+            data['kWh_oil'] = None
+
         print(data)
         producer.send(KAFKA_TOPIC, data)
         sent_messages += 1

@@ -49,7 +49,7 @@ PARAMETERS_UNIT_MAPPING = {
 }
 
 # Constants to be used for scraping 2016 data
-EXCEL_2016 = "2016_CTDatAl.xlsx"
+EXCEL_2016 = "2016_CTDatAl_public.xlsx"
 MONTHS_SHEETS_2016 = ['IAN16', 'FEB16', 'MARCH16', 'APRIL16', 'MAY16', 'JUL16', 'JUN16', 'AUG16', 'SEPT16', 'OKT16', 'NOE16', 'DEC16']
 DATES_2016_MAPPING = {
     'IAN16': "2016-01-01",
@@ -68,7 +68,7 @@ DATES_2016_MAPPING = {
 
 
 # Constants to be used for scraping 2017 data
-EXCEL_2017 = "2017_CTDatAl.xlsx"
+EXCEL_2017 = "2017_CTDatAl_public.xlsx"
 MONTHS_SHEETS_2017 = ['IAN17', 'FEV17', 'MAR17', 'APRIL17', 'MAY17', 'JUN17', 'JUL17', 'AUG17', 'SEPT17', 'OKT17']
 DATES_2017_MAPPING = {
     'IAN17': "2017-01-01",
@@ -84,7 +84,7 @@ DATES_2017_MAPPING = {
 }
 
 # Constants to be used for scraping 2018 data
-EXCEL_2018 = "2018_CTDatAl.xlsx"
+EXCEL_2018 = "2018_CTDatAl_public.xlsx"
 MONTHS_SHEETS_2018 = ['IOUL18', 'AUG18', 'SEPT18', 'OKT18', 'NOE18', 'DEC18']
 DATES_2018_MAPPING = {
     'IOUL18': "2018-07-01",
@@ -96,7 +96,7 @@ DATES_2018_MAPPING = {
 }
 
 # Constants to be used for scraping 2019 data
-EXCEL_2019 = "2019_CTDatAl.xlsx"
+EXCEL_2019 = "2019_CTDatAl_public.xlsx"
 MONTHS_SHEETS_2019 = ['IAN19', 'FEV19', 'MART19', 'APRIL19', 'MAY19', 'JUN19', 'JUL19']
 DATES_2019_MAPPING = {
     'IAN19': "2019-01-01",

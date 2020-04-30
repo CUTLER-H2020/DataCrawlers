@@ -18,8 +18,8 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 
 DISCLAIMER
 
-This code is used to crawl/parse data from several file from Thessaloniki Municipality (2016_CTDatAl.xlsx,
-2017_CTDatAl.xlsx, 2018_CTDatAl.xlsx, 2019_CTDatAl.xlsx).
+This code is used to crawl/parse data from several file from Thessaloniki Municipality (2016_CTDatAl_public.xlsx,
+2017_CTDatAl_public.xlsx, 2018_CTDatAl_public.xlsx, 2019_CTDatAl_public.xlsx).
 By downloading this code, you agree to contact the corresponding data provider
 and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process)
 all data obtained from the data source.

@@ -15,6 +15,6 @@ STATIONS = {
     "LP5": (40.5931417, 22.9473277)
 }
 
-EXCEL_FILE = "Nutrients_2016_2019.xlsx"
+EXCEL_FILE = "Nutrients_2016_2019_public.xlsx"
 
 SHEET_NAME = "NUTRIENTS"

@@ -1,0 +1,7 @@
+KAFKA_TOPIC = 'CORK_ENV_EMISSIONS_KPI_ONCE'
+KAFKA_TOPIC_FINISH = 'CORK_ENV_EMISSIONS_KPI_FINISH_ONCE'
+
+ELASTICSEARCH_INDEX = 'cork_env_emissions_kpi_once'
+
+EXCEL_FILE = "KPI-Cork-emissions_public.xlsx"
+

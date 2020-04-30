@@ -18,7 +18,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 
 DISCLAIMER
 
-This code is used to crawl/parse data from file from Cork Municipality (EPA_TRaCData_CorkHarbour_2010_2018.xlsx).
+This code is used to crawl/parse data from file from Cork Municipality (EPA_TRaCData_CorkHarbour_2010_2018 - ΕΝ_public.xlsx).
 By downloading this code, you agree to contact the corresponding data provider
 and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process)
 all data obtained from the data source.

@@ -3,7 +3,7 @@ KAFKA_TOPIC_FINISH = 'THESS_ENV_WATERQUALITY_CHLOR_FINISH_YEARLY'
 
 ELASTICSEARCH_INDEX = 'thess_env_waterquality_chlor_yearly'
 
-EXCEL_FILE = "Chlorophyll_2014_2019.xlsx"
+EXCEL_FILE = "Chlorophyll_2014_2019_public.xlsx"
 
 FIRST_LP_SHEET = "LP_Chl-a"
 

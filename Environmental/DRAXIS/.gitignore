@@ -1,6 +1,18 @@
 .env
-# Allow excel files in order crawlers to be able to run
+# Ignore all excel files
 *.xlsx
 *.xls
+
+# except files ending with '_public' (open data)
+!*_public.xls
+!*_public.xlsx
+
+# or '_private' (private data)
+# Note: that in order those crawlers to run
+# they need the full data of those files
+#without the ending '_private'
+!*_private.xls
+!*_private.xlsx
+
 .idea/
 /JavaScript/node_modules/

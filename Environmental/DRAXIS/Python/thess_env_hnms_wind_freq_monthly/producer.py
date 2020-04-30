@@ -75,6 +75,13 @@ def parse_excel(excel):
     sent_messages = 0
     for index, row in df.iterrows():
 
+        # For kibana visualization reasons
+        # convert all int values to float,
+        # because if we transmit them the way they are in raw data, the first values are 0 so,
+        # Elastic will get 0 and then 0.84 and will assume this field is 'long'.
+        # We need this field to be 'float' so convert them all to 'float' in advance
+        row = row.astype(float)
+
         row_dict = row.to_dict()
         # Beaufort is the same for all wind directions (columns) I need to iterate
         beaufort = row_dict.pop('Beaufort')

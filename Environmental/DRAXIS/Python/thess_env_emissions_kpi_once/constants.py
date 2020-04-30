@@ -1,0 +1,7 @@
+KAFKA_TOPIC = 'THESS_ENV_EMISSIONS_KPI_ONCE'
+KAFKA_TOPIC_FINISH = 'THESS_ENV_EMISSIONS_KPI_FINISH_ONCE'
+
+ELASTICSEARCH_INDEX = 'thess_env_emissions_kpi_once'
+
+EXCEL_FILE = "KPI-Thessaloniki-emissions_public.xlsx"
+

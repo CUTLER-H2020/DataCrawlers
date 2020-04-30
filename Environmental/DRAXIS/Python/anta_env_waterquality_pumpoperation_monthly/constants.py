@@ -3,7 +3,7 @@ KAFKA_TOPIC_FINISH = 'ANTA_ENV_WATERQUALITY_PUMPOPERATION_FINISH_MONTHLY'
 
 ELASTICSEARCH_INDEX = "anta_env_waterquality_pumpoperation_monthly"
 
-EXCEL_FILE = "antalya_all_data_EN.xlsx"
+EXCEL_FILE = "antalya_all_data_EN_KPI.xlsx"
 
 LOCATION_BEFORE = (36.965597, 30.724744)
 LOCATION_AFTER = (36.965441, 30.725827)

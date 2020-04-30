@@ -161,8 +161,19 @@ def broadcast_data(climatology_index, metadata):
         'Unit': metadata['unit']
     }
 
+    # For Kibana visualisation reasons:
+
+    # 1. If climatology index is rh multiply it's value by 100
+    if climatology_index == 'rh':
+        values = {key: value * 100 for key, value in values.items()}
+
+    # 2. If climatology index is total-prec multiply it's value by 1000
+    if climatology_index == 'total-prec':
+        values = {key: value * 1000 for key, value in values.items()}
+
     for date, value in values.items():
-        # for Kibana visualisation reasons, cut values below 0.001
+
+        # 3. cut values below 0.001 for all climatology indices
         if -0.001 < value < 0.001:
             value = 0.0
 
