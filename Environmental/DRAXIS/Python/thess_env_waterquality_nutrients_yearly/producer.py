@@ -55,6 +55,9 @@ def parse_file(excel, sheet):
     # in order to be json encoded compatible
     df.Date = df.Date.apply(lambda x: x.strftime('%Y-%m-%d'))
 
+    # Add extra column "Year" which is populated by the extraction of month in Date field
+    df['Year'] = pd.DatetimeIndex(df.Date).year
+
     for row in df.iterrows():
         # replace original NaN values with None
         data = row[1].where(pd.notnull(row[1]), None).to_dict()

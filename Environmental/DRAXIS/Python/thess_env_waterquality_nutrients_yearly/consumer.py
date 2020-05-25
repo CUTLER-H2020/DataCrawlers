@@ -33,24 +33,6 @@ from dotenv import load_dotenv
 from constants import *
 
 
-def transform_message_for_es(msg: dict) -> dict:
-    # the skeleton payload to insert data in Elasticsearch.
-    # this will be updated with new values if exist.
-    # thus when we won't have empty fields.
-    send = {
-        "Parameter": None,
-        "Station": None,
-        "Date": None,
-        "Value": None,
-        "Unit": None,
-        "location": None
-    }
-
-    send.update(msg)
-    print(send)
-    return send
-
-
 load_dotenv()
 
 es = ElasticSearchClient(os.getenv('ES_HOST'), os.getenv('ES_PORT'),
@@ -77,5 +59,5 @@ c = 0
 for msg in kafka_consumer:
     c += 1
     print("Consumed: {} messages".format(c))
-    formatted_msg = transform_message_for_es(msg.value)
-    es.insert_doc(formatted_msg)
+    # data are already processed in the appropriate way from producer's DataFrame, so just insert them to DB
+    es.insert_doc(msg.value)

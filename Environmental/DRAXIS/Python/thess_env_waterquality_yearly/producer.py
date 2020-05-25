@@ -69,7 +69,10 @@ def parse_file(excel_file: str, months: list, date_mapping: dict):
             data['lat'] = lat
             data['lon'] = lon
 
-            data['date'] = date_mapping.get(month)
+            date_str = date_mapping.get(month)
+            datetime_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+            data['date'] = datetime_obj.isoformat()
+            data['year'] = datetime_obj.year
 
             data['Parameter_fullname'] = PARAMETERS_FULLNAME_MAPPING[data['Parameter']]
 

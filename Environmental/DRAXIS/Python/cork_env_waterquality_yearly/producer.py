@@ -50,6 +50,9 @@ def parse_file():
     # Convert Sample_ID from auto-detected type int to string
     df.Sample_ID = df.Sample_ID.astype('str')
 
+    # Add extra column "Year" which is populated by the extraction of month in Date field
+    df['Year'] = pd.DatetimeIndex(df.Date).year
+
     for index, row in df.iterrows():
         base = row[BASIC].to_dict()
         base['Date'] = base['Date'].date().strftime('%Y-%m-%d') if isinstance(base['Date'],

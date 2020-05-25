@@ -69,6 +69,9 @@ def parse_sheet_lp_chl_a(excel, lp_sheet, total_messages):
     # Change it from type int to the desired type string
     df.month = df.month.astype('str')
 
+    # Add extra column "year" which is populated by the extraction of month in Date field
+    df['year'] = pd.DatetimeIndex(df.Date).year
+
     for row in df.iterrows():
         data = row[1].to_dict()
 

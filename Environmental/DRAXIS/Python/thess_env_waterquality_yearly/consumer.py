@@ -44,6 +44,7 @@ def transform_message_for_es(msg: dict) -> dict:
         "Value": None,
         "location": None,
         "date": None,
+        "year": None,
         "Parameter_fullname": None,
         "Location": None,
         "Unit": None

@@ -42,6 +42,7 @@ def parse_excel(excel):
     sent_messages = 0
     for index, row in df.iterrows():
         data = row.to_dict()
+        year_number = data['Year'].split(' ')[1]
 
         print(data)
         producer.send(KAFKA_TOPIC, data)
