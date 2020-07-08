@@ -2,6 +2,7 @@
 - To run this script Apache Spark and respective Elastic Search jars on the host machine where Apache Spark is , are required
 - The indexed data can be then used for visualization"""
 - This is a generic scripts which can be adapted for different data sources
+- The code requires a spark conf file, available in same repo folder (spark.conf)
   */
 
   /**
