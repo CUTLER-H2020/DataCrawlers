@@ -16,3 +16,9 @@
 
 .idea/
 /JavaScript/node_modules/
+
+# Log files
+*.log
+
+# Italy's pilot geo-data
+Python/Data-Italy/
