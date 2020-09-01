@@ -10,7 +10,7 @@ Scrapy == 1.5.0
 beautifulsoup4 == 4.6.0
 
 # comment_classifier.py: 1
-nltk == 3.3
+nltk == 3.4.5
 
 # comment_classifier.py: 2
 numpy == 1.14.3
