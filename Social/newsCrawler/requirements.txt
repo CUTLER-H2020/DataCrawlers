@@ -26,7 +26,7 @@ python_dotenv == 0.8.2
 
 # news_auth.py: 3
 # news_crawler.py: 5
-requests == 2.18.1
+requests == 2.20.0
 
 # comment_classifier.py: 3
 scikit_learn == 0.19.1
