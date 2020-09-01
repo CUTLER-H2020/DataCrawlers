@@ -64,7 +64,8 @@ const extractValues = (async () => {
         'Max visitors per day': row[5],
         'Revenues per space': row[6],
         'Revenues per day': row[7],
-        'Revenues - Construction cost': row[8]
+        'Revenues - Construction cost': row[8],
+        'Max CO2 emissions (kg/day)': row[9]
       };
       if (returnVal) {
         // elBody.push(elIndex);

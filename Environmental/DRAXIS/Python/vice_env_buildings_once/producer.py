@@ -18,8 +18,8 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 
 DISCLAIMER
 
-This code is used to crawl/parse data from file Thessaloniki-boatstops_public.xlsx provided by DRAXIS ENVIRONMENTAL S.A.
-described in D5.3.
+This code is used to crawl/parse geo-data from shapefile.
+
 By downloading this code, you agree to contact the corresponding data provider
 and verify you are allowed to use (including, but not limited, crawl/parse/download/store/process)
 all data obtained from the data source.

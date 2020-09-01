@@ -20,5 +20,8 @@
 # Log files
 *.log
 
-# Italy's pilot geo-data
-Python/Data-Italy/
+# Python virtual environment
+env/
+
+# Python cache files
+__pycache__
