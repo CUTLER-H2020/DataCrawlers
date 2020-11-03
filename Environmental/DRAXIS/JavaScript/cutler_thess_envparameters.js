@@ -65,27 +65,27 @@ fs.readdir(__dirname + '/files' + '/metriseis', function(err, files) {
   }
 
   var locations = {
-    EGNATIAS: {
+    DHMARXEIOY: {
       lat: 40.623814599999996,
       lon: 22.953126999999995
     },
-    MARTIOY: {
+    MALAKOPHS: {
       lat: 40.61637939999999,
       lon: 22.982339000000024
     },
-    LAGKADA: {
+    EPTAPYRGIOY: {
       lat: 40.64398020000002,
       lon: 22.958314700000074
     },
-    EPTAPYRGIOY: {
+    LAGKADA: {
       lat: 40.65176230000001,
       lon: 22.93485439999995
     },
-    MALAKOPHS: {
+    MARTIOY: {
       lat: 40.60102300000002,
       lon: 22.960178600000063
     },
-    DHMARXEIOY: {
+    EGNATIAS: {
       lat: 40.63753080000001,
       lon: 22.940941000000066
     }
