@@ -33,12 +33,63 @@ const indexes = [
   {
     index: 'cutler_thess_envparameters',
     mapping: {
+      aa: {
+        type: "long"
+      },
+      daily_aqi: {
+        type: "long"
+      },
       date: {
-        type: 'date',
-        format: 'yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis'
+        type: "date",
+        format: "yyyy/MM/dd HH:mm:ss||yyyy/MM/dd||epoch_millis"
       },
       loc: {
-        type: 'geo_point'
+        type: "geo_point"
+      },
+      month_: {
+        type: "long"
+      },
+      parameter_fullname: {
+        type: "text",
+        fields: {
+          keyword: {
+            type: "keyword",
+            ignore_above: 256
+          }
+        }
+      },
+      parameter_name: {
+        type: "text",
+        fields: {
+          keyword: {
+            type: "keyword",
+            ignore_above: 256
+          }
+        }
+      },
+      station_name: {
+        type: "text",
+        fields: {
+          keyword: {
+            type: "keyword",
+            ignore_above: 256
+          }
+        }
+      },
+      units: {
+        type: "text",
+        fields: {
+          keyword: {
+            type: "keyword",
+            ignore_above: 256
+          }
+        }
+      },
+      value: {
+        type: "long"
+      },
+      year_: {
+        type: "long"
       }
     }
   }
