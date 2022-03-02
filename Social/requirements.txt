@@ -4,7 +4,7 @@
 # newsCrawler/news_process.py: 1
 # newsCrawler/newsspider.py: 1
 # newsCrawler/scrapy_selenium/http.py: 3
-Scrapy == 1.5.0
+Scrapy == 1.8.2
 
 # TweetCrawler.py: 3
 TwitterSearch == 1.0.2
