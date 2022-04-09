@@ -12,7 +12,7 @@
     "greek-utils": "^1.2.2",
     "kafka-node": "^4.1.3",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "xlsx": "^0.15.0",
     "xlsx-extract": "^0.1.2"
   },
